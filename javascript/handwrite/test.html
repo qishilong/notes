@@ -12,32 +12,32 @@
     <!-- <script src='./手写防抖和节流.js'></script> -->
     <!-- <script src="./函数科里化.js"></script> -->
     <!-- <script src="./函数管道化.js"></script> -->
-    <!-- <script>
-        const input = document.getElementById('input');
+    <script>
+        // const input = document.getElementById('input');
 
-        const handle = debounce(function (input, value) {
-            console.log(input, value);
-        }, 1000)
+        // const handle = debounce(function (input, value) {
+        //     console.log(input, value);
+        // }, 1000)
 
-        input.oninput = function () {
-            handle(this, this.value)
-        }
+        // input.oninput = function () {
+        //     handle(this, this.value)
+        // }
 
-        const throttleHandle = throttle(function () {
-            console.log('a')
-        }, 1000, true)
-        window.onresize = () => {
-            throttleHandle()
-        }
-    </script> -->
-    <!-- <script>
-        function add(x, y, z) {
-            return x + y + z;
-        }
-        const curFn = curry(add, 1);
-        console.log(curFn(1, 2));
-        console.log(curFn(2, 3));
-    </script> -->
+        // const throttleHandle = throttle(function () {
+        //     console.log('a')
+        // }, 1000, true)
+        // window.onresize = () => {
+        //     throttleHandle()
+        // }
+    </script>
+    <script>
+        // function add(x, y, z) {
+        //     return x + y + z;
+        // }
+        // const curFn = curry(add, 1);
+        // console.log(curFn(1, 2));
+        // console.log(curFn(2, 3));
+    </script>
     <script>
         // 函数管道：将多个单参函数组合起来，形成一个新的函数，这些函数中，前一个函数的输出，是后一个函数的输入
 
@@ -66,13 +66,13 @@
                 return $.toLowerCase();
             });
         }
-        const handle = pipe(everyFirstLetterUp, firstLetterLower,
-            otherLetterLower, removeEmpty);
-        console.log(handle("    MY     fIrST    naME"));
-        console.log(handle("  asdfasf  sdfasf   ggggggg  hGDGF"));
+        // const handle = pipe(everyFirstLetterUp, firstLetterLower,
+        //     otherLetterLower, removeEmpty);
+        // console.log(handle("    MY     fIrST    naME"));
+        // console.log(handle("  asdfasf  sdfasf   ggggggg  hGDGF"));
     </script>
 
-    <script src='./promise 并发.js'></script>
+    <!-- <script src='./promise 并发.js'></script> -->
     <script>
         // const urls = [];
         // for (let i = 0; i < 10; i++) {
