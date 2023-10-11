@@ -12,7 +12,7 @@ function deepClone(obj, hash = new WeakMap()) {
 	if (obj.constructor === Date) {
 		return new Date(obj); // 如果是日期对象，直接返回一个新的日期对象
 	} else if (obj.constructor === RegExp) {
-		return new RegExp(obj); // 如果是正则对象，直接放回一个新的正则对象
+		return new RegExp(obj); // 如果是正则对象，直接返回一个新的正则对象
 	} else if (obj.constructor === Function) {
 		return new Function(`return ${obj.toString()}`).call(this);
 	} else if (obj.constructor === Map) {
