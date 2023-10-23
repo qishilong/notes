@@ -44,6 +44,9 @@ event1.on('handle', handle);
 event1.emit('handle', 'aaa1');
 event1.off('handle', handle);
 event1.emit('handle', 'aaa2');
+event1.once('handleOnce', handle);
+event1.emit('handleOnce', 'once');
+event1.emit('handleOnce', 'once');
 
 event2.once('handle1', handle);
 event2.emit('handle1', 'bbb1');
