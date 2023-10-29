@@ -1,7 +1,7 @@
 // 继承（圣杯模式）
 const inherit = (function () {
-    const Temp: any = function () { };
-    return function (son: any, father: any) {
+    const Temp = function () { };
+    return function (son, father) {
         Temp.prototype = father.prototype;
         son.prototype = new Temp();
         son.prototype.constructor = son;
