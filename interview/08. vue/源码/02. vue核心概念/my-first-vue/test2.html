@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        姓：{{firstName}} 名：{{lastName}}
+      </div>
+      <p>
+        全名：{{fullName}}
+      </p>
+      <p>
+        全名：{{fullName}}
+      </p>
+      <p>
+        全名：{{fullName}}
+      </p>
+      <p>
+        全名：{{fullName}}
+      </p>
+      <p>
+        全名：{{getFullName()}}
+      </p>
+      <p>
+        全名：{{getFullName()}}
+      </p>
+      <p>
+        全名：{{getFullName()}}
+      </p>
+      <p>
+        全名：{{getFullName()}}
+      </p>
+      <p>
+        全名：{{getFullName()}}
+      </p>
+      <p>
+        全名：{{getFullName()}}
+      </p>
+    </div>
+    <script src="vue.min.js"></script>
+    <script>
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          firstName: "袁",
+          lastName: "进",
+        },
+        computed: {
+          // fullName: {
+          //   get() {
+          //     console.log("计算了属性fullName");
+          //     return this.firstName + this.lastName;
+          //   },
+          //   set(val){
+          //     console.log("计算属性赋值了！")
+          //     this.firstName = val[0];
+          //     this.lastName = val.substr(1);
+          //   }
+          // },
+          fullName() {
+            console.log("计算了属性fullName");
+            return this.firstName + this.lastName;
+          },
+        },
+        methods: {
+          getFullName() {
+            console.log("运行了方法getFullName");
+            return this.firstName + this.lastName;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

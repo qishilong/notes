@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <a :href="link">{{text}}</a>
+      <p>
+        链接地址： <input type="text" v-model="link" /> 文本：
+        <input
+          type="text"
+          :value="text"
+          @input="text=$event.target.value"
+          v-model="text"
+        />
+      </p>
+    </div>
+    <script src="vue.min.js"></script>
+    <script>
+      var vm =  new Vue({
+        el: "#app",
+        data: {
+          link: "https://duyi.ke.qq.com",
+          text: "渡一课程",
+        },
+      });
+    </script>
+  </body>
+</html>

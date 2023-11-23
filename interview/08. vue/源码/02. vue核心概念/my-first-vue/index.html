@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1 v-html="title"></h1>
+
+      <p>
+        名称：<input type="text" v-model="newProduct.name" /> 库存：<input
+          v-model="newProduct.stock"
+          type="number"
+        />
+        <button @click="addProduct">添加</button>
+      </p>
+      <h2 v-show="products.length===0">没有商品</h2>
+      <ul>
+        <li v-for="(item, i) in products" :key="item.id">
+          {{item.name}} 库存：{{item.stock}}
+          <button @click="handleDelete(i)">删除</button>
+        </li>
+      </ul>
+      <p>
+        商品总数：{{products.length}}， 总库存：{{totolStock}}
+      </p>
+    </div>
+    <!-- <p>
+      asdfasfdasdfa
+    </p> -->
+    <script src="vue.min.js"></script>
+    <script>
+      var vm = new Vue({
+        // 配置
+        // template: `<div id="app"><h1>
+        //   {{title}}
+        // </h1>
+        // <p>
+        //   名称：<input type="text" v-model="newProduct.name" /> 库存：<input
+        //     v-model="newProduct.stock"
+        //     type="number"
+        //   />
+        //   <button @click="addProduct">添加</button>
+        // </p>
+        // <ul>
+        //   <li v-for="(item, i) in products" :key="i">
+        //     {{item.name}} 库存：{{item.stock}}
+        //   </li>
+        // </ul></div>`,
+        // render(createElement) {
+        //   return createElement("h1", ["abc"]);
+        // },
+        data: {
+          //配置数据
+          title: `<span style="color:red">商品管理</span>`,
+          newProduct: {
+            name: "默认名称",
+            stock: 10,
+          },
+          products: [
+            { name: "iphone", id: 1, stock: 10 },
+            { name: "xiao mi", id: 2, stock: 5 },
+            { name: "huawei", id: 4, stock: 0 },
+          ],
+        },
+        computed: {
+          totolStock() {
+            // var sum = 0;
+            // for (var i = 0; i < this.products.length; i++) {
+            //   sum += +this.products[i].stock;
+            // }
+            // return sum;
+
+            // var sum = 0;
+            // for (var p of this.products) {
+            //   sum += +p.stock;
+            // }
+            // return sum;
+
+            return this.products.reduce((a,b)=>{
+              return a + (+b.stock);
+            }, 0)
+          },
+        },
+        methods: {
+          addProduct() {
+            this.products.push({
+              name: this.newProduct.name,
+              stock: this.newProduct.stock,
+            });
+          },
+          handleDelete(i) {
+            this.products.splice(i, 1);
+          },
+        },
+      });
+      vm.$mount("#app");
+    </script>
+  </body>
+</html>

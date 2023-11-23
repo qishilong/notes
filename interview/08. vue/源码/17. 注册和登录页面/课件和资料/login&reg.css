@@ -1,0 +1,26 @@
+.login-container {
+  width: 400px;
+}
+.form-item .error.center {
+  text-align: center;
+}
+.form-item .input {
+  display: flex;
+}
+.form-item label {
+  width: 100px;
+  display: inline-block;
+  text-align: right;
+  line-height: 41px;
+}
+.form-item .error {
+  font-size: 14px;
+  color: #a44242;
+  padding-left: 100px;
+  height: 30px;
+  line-height: 30px;
+}
+.form-item input,
+.form-item button {
+  flex-grow: 1;
+}
