@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <script>
+        (function (doc, win, designWidth) {
+            var html = doc.documentElement;
+            function refreshRem() {
+                var clientWidth = html.clientWidth;
+                if (clientWidth >= designWidth) {
+                    // 如果设备宽度都大于设计稿了，那么测量出来是多少就是多少
+                    html.style.fontSize = '100px';
+                } else {
+                    // 计算出比例
+                    // 拿 iPhone6 为例，375/750=0.5
+                    // 相当于每一列的宽度为 0.5px，分成了 750 列
+                    // 但是浏览器是不允许这么小的字体大小的，因此乘上一个 100
+                    // 变成每一列的宽度为 50px
+                    // 之后在将设计稿尺寸转换为列数时，也不需要繁杂的计算
+                    // 假设设计稿量出来为 375px => 187.5(CSS像素) => 187.5/50(每一列宽度) = 3.75(所占列数)
+                    html.style.fontSize = 100 * (clientWidth / designWidth) + 'px';
+                }
+            };
+            doc.addEventListener('DOMContentLoaded', refreshRem);
+        })(document, window, 1080);
+    </script>
+</head>
+
+<body>
+    <div class="container_login">
+        <!-- 登录页面头部 -->
+        <header class="login">
+            <ul>
+                <li><a href="#"></a></li>
+                <li>登录</li>
+                <li><a href="#">忘记密码</a></li>
+            </ul>
+        </header>
+        <!-- 用户头像 -->
+        <div class="user_pic">
+            <img src="" alt="">
+        </div>
+        <!-- 美团账号登录 -->
+        <p class="meituan_login">美团账号登录</p>
+        <!-- 表单 -->
+        <form action="" class="user_input border_b">
+            <div class="border_b">
+                <label for="user_name">用户名：</label>
+                <input type="text" placeholder="邮箱/手机号/用户名" id="user_name" autocomplete>
+            </div>
+            <div>
+                <label for="user_password">密&nbsp;&nbsp;&nbsp;码：</label>
+                <input type="password" placeholder="密码" id="user_password" autocomplete>
+            </div>
+        </form>
+        <!-- 按钮组 -->
+        <div class="submit">
+            <form action="#">
+                <button>登录</button>
+            </form>
+            <a href="#">立即注册</a>
+            <a href="#">手机号快捷登录></a>
+        </div>
+        <!-- 底部第三方账号登录 -->
+        <footer>
+            <p>第三方账号登录</p>
+            <ul>
+                <li>
+                    <a href="#">
+                        <img src="../img/wx.png" alt="">
+                        <span>微信</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../img/qq.png" alt="">
+                        <span>QQ</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../img/wb.png" alt="">
+                        <span>微博</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="../img/baidu.png" alt="">
+                        <span>百度</span>
+                    </a>
+                </li>
+            </ul>
+        </footer>
+    </div>
+</body>
+
+</html>

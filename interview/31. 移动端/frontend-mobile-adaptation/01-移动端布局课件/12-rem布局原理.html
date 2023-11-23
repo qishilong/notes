@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimum-scale=1,maximum-scale=1">
+		<title></title>
+	</head>
+	<body>
+		<!-- 
+			rem适配的原理：把所有的设备都分成相同的若干份，再计算元素宽度所占的份数
+		 -->
+		<script>
+			/*
+				1、元素适配的宽度（算出来的）
+					=元素所占的列数*一列的宽
+					=元素所占的列数*1rem
+
+				2、元素在设计稿里的宽度（量出来的）
+				3、列数（随便给的）
+					100
+				4、一列的宽度（算出来的）
+					=屏幕实际的宽度（css像素）/列数
+					一列的宽度就是1rem
+
+				5、元素实际占的列数（算出来的）
+					=元素设计稿里的宽/一列的宽
+					=元素设计稿里的宽/1rem
+			 */
+
+			 /*
+			 	var colWidth=屏幕实际的宽度（css像素）/100;
+				50*colWidth	//50列所占的宽
+			  */
+			
+			var colWidth=0;	//一列的宽
+			var col=100;	//列数
+
+			//分别算出iphone5与iphone6里面一列的宽度
+			colWidth=375/100;	//3.75px	iphone6	
+			colWidth=320/100;	//3.2px		iphone5
+
+			//假如一个div需要占10列，算出div的分别在两个手机里的宽度
+			var divWidth=0;		//div的宽度
+			divWidth=10*3.75;	//37.5px	iphone6里div的宽度
+			divWidth=10*3.2;	//32px		iphone5里div的宽度
+			
+			//根据设计稿里元素的宽算出来它所占的列数
+			var divWidth=50;	//div在设计稿里实际的宽（量出来的）
+			var divCol=0;		//要算出div所占的列数
+
+			//以iphone6为例，一列的宽为3.75px，那50px占多少列？
+			divCol=50/3.75;		//13.333	在iphone6里所占的列数
+			divCol=50/3.2;		//15.625	在iphone5里所占的列数
+
+
+
+
+			//width: 10rem;	实际切图时候给的值
+			//元素适配的宽度=元素所占的列数*一列的宽
+			//元素适配的宽度 => width
+			//元素所占的列数 => 10
+			//一列的宽 => rem
+			/* html{
+				font-size:屏幕实际的宽度（css像素）/列数
+			} */
+			
+		</script>
+	</body>
+</html>

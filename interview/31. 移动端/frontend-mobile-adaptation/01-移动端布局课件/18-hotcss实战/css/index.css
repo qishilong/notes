@@ -1,0 +1,271 @@
+@charset "UTF-8";
+body {
+  font-family: helvetica;
+  margin: 0 auto;
+  max-width: 1500px;
+}
+
+body * {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+a, button, input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, input {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+  outline: none;
+  vertical-align: middle;
+  padding: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  vertical-align: middle;
+}
+
+h3, h4, p {
+  margin: 0;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* header */
+#header {
+  height: 100px;
+  line-height: 100px;
+  background: #d22147;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+}
+
+#header a:nth-of-type(1) {
+  color: #fff;
+  text-align: center;
+  flex: 0 0 160px;
+}
+
+#header a:nth-of-type(1)::after {
+  content: '';
+  display: inline-block;
+  width: 25px;
+  height: 14px;
+  background: url(../images/ico_01.png) no-repeat center;
+  background-size: cover;
+  margin-left: 8px;
+}
+
+#header div {
+  flex: 1;
+}
+
+#header div input {
+  width: 100%;
+  height: 64px;
+  border-radius: 16px;
+  border: none;
+  color: #e2c2c9;
+  text-indent: 68px;
+  background: #ae3e56 url(../images/ico_02.png) no-repeat 16px 10px;
+  background-size: 42px 44px;
+  font-size: 28px;
+}
+
+#header a:nth-of-type(2) {
+  color: #fff;
+  text-align: center;
+  flex: 0 0 138px;
+}
+
+#header a:nth-of-type(2)::before {
+  content: '';
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  background: url(../images/ico_03.png) no-repeat center;
+  background-size: cover;
+  margin-right: 10px;
+}
+
+/* banner */
+#banner {
+  text-align: center;
+}
+
+#banner a img {
+  width: 100%;
+}
+
+/* nav */
+#nav ul {
+  font-size: 0;
+  padding: 0.42667rem 0;
+  background: #f2f0f0;
+}
+
+#nav li {
+  width: 25%;
+  display: inline-block;
+  text-align: center;
+  margin: 0.42667rem 0;
+}
+
+#nav li a {
+  font-size: 0.59733rem;
+  color: #525252;
+}
+
+#nav li img {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: block;
+  margin: 0 auto 0.21333rem auto;
+}
+
+/* ad1 */
+#ad1 a {
+  float: left;
+}
+
+#ad1 a img {
+  width: 5.33333rem;
+  height: 5.33333rem;
+}
+
+/* ad2 */
+#ad2 {
+  background: #f2f0f0;
+  padding: 0.64rem 0;
+}
+
+#ad2 img {
+  width: 100%;
+}
+
+/* list */
+#list h3 {
+  font-size: 0.68267rem;
+  line-height: 1.70667rem;
+  color: #131313;
+  font-weight: normal;
+  padding-left: 0.42667rem;
+  border-bottom: 1px solid #d2d1d4;
+}
+
+#list h3::before {
+  content: '';
+  display: inline-block;
+  width: 0.17067rem;
+  height: 0.68267rem;
+  background: #cc0530;
+  border-radius: 0.10667rem;
+  margin-right: 0.42667rem;
+  vertical-align: middle;
+}
+
+#list h3 span {
+  vertical-align: middle;
+}
+
+#list article {
+  border-bottom: 1px solid #c1c0c5;
+}
+
+#list article a {
+  padding: 0.42667rem;
+  display: flex;
+}
+
+#list article .img {
+  flex: 0 0 auto;
+  padding-right: 0.64rem;
+}
+
+#list article .img img {
+  width: 4.56533rem;
+  height: 4.13867rem;
+}
+
+#list article .text {
+  flex: 2 2 auto;
+}
+
+#list article .text h4 {
+  font-size: 0.59733rem;
+  color: #181818;
+  line-height: 1.30133rem;
+  margin-bottom: 0.10667rem;
+}
+
+#list article .text p {
+  font-size: 0.512rem;
+  color: #979797;
+  line-height: 0.768rem;
+  margin-bottom: 0.40533rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  /* 设置文本显示的行数 */
+}
+
+#list article .text div {
+  font-size: 0.512rem;
+  height: 0.72533rem;
+  line-height: 0.72533rem;
+  color: #525252;
+}
+
+.text div strong {
+  color: #cc0530;
+  margin: 0 0.192rem;
+}
+
+.text .discount {
+  display: inline-block;
+  width: 1.792rem;
+  height: 0.704rem;
+  color: #fff;
+  padding-left: 0.32rem;
+  margin-left: 0.32rem;
+  box-sizing: border-box;
+  background: url(../images/ico_04.gif) no-repeat;
+  background-size: cover;
+  vertical-align: middle;
+}
+
+.text .red {
+  float: right;
+  background: url(../images/ico_05.png) no-repeat left 0.064rem;
+  background-size: 0.512rem 0.46933rem;
+  padding-left: 0.59733rem;
+}

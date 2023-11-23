@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绘制矩形变换</title>
+</head>
+
+<body>
+    <canvas width="500" height="500" id="oCanvas"></canvas>
+    <script type="notjs" id="vertex">
+        /* 
+            在三维坐标系上  A (X, Y, Z)
+            在齐次坐标系中我们会使用 (X, Y, Z, W) 来表示这个顶点  
+                                   (X, Y, Z, 0) 来表示向量
+        */
+        attribute vec4 a_position;
+        attribute vec4 a_color;
+        // 用vec2分量表示平移矢量 (-0.5, 0.5)
+        uniform mat4 a_Translate;
+        // uniform float cosb, sinb;
+        /* 
+            用矩阵的方式   声明旋转矩阵
+        */
+        uniform mat4 scaleMatrix;
+        uniform mat4 rotateMatrix;
+        varying vec4 v_color;
+        void main () {
+            // 先平移再选转  先需要得到平移后的坐标
+            // 再旋转
+            gl_Position = rotateMatrix * a_Translate * scaleMatrix * a_position;
+            v_color = a_color;
+        }
+    </script>
+    <script type="notjs" id="fragment">
+        precision mediump float;
+        varying vec4 v_color;
+        void main () {
+            gl_FragColor = v_color;
+        }
+    </script>
+    <script>
+        var oCanvas = document.getElementById('oCanvas');
+        var gl = oCanvas.getContext('webgl');
+        if (!gl) {
+            alert('浏览器不支持webgl');
+        }
+
+        // var str = ""
+        // 创建着色器函数
+        function createShader(gl, type, source) {
+            var shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+            if (success) {
+                return shader;
+            }
+            console.log(gl.getShaderInfoLog(shader));
+        }
+
+        var vetexStr = document.getElementById('vertex').innerText;
+        var fragmentStr = document.getElementById('fragment').innerText;
+        var vertexShader = createShader(gl, gl.VERTEX_SHADER, vetexStr);
+        var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentStr);
+
+        function createProgram(gl, vertexShader, fragmentShader) {
+            var program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            var success = gl.getProgramParameter(program, gl.LINK_STATUS);
+            if (success) {
+                return program;
+            }
+            console.log(gl.getProgramInfoLog(shader));
+        }
+        var program = createProgram(gl, vertexShader, fragmentShader);
+        console.log(program);
+        gl.useProgram(program);
+
+
+        var a_position = gl.getAttribLocation(program, "a_position");
+        var pointsize = gl.getAttribLocation(program, "pointsize");
+        var screenSize = gl.getUniformLocation(program, 'screenSize');
+        var a_color = gl.getAttribLocation(program, "a_color");
+        var rotateMatrix = gl.getUniformLocation(program, 'rotateMatrix');
+        var a_Translate = gl.getUniformLocation(program, 'a_Translate');
+        var scaleMatrix = gl.getUniformLocation(program, 'scaleMatrix');
+        var deg = 0;
+      
+        var Tx = 0.5;
+        var Ty = -0.5;
+        var Tz = 0;
+        var Sx = 0.5,
+            Sy = 0.5,
+            Sz = 1;
+        gl.uniformMatrix4fv(a_Translate, false, new Float32Array([
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            Tx, Ty, Tz, 1
+        ]))
+        
+        gl.uniformMatrix4fv(scaleMatrix, false, new Float32Array([
+            Sx, 0, 0, 0,
+            0, Sy, 0, 0,
+            0, 0, Sz, 0,
+            0, 0, 0, 1
+        ]))
+        gl.uniform2f(screenSize, oCanvas.width, oCanvas.height);
+        // gl.vertexAttrib4f(a_color, 1, 0, 0, 1);
+        var positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        var indexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+
+        function rotate () {
+            deg ++;
+            var cosb = Math.cos(deg * Math.PI / 180);
+            var sinb = Math.sin(deg * Math.PI / 180);
+            gl.uniformMatrix4fv(rotateMatrix, false, new Float32Array([
+                cosb, sinb, 0, 0,
+                -sinb, cosb, 0, 0,
+                0, 0,  1 , 0,
+                0, 0, 0, 1,
+            ]));
+            draw();
+        }
+        function draw() {
+            // 绑定缓冲区数据  
+            // 第一个参数绑定的缓冲区  
+            //  第二个参数 传入的数据（要求时强类型语言需要你用类型化数组转换一下） 
+            // 第三个参数是绘制的方式一般为gl.STATIC_DRAW 表示不会频繁改变缓冲区中的数据（webgl会根据这个参数做一些优化处理）
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                0, 0, 0,0, 1, 0,
+                -0.5, 0.5, 0, 1, 0, 0,
+                0.5, 0.5, 0, 0, 1, 0,
+                0.5, -0.5,0, 0, 0, 1,
+                -0.5, -0.5, 0,1, 1, 0,
+                -0.5, 0.5, 0,1, 0, 0,
+            ]), gl.STATIC_DRAW);
+            // gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array([
+            //     0, 1, 2,
+            //     2, 3, 0,
+            // ]), gl.STATIC_DRAW);
+            // 为变量分配数据  
+            // 第一个参数是为哪个变量分配数据
+            // 第二个参数是这个变量拥有数据的分量个数
+            // 第三个参数是数据类型
+            // 第四个参数是 如果是非浮点型数据是否将数据进行归一化  如果设置为true 数值类型字节大小在-128到127之间的数（BYTE）回转传承-1.0 到1.0之间，数值类型字节大小在0 到255之间的数（UNSIGNED_BYTE）变为0.0 到1.0之间，SHORT也是转换到-1.0 - 1.0之间，如果该值为false  则按照用户输入的数据处理。
+            // 第四个参数说白了就是只有在第三个参数除了为FLOAT之外的（即为UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT, INT, UNSIGNED_INT）时实用  
+            // 第五个参数为两个顶点之间的字节数，也就是每个顶点的字节数，如果设置为0 则代表两个顶点之间字节数为 顶点数据分量 * 每个元素的字节数
+            // 第六个参数为当前变量数据是从每个顶点数据的哪一位开始取
+            gl.vertexAttribPointer(a_position, 3, gl.FLOAT, false, 4 * 6, 0);
+            gl.vertexAttribPointer(a_color, 3, gl.FLOAT, false, 4 * 6, 4 * 3);
+            // 启用这个位置数据
+            gl.enableVertexAttribArray(a_position);
+            gl.enableVertexAttribArray(a_color);
+            // 绘制三角形
+            // gl.drawElements(gl.TRIANGLE_STRIP, 6, gl.UNSIGNED_SHORT, 0);
+            gl.drawArrays(gl.TRIANGLE_FAN, 0, 6);
+        }
+
+
+        rotate();
+        setInterval(function () {
+            rotate()
+        }, 100);
+
+
+    </script>
+</body>
+
+</html>

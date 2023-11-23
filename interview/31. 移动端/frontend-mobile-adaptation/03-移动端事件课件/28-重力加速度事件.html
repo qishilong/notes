@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			.box{
+				width: 200px;
+				height: 200px;
+				background: green;
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"></div>
+		<script>
+			/*
+				devicemotion		重力加速度事件
+					acceleration	设备在X,Y,Z三个轴的方向上移动的距离, 不包含重力加速度
+
+					accelerationIncludingGravity	设备在X,Y,Z三个轴方向移动的距离, 包含重力加速度（重力加速度通常取值为9.8m/s的二次方）
+						x轴加速度	以手机屏幕左右两侧为方向移动，往右为正，往左为负
+						y轴加速度	以手机屏幕前后两侧为方向移动，往前为正，往后为负
+						z轴加速度	以手机屏幕上下两侧为方向移动，往上为正，往下为负
+
+					rotationRate	设备在Alpha, Beta, Gamma三个方向旋转的速率（度/秒）
+						alpha		以设备坐标系z轴为轴的旋转速率
+						beta		以设备坐标系x轴为轴的旋转速率
+						gamma		以设备坐标系y轴为轴的旋转速率
+
+					interval		从设备获取数据的频率, 单位是毫秒
+				
+				注意：ios与android里取到的属性值不一致（正负相反），因为它们各自处理坐标的方式不同
+			 */
+
+			const box=document.querySelector('.box');
+			window.addEventListener('devicemotion',ev=>{
+				//console.log(ev);
+				let motion=ev.acceleration;
+				box.innerHTML=`
+						x:${motion.x}<br>
+						y:${motion.y}<br>
+						z:${motion.z}<br>`;
+			})
+		</script>
+	</body>
+</html>

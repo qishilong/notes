@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="oCanvas" width="500" height="400"></canvas>
+    <script src="./cuon-matrix.js"></script>
+    <script type="notjs" id="vertex">
+        // 存储限定符    数据类型   变量名称
+        attribute vec4 a_position;
+        attribute vec4 a_color;
+        uniform mat4 u_projectMatrix;
+        uniform mat4 rotateMatrix;
+        varying vec4 f_color;
+        void main() {
+            gl_Position = u_projectMatrix * a_position;
+            f_color = a_color;
+        }
+    </script>
+    <script type="notjs" id="fragment">
+        precision mediump float;
+        varying vec4 f_color;
+        void main() {
+            gl_FragColor = f_color;
+        }
+    </script>
+    <script>
+        var oCanvas = document.getElementById('oCanvas');
+        var gl = oCanvas.getContext('webgl');
+
+        if (!gl) {
+            alert('浏览器不支持webgl');
+        }
+
+        function createShader(gl, type, source) {
+            // 创建着色器
+            var shader = gl.createShader(type);
+            // 
+            gl.shaderSource(shader, source);
+            // 将着色器数据源转化成代码
+            gl.compileShader(shader);
+
+            // 判断着色器是否建立完成  
+            var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+
+            if (success) {
+                return shader;
+            }
+            console.log(gl.getShaderInfoLog(shader));
+        }
+        // gl.VERTEX_SHADER    gl.FRAGMENT_SHADER
+
+        var vertexStr = document.getElementById('vertex').innerText;
+        var fragmentStr = document.getElementById('fragment').innerText;
+
+        // 创建着色器
+        var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexStr);
+        var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentStr);
+
+        function createProgram(gl, vertexShader, fragmentShader) {
+            var program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+
+            var success = gl.getProgramParameter(program, gl.LINK_STATUS);
+            if (success) {
+                return program;
+            }
+            console.log(gl.getProgramInfoLog(program));
+        }
+
+        var program = createProgram(gl, vertexShader, fragmentShader);
+        gl.useProgram(program);
+
+        var a_position = gl.getAttribLocation(program, "a_position");
+        var a_color = gl.getAttribLocation(program, "a_color");
+        var u_projectMatrix = gl.getUniformLocation(program, "u_projectMatrix");
+        var u_rotateMatrix = gl.getUniformLocation(program, 'rotateMatrix');
+
+        var m3 = {
+            translate: function (Tx, Ty, Tz) {
+                return [
+                    1.0, 0, 0, 0,
+                    0, 1.0, 0, 0,
+                    0, 0, 1.0, 0,
+                    Tx, Ty, Tz, 1.0
+                ];
+            },
+            rotatez: function (deg) {
+                var sinb = Math.sin(deg * Math.PI / 180).toFixed(2);
+                var cosb = Math.cos(deg * Math.PI / 180).toFixed(2);
+                return [
+                    cosb, sinb, 0, 0,
+                    -sinb, cosb, 0, 0,
+                    0, 0, 1, 0,
+                    0, 0, 0, 1
+                ];
+            },
+            rotatex: function (deg) {
+                var sinb = Math.sin(deg * Math.PI / 180).toFixed(2);
+                var cosb = Math.cos(deg * Math.PI / 180).toFixed(2);
+                return [
+                    1, 0, 0, 0,
+                    0, cosb, sinb, 0,
+                    0, -sinb, cosb, 0,
+                    0, 0, 0, 1
+                ];
+            },
+            rotatey: function (deg) {
+                var sinb = Math.sin(deg * Math.PI / 180).toFixed(2);
+                var cosb = Math.cos(deg * Math.PI / 180).toFixed(2);
+                return [
+                    cosb, 0, -sinb, 0,
+                    0, 1, 0, 0,
+                    sinb, 0, cosb, 0,
+                    0, 0, 0, 1
+                ];
+            },
+            scale: function (Sx, Sy, Sz) {
+                return [
+                    Sx, 0, 0, 0,
+                    0, Sy, 0, 0,
+                    0, 0, Sz, 0,
+                    0, 0, 0, 1,
+                ];
+            },
+            muliply: function (a, b) {
+                var a00 = a[0 * 4 + 0];
+                var a01 = a[0 * 4 + 1];
+                var a02 = a[0 * 4 + 2];
+                var a03 = a[0 * 4 + 3];
+                var a10 = a[1 * 4 + 0];
+                var a11 = a[1 * 4 + 1];
+                var a12 = a[1 * 4 + 2];
+                var a13 = a[1 * 4 + 3];
+                var a20 = a[2 * 4 + 0];
+                var a21 = a[2 * 4 + 1];
+                var a22 = a[2 * 4 + 2];
+                var a23 = a[2 * 4 + 3];
+                var a30 = a[3 * 4 + 0];
+                var a31 = a[3 * 4 + 1];
+                var a32 = a[3 * 4 + 2];
+                var a33 = a[3 * 4 + 3];
+                var b00 = b[0 * 4 + 0];
+                var b01 = b[0 * 4 + 1];
+                var b02 = b[0 * 4 + 2];
+                var b03 = b[0 * 4 + 3];
+                var b10 = b[1 * 4 + 0];
+                var b11 = b[1 * 4 + 1];
+                var b12 = b[1 * 4 + 2];
+                var b13 = b[1 * 4 + 3];
+                var b20 = b[2 * 4 + 0];
+                var b21 = b[2 * 4 + 1];
+                var b22 = b[2 * 4 + 2];
+                var b23 = b[2 * 4 + 3];
+                var b30 = b[3 * 4 + 0];
+                var b31 = b[3 * 4 + 1];
+                var b32 = b[3 * 4 + 2];
+                var b33 = b[3 * 4 + 3];
+
+
+
+                return [
+                    a00 * b00 + a01 * b10 + a02 * b20 + a03 * b30,
+                    a00 * b01 + a01 * b11 + a02 * b21 + a03 * b31,
+                    a00 * b02 + a01 * b12 + a02 * b22 + a03 * b32,
+                    a00 * b03 + a01 * b13 + a02 * b23 + a03 * b33,
+
+                    a10 * b00 + a11 * b10 + a12 * b20 + a13 * b30,
+                    a10 * b01 + a11 * b11 + a12 * b21 + a13 * b31,
+                    a10 * b02 + a11 * b12 + a12 * b22 + a13 * b32,
+                    a10 * b03 + a11 * b13 + a12 * b23 + a13 * b33,
+
+                    a20 * b00 + a21 * b10 + a22 * b20 + a23 * b30,
+                    a20 * b01 + a21 * b11 + a22 * b21 + a23 * b31,
+                    a20 * b02 + a21 * b12 + a22 * b22 + a23 * b32,
+                    a20 * b03 + a21 * b13 + a22 * b23 + a23 * b33,
+
+                    a30 * b00 + a31 * b10 + a32 * b20 + a33 * b30,
+                    a30 * b01 + a31 * b11 + a32 * b21 + a33 * b31,
+                    a30 * b02 + a31 * b12 + a32 * b22 + a33 * b32,
+                    a30 * b03 + a31 * b13 + a32 * b23 + a33 * b33,
+                ]
+            }
+        }
+        var vertexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+        var positionData = [
+            // 左面   绿色
+            0, 0, 0, 0, 0, 1, 1,
+            0, 0.5, 0, 1, 0, 1, 1,
+            0, 0.5, 0.5, 0, 0, 1, 1,
+            0, 0.5, 0.5, 0, 0, 1, 1,
+            0, 0, 0, 0, 0, 1, 1,
+            0, 0, 0.5, 1, 1, 1, 1,
+
+
+            // 右面  红色  -
+            0.5, 0, 0, 1, 0, 0, 1,
+            0.5, 0.5, 0, 1, 0, 0, 1,
+            0.5, 0, 0.5, 1, 0, 0, 1,
+            0.5, 0, 0.5, 1, 0, 0, 1,
+            0.5, 0.5, 0.5, 1, 0, 0, 1,
+            0.5, 0.5, 0, 1, 0, 0, 1,
+            // 上面 蓝色
+            0, 0.5, 0, 0, 1, 1, 1,
+            0, 0.5, 0.5, 0, 0, 1, 1,
+            0.5, 0.5, 0, 0, 0, 1, 1,
+            0.5, 0.5, 0, 0, 0, 1, 1,
+            0.5, 0.5, 0.5, 0, 0, 1, 1,
+            0, 0.5, 0.5, 0, 0, 1, 1,
+
+            // 下面 黄色 -
+
+            0, 0, 0, 0, 0, 1, 1,
+            0, 0, 0.5, 1, 1, 0, 1,
+            0.5, 0, 0, 1, 1, 0, 1,
+            0.5, 0, 0, 1, 1, 0, 1,
+            0.5, 0, 0.5, 1, 1, 0, 1,
+            0, 0, 0.5, 1, 1, 0, 1,
+
+            // 后面 浅蓝 -
+
+            0, 0, 0, 0, 0, 0, 1,
+            0.5, 0, 0, 0, 0, 0, 1,
+            0.5, 0.5, 0, 0, 0, 0, 1,
+            0.5, 0.5, 0, 0, 0, 0, 1,
+            0, 0.5, 0, 0, 0, 0, 1,
+            0, 0, 0, 0, 0, 0, 1,
+
+            // 前面 玫粉色 -
+
+            0, 0, 0.5, 1, 0, 1, 1,
+            0, 0.5, 0.5, 1, 0, 1, 1,
+            0.5, 0, 0.5, 1, 0, 1, 1,
+            0.5, 0, 0.5, 1, 0, 1, 1,
+            0.5, 0.5, 0.5, 1, 0, 1, 1,
+            0, 0.5, 0.5, 1, 0, 1, 1,
+        ];
+        var projectMatrix = new Matrix4();
+        projectMatrix.setOrtho(-1, 1, -1, 1, 1, -1);
+        gl.uniformMatrix4fv(u_projectMatrix, false, projectMatrix.elements);
+        function draw(deg) {
+            // gl.uniformMatrix4fv(u_rotateMatrix, false, new Float32Array(m3.rotatey(deg)));
+            console.log(m3.muliply(m3.rotatey(deg), positionData))
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array( positionData), gl.STATIC_DRAW);
+            gl.vertexAttribPointer(a_position, 3, gl.FLOAT, false, 4 * 7, 0);
+            gl.enableVertexAttribArray(a_position);
+            gl.vertexAttribPointer(a_color, 4, gl.FLOAT, false, 4 * 7, 4 * 3);
+            gl.enableVertexAttribArray(a_color);
+            gl.drawArrays(gl.TRIANGLES, 0, 36);
+        }
+        var deg = 0;
+        function rotate() {
+            console.log(deg)
+            draw(deg);
+            deg += 90;
+           
+                
+                console.log(deg)
+                    if (deg > 270) {
+                        clearTimeout(timer)
+                    } else {
+                        
+                    }
+        }
+
+        rotate()
+
+
+
+    </script>
+</body>
+
+</html>

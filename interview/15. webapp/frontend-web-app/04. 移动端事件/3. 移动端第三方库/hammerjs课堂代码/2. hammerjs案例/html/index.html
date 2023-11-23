@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <title>Hammer.js-图片拖动、放缩、旋转</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+        }
+
+        #imgid {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <img id="imgid" class="imgid" src="../image/ok.png" />
+    <script type="text/javascript" src="../js/hammer.min.js"></script>
+    <script>
+        // 获取图片 DOM 元素
+        var el = document.getElementById('imgid');
+
+        // 初始化图片的 x 和 y 坐标
+        var startX = Math.round((window.innerWidth - el.offsetWidth) / 2);
+        var startY = Math.round((window.innerHeight - el.offsetHeight) / 2);
+
+        // 初始化一些变量
+        var ticking = false; // 是否正在执行动画
+        var transform = null; // 图片的 transform 属性
+        var initAngle = 0; // 初始化旋转角度
+        var initScale = 1; // 初始化缩放比例
+
+        // 初始化 Hammer.js
+        var mc = new Hammer.Manager(el); // 创建一个管理器，可以同时触发旋转、缩放和移动
+        mc.add(new Hammer.Pan()); // 添加一个移动手势
+        mc.add(new Hammer.Rotate()).recognizeWith(mc.get('pan')); // 添加一个旋转的手势，并且和移动手势同时识别
+        mc.add(new Hammer.Pinch()).recognizeWith([mc.get('pan'), mc.get('rotate')]); // 添加一个缩放的手势，并且和移动手势和旋转手势同时识别
+
+        // 当移动手势开始时
+        mc.on('panstart panmove', function (ev) {
+            if (!ev.isFinal) {
+                // 进入此 if，说明拖动行为没有结束
+                // 也就是用户一直都在进行拖动
+                // 我们一直在更新图片的 x 和 y 值
+                transform.translate = {
+                    x: startX + ev.deltaX,
+                    y: startY + ev.deltaY
+                };
+                // 更新图片的 transform 属性
+                requestElementUpdate();
+            }
+        });
+
+        // 当手指进行缩放的时候
+        mc.on('pinchstart pinchmove', function (ev) {
+            if (ev.type === 'pinchstart') {
+                // 进入此 if，说明缩放开始
+                // 初始化缩放比例
+                initScale = transform.scale || 1;
+            } else {
+                // 进入此 if，说明缩放进行中
+                // 更新缩放比例
+                transform.scale = initScale * ev.scale;
+            }
+            // 更新图片的 transform 属性
+            requestElementUpdate();
+        })
+
+        // 当手指进行旋转的时候
+        var deltaAngle = 0; // 旋转角度的差值
+        var startRotateAngle = 0; // 开始时的旋转角度
+        mc.on("rotatestart rotatemove rotateend", function (ev) {
+            // 旋转开始时
+            if (ev.type === "rotatestart") {
+                startRotateAngle = ev.rotation; // 记录开始时的旋转角度
+            }
+            // 旋转进行中
+            if (ev.type === "rotatemove") {
+                // 计算旋转角度的差值
+                deltaAngle = ev.rotation - startRotateAngle;
+                transform.rz = 1;
+                transform.angle = initAngle + deltaAngle;
+                // 更新图片的 transform 属性
+                requestElementUpdate();
+            }
+            // 旋转结束时
+            if (ev.type === "rotateend") {
+                // 旋转结束的时候，我们只需要更新一下初始的旋转角度即可
+                initAngle = transform.angle;
+            }
+        })
+    
+
+        // 更新图片的 transform 属性
+        function updateElementTransform(){
+            var value = `
+                translate(${transform.translate.x}px, ${transform.translate.y}px)
+                scale(${transform.scale})
+                rotate(${transform.angle}deg)
+            `;
+            el.style.transform = value;
+            ticking = false;
+        }
+    
+        // 请求更新图片的 transform
+        function requestElementUpdate(){
+            if (!ticking) {
+                // 进入此 if，说明没有在执行动画
+                // 我们可以进行动画
+                window.requestAnimationFrame(updateElementTransform);
+                ticking = true;
+            }
+        }
+
+        // 初始化图片的 transform 属性
+        (function(){
+            transform = {
+                translate: {
+                    x: startX,
+                    y: startY
+                },
+                scale: initScale,
+                rx : 0,
+                ry : 0,
+                rz: 1,
+                angle: initAngle
+            };
+            // 更新图片的 transform 属性
+            requestElementUpdate();
+        })();
+    </script>
+</body>
+
+</html>

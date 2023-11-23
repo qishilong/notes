@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>渲染器</title>
+    <style>
+        #oCanvas {
+            /* margin: 0 auto; */
+            /* width: 100%;
+            height: 100%; */
+            /* display: block; */
+        }
+    </style>
+</head>
+<body>
+    <canvas id="oCanvas" height="500" width="500"></canvas>
+    <span>skajdfasdf</span>
+    <script src="./three.js"></script>
+    <script>
+         var oCanvas = document.getElementById('oCanvas')
+        // 创建场景
+        var scene = new THREE.Scene();
+        // 创建相机   远景相机  和 正交相机
+        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 100, 1000);
+        // var orgCamera = new THREE.OrthographicCamera(window.innerWidth / -2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / -2, 100, 1000);
+        // 渲染器 
+        // 1. 放映的位置
+        // 2. 分辨率
+        // 3. 颜色通道
+        // 4. 渲染的大小
+        var renderer = new THREE.WebGLRenderer({
+            canvas: oCanvas,
+            antialias: true,
+        });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        console.log('===', renderer.compile(scene, camera), renderer.getPixelRatio())
+        // renderer.setSize(window.innerWidth, window.innerHeight);
+        // document.body.appendChild(renderer.domElement);
+        // 创建几何体
+        var geometry = new THREE.BoxGeometry( 100, 100, 100 );
+        // 材质
+        var material = new THREE.MeshBasicMaterial( {color: 0x0fff00} );
+        var cube = new THREE.Mesh( geometry, material );
+        scene.add(cube);
+        camera.position.z = 950;
+        camera.up.x = -1;
+        camera.lookAt(0, 100, 0)
+        console.log(camera)
+        function animate() {
+            // console.log(cube);
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate()
+
+    </script>
+</body>
+</html>

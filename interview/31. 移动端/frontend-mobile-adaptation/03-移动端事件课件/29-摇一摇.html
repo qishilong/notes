@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			.box div{
+				width: 100%;
+				height: 100px;
+				background: #000;
+				transition: 0.2s;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div></div>
+			<div></div>
+		</div>
+		<script>
+			(function(){
+				let range=50;	//给一个摇晃的幅度，如果用户超过了这个值可以认为是摇了，没超过就认为用户没有摇
+				let lastPostion={
+					x:0,
+					y:0,
+					z:0,
+					time:Date.now()
+				};
+
+				let isShake=false;	//用户是否停止了摇
+				let divs=document.querySelectorAll('.box div');
+
+				window.addEventListener('devicemotion',ev=>{
+					let nowTime=Date.now();
+					let motion=ev.accelerationIncludingGravity;
+
+					if(nowTime-lastPostion.time>100){
+						let nowPostion={
+							x:motion.x,
+							y:motion.y,
+							z:motion.z,
+						}
+
+						//两次摇晃的差值
+						let dis=Math.abs(nowPostion.x-lastPostion.x)+Math.abs(nowPostion.y-lastPostion.y)+Math.abs(nowPostion.z-lastPostion.z);
+
+						if(dis>range){
+							isShake=true;
+
+							divs[0].style.transform='translateY(-50px)';
+							divs[1].style.transform='translateY(50px)';
+						}
+					}
+				});
+			})();
+		</script>
+	</body>
+</html>

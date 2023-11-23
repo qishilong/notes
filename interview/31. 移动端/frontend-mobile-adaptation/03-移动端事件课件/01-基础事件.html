@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			#box{
+				width: 200px;
+				height: 200px;
+				background: green;
+				color: #fff;
+				font-size: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script>
+			/*
+				touchstart		手指按下事件，类似mousedown
+				touchmove		手指移动事件，类似mousemove
+				touchend		手指抬起事件，类似mouseup
+				
+				注意：移动端事件最好用事件监听函数来添加，不要用on添加
+			 */
+
+			var box=document.querySelector('#box');
+			box.addEventListener('touchstart',()=>{
+				console.log('手指按下去了');
+			});
+
+			box.addEventListener('touchmove',()=>{
+				console.log('手指滑动了');
+			});
+
+			box.addEventListener('touchend',()=>{
+				console.log('手指抬起了');
+			});
+			
+		</script>
+	</body>
+</html>

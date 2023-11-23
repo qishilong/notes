@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<title></title>
+		<style>
+			.row div{
+				background: green;
+				color: #fff;
+				height: 100px;
+				border: 1px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+			1、容器
+				.container-fluid	100%宽度
+				.container			固定宽度
+									宽度>=1200				1140px
+									992=<宽度<1200			960px
+									768=<宽度<992			720px
+									576=<宽度<768			540px
+									宽度<576				auto
+				注意：这两个class不能嵌套，可以是个兄弟关系
+			2、行	.row
+			3、列
+				.col-xl-*
+				.col-lg-*
+				.col-md-*
+				.col-sm-*
+				.col-*
+				.col
+		-->
+		<div class="container-fluid" style="border:1px solid #000">
+			<!-- <div style="background:green">kaivon</div> -->
+			<div class="row">
+				<div class="col-lg-1">第1列</div>
+				<div class="col-lg-1">第2列</div>
+				<div class="col-lg-1">第3列</div>
+				<div class="col-lg-1">第4列</div>
+				<div class="col-lg-1">第5列</div>
+				<div class="col-lg-1">第6列</div>
+				<div class="col-lg-1">第7列</div>
+				<div class="col-lg-1">第8列</div>
+				<div class="col-lg-1">第9列</div>
+				<div class="col-lg-1">第10列</div>
+				<div class="col-lg-1">第11列</div>
+				<div class="col-lg-1">第12列</div>
+			</div>
+		</div>
+
+		<div class="container" style="border:1px solid #f00">
+			<!-- <div style="background:red">kaivon</div> -->
+			<div class="row">
+					<div class="col-lg-1">第1列</div>
+					<div class="col-lg-1">第2列</div>
+					<div class="col-lg-1">第3列</div>
+					<div class="col-lg-1">第4列</div>
+					<div class="col-lg-1">第5列</div>
+					<div class="col-lg-1">第6列</div>
+					<div class="col-lg-1">第7列</div>
+					<div class="col-lg-1">第8列</div>
+					<div class="col-lg-1">第9列</div>
+					<div class="col-lg-1">第10列</div>
+					<div class="col-lg-1">第11列</div>
+					<div class="col-lg-1">第12列</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-5">第1列</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">第12列</div>
+			</div>
+		</div>
+	</body>
+</html>

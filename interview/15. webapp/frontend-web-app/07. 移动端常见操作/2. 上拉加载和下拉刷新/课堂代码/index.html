@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>上拉加载和下拉刷新2</title>
+    <link rel="stylesheet" href="./css/swiper.min.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <body class="padd_40">
+    <!-- 标题 -->
+    <div class="a">标题</div>
+    <!-- tab 选项栏 -->
+    <div class="tab">
+      <a href="#" class="active">tab1</a>
+      <a href="#">tab2</a>
+      <a href="#">tab3</a>
+    </div>
+    <!-- 内容 -->
+    <div class="swiper-container">
+      <div class="refreshtip">下拉可以刷新</div>
+      <!-- 中间可以竖屏滑动的内容 -->
+      <div class="swiper-wrapper w">
+        <div class="swiper-slide d">
+          <div
+            class="init-loading list-group-item text-center"
+            style="display: none"
+          >
+            下拉可以刷新
+          </div>
+          <!-- 又是一个轮播容器，对应的是横屏的滑动 -->
+          <div class="swiper-container2">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide list-group">
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+              </div>
+              <div class="swiper-slide list-group">
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+              </div>
+              <div class="swiper-slide list-group">
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+                <div class="list-group-item">列表</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="loadtip">上拉加载更多</div>
+      <div class="swiper-scrollbar"></div>
+    </div>
+    <script src="./js/swiper-3.2.5.min.js"></script>
+    <script src="./js/zepto.min.js"></script>
+    <script src="./js/index.js"></script>
+  </body>
+</html>

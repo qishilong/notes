@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+			}
+			div{
+				background: green;
+				float: left;
+
+				width: 4rem;
+				height: 4rem;
+			}
+			img{
+				width: 16rem;	/* 640/2=320/20=16rem */
+			}
+		</style>
+		<script>
+			/* 
+				1、元素适配的宽度=元素所占的列数*1rem
+				2、一列的宽度=屏幕实际的宽度（css像素）/列数
+				3、元素实际占的列数=元素设计稿里的宽/1rem
+			 */
+			(function(){
+				var html=document.documentElement;	//html
+				var width=html.clientWidth;		//css像素
+				
+				console.log(width);
+				
+				html.style.fontSize=width/16+'px';	//把屏幕分成了16列，以iphone为例得出一个列的值为整数
+			})();
+
+
+			//iphone5
+			//1rem=20px;		一列的宽度
+			//80/1rem=80/20=4;	元素实际占的列数
+			//4*1rem=4rem;		元素适配的宽度
+
+
+			//iphone6
+			//1rem=375/16=23.4375;	一列的宽度
+			//4*1rem=4*23.4375=93.75;	元素适配的宽度
+			//4*93.75=375;		css的宽度
+
+			//真正切图时候的方法!!!
+			//1、算rem，还是根据设备实际的css像素算
+			//2、量出一个元素在设计稿里的尺寸
+			//3、拿这个尺寸除以DPR值后，再去换算rem
+		</script>
+	</head>
+	<body>
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+		<img src="images/img_11.jpg" alt="">
+	</body>
+</html>

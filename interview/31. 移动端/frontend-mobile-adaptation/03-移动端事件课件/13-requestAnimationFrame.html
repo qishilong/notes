@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+	</head>
+	<body>
+		<div style="background: lightblue;width: 0;height: 20px;">0%</div>
+		<button>走你</button>
+		<script>
+			/*
+				requestAnimationFrame(callback)		由浏览器专门为动画提供的API
+					1、参数为回调函数
+					2、函数有个返回值，为编号（与定时器一样），用于清除动画
+				cancelAnimationFrame(返回值)		清除动画
+
+				支持情况：
+					1、Firefox	11~22的版本需要加前缀，22以上版本不需要加
+					2、Chrome	22-23的版本需要加前缀，23以上版本不需要加
+					3、IE		9以上版本支持，不需要加前缀
+					4、IOS		6的版本需要加前缀，6以上的版本不需要加
+					5、Android	4.4的版本需要加前缀，4.4以上的版本不需加
+
+				问题：
+					调用一次走一次
+
+				注意：它们是window身上的方法
+			 */
+		
+			const div=document.querySelector('div'),
+				btn=document.querySelector('button');
+			
+			let timer=null;
+
+			btn.onclick=()=>{
+				//requestAnimationFrame(move);
+
+				div.style.width=0;
+				cancelAnimationFrame(timer);	//避免多次调用
+
+				timer=requestAnimationFrame(function fn(){
+					move();
+
+					timer=requestAnimationFrame(fn);
+
+					if(div.offsetWidth>=500){	//关闭
+						cancelAnimationFrame(timer);
+					}
+				});
+
+			}
+			
+			function move(){
+				div.style.width=div.offsetWidth+5+'px';
+				div.innerHTML=div.offsetWidth/5+'%';
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			.box{
+				width: 200px;
+				height: 200px;
+				background: green;
+				color: #fff;
+				font-size: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">kaivon</div>
+		<script>
+			/*
+				多指操作
+				gesturestart	两个或者两个以上手指按下
+				gesturechange	两个或者两个以上手指变换
+				gestureend		两个或者两个以上手指离开
+				
+				ev.rotation		start与move的手指旋转角度的差值
+				ev.scale		start与move的手指间的距离的比值	
+
+				注意：该方法为非标准方法，都不支持
+			 */
+
+			const box=document.querySelector('.box');
+
+			box.addEventListener('gesturestart',()=>{
+				box.style.background='green';
+			});
+
+			box.addEventListener('gesturechange',ev=>{
+				box.innerHTML=ev.rotation;
+				box.innerHTML=ev.scale;
+			});
+
+			box.addEventListener('gestureend',ev=>{
+				box.style.background='grey';
+			});
+		</script>
+	</body>
+</html>

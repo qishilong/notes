@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			.box{
+				width: 200px;
+				height: 200px;
+				background: green;
+				color: #fff;
+				font-size: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">kaivon</div>
+		<script>
+			/*
+				gesTure({
+					el:要添加事件的元素,
+					start(){	//对应gesturestart
+						//按下时要操作的事件
+					}
+					change(){	//对应gesturechange
+						//手指移动时的回调
+						//el.rotation	start与move的手指旋转角度的差值
+						//el.scale		start与move的手指间的距离的比值
+					}
+					end(){	//对应gestureend
+						//手指抬起时候的回调函数
+					}
+				})
+			 */
+			const gesTure=({el,start,change,end})=>{
+				let isGesture=false;	//用户是否要做手势事件
+				let startPointDis=0;	//按下时两个点之间的距离
+				
+				el.addEventListener('touchstart',ev=>{
+					const touch=ev.touches;	//当前屏幕上所有的手指列表
+
+					if(touch.length>=2){	//这个条件代表现在屏幕上有2根及以上的手指
+						isGesture=true;
+
+						startPointDis=getPointDis(touch[0],touch[1]);	//按下时候两个手指之间的距离
+						//el.scale=startPointDis;
+						//alert(startPointDis)
+
+						start&&start.call(el,ev);
+					}
+				});
+
+				el.addEventListener('touchmove',ev=>{
+					const touch=ev.touches;
+
+					if(touch.length>=2 && isGesture){
+						isGesture=true;
+
+						//移动时候两个手指间的距离
+						const movePointDis=getPointDis(touch[0],touch[1]);
+						el.scale=movePointDis/startPointDis;	//移动的时候与按下的时候两根手指距离的比值
+
+						change&&change.call(el,ev);
+					}
+				});
+
+				el.addEventListener('touchend',ev=>{
+					if(isGesture){
+						end&&end.call(el,ev);
+					}
+
+					isGesture=false;
+				});
+
+				//求两点之间的距离
+				function getPointDis(p1,p2){
+					let x=p2.pageX-p1.pageX;
+					let y=p2.pageY-p1.pageY;
+
+					return Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+				}
+			}
+
+
+
+			const box=document.querySelector('.box');
+
+			gesTure({
+				el:box,
+				start(){
+					//box.innerHTML=box.scale;
+				},
+				change(){
+					//box.innerHTML='两个手指移动了';
+					box.innerHTML=box.scale;
+				},
+				end(){
+					box.innerHTML='两个手抬起了';
+				}
+			});
+		</script>
+	</body>
+</html>

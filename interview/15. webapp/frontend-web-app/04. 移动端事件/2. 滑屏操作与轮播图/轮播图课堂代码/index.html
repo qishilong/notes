@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轮播图</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #banner {
+            position: relative;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .wrap {
+            width: 300vw;
+            display: flex;
+        }
+
+        .wrap a {
+            width: 100vw;
+        }
+
+        .wrap a img {
+            width: 100%;
+            vertical-align: middle;
+        }
+
+        .circle {
+            position: absolute;
+            bottom: 3vw;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+        }
+
+        .circle span {
+            width: 3vw;
+            height: 3vw;
+            background: #ddd;
+            border-radius: 50%;
+            margin: 0 1.5vw;
+        }
+
+        .circle span.active {
+            background: grey;
+            opacity: .8;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="banner">
+        <!-- 轮播图 -->
+        <div class="wrap">
+            <a href="#"><img src="./img/banner_01.jpg" alt=""></a>
+            <a href="#"><img src="./img/banner_02.jpg" alt=""></a>
+            <a href="#"><img src="./img/banner_03.jpg" alt=""></a>
+        </div>
+        <!-- 小圆点 -->
+        <div class="circle">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+        </div>
+    </section>
+    <script src="./transform.js"></script>
+    <script>
+        // 获取一些 DOM 节点
+        var banner = document.querySelector("#banner"); // 最外层容器
+        var wrap = document.querySelector(".wrap"); // 轮播图图片容器
+        var spans = document.querySelectorAll(".circle span"); // 获取所用的小圆点
+
+        // 初始化一些变量
+        var imgWidth = banner.offsetWidth; // 一张图片的宽度
+        var startPointX = 0; // 手指按下时的坐标
+        var disPointX = 0; // 手指移动的距离
+        var startEleX = 0; // 按下时元素的位置
+        var cn = 0; // 当前图片的索引值
+        var ln = 0; // 上一个图片的索引值
+
+        Transform(wrap);
+
+        // 因为要实现的是无缝滚动，所以需要复制一份图片在后面
+        wrap.innerHTML += wrap.innerHTML; // 复制了一份
+        wrap.style.width = wrap.children.length * imgWidth + "px";
+
+        // 手指按下的时候要做的事情
+        banner.addEventListener("touchstart", ev => {
+            startPointX = ev.changedTouches[0].pageX; // 记录手指按下去的时候的 X 坐标
+
+            // 需要判断当前是第几张图，如果是第一张或者是最后一张，那么我们是要做特殊处理的
+            // 因为我们并不知道用户是往左边还是右边，所以我们针对第一张和最后一张直接进行跳转
+            if(cn === 0){
+                cn = wrap.children.length / 2;
+            }
+
+            if(cn === wrap.children.length - 1){
+                cn = wrap.children.length / 2 - 1;
+            }
+
+            wrap.style.transition = ""; // 去除 wrap 的过渡，否则一会儿拖动的时候就会因为过渡感觉慢半拍
+            // 因为现在图片的下标已经更新了，所以我们需要根据新的下标修正 wrap 的 translate 移动距离
+            wrap.translateX =  - imgWidth * cn;
+            // 还需要更新一下元素的移动距离
+            startEleX = wrap.translateX;
+            ev.preventDefault();
+        });
+
+        // 手指移动的时候要做的事情
+        banner.addEventListener("touchmove", ev => {
+            disPointX = ev.changedTouches[0].pageX - startPointX; // 获取手指移动的距离
+            wrap.translateX = startEleX + disPointX;
+        });
+
+        // 手指抬起的时候要做的事情
+        banner.addEventListener("touchend", ev => {
+            // 当用户手指抬起的时候，需要判断要不要切换图片
+            // 这个就根据用户手指移动的距离，如果用户手指移动的距离很短，我们就回弹图片
+            // 我们将整个图片宽度分为 8 份，如果用户手指移动的距离大于八分之一，我们就切换，否则我们就回弹
+            var backWidth = imgWidth / 8;
+
+            if(Math.abs(disPointX) > backWidth){
+                // 大于八分之一，那我们就切换图片
+                // 分为往左还是往右
+                if(disPointX < 0){
+                    // 往左边拖，想看下一张图片
+                    cn++
+                }
+                if(disPointX > 0){
+                    // 往右边拖，想看上一张图片
+                    cn--;
+                }
+            }
+            // 至此，图片的下标已经更新
+            wrap.style.transition = ".3s";
+            wrap.translateX =  - imgWidth * cn;
+
+            // 最后一个事情，就是更新小圆点
+            // 这里还是根据图片的下标来做
+            // 首先去除上一次圆点身上的 class
+            spans[ln].className = "";
+            // 给当前的下标添加上 class
+            // 图片当前的索引：0 1 2 3 4 5 ==> 0 1 2 0 1 2
+            spans[cn % (wrap.children.length / 2)].className = "active";
+            // 更新上一个索引
+            ln = cn % (wrap.children.length / 2)
+        })
+    </script>
+</body>
+
+</html>

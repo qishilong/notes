@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 3.75rem;
+            height: 3.75rem;
+            background-color: red;
+        }
+    </style>
+    <script>
+        // 方案一：缺点在于我们还需要手动去计算究竟是多少rem，存在一个单位的转换，比较繁琐
+        // (function () {
+        //     var html = document.documentElement; // 获取 html 根元素，一会儿要设置根元素的字体大小
+        //     var width = html.clientWidth; // 获取 CSS 像素（设备的宽度）
+        //     html.style.fontSize = width / 16 + "px"; // 每一列的宽度，就是一个 rem，设置为根字体的大小
+        // })()
+
+            // 方案二：优化方案，可以非常轻松的实现转换
+            (function (doc, win, designWidth) {
+                var html = doc.documentElement; // 获取 html 根元素，一会儿要设置根元素的字体大小
+                function refreshRem() {
+                    var width = html.clientWidth; // 获取 CSS 像素（设备的宽度）
+                    if (width >= designWidth) {
+                        // 说明设备宽度都已经大于设计稿，测量出来是多少就是多少
+                        html.style.fontSize = '100px';
+                    } else {
+                        // 计算比例
+                        // 拿 iPhone6（375px） 375px/750px = 0.5 -> 1/DPR
+                        // 相当于现在每一列的宽度为 0.5px，相当于分成了 375px/0.5 = 750列
+                        // 但是现在我们设置 font-size 为 0.5px 浏览器不允许设置这么小的，因此乘以一个 100
+                        // 每一列的宽度就变为了 50px，375px/50 = 7.5列
+                        // 假设设计稿量出来的是 375px->设备像素187.5px->187.5/50(每一列的宽度)->3.75(所占列数)->3.75rem
+                        // 假设量出来是 100px -> 1列
+                        // 100px->50px/50px->1->1rem
+                        html.style.fontSize = 100 * (width / designWidth) + 'px';
+                    }
+                }
+                doc.addEventListener("DOMContentLoaded", refreshRem);
+            })(document, window, 750);
+        // 这里的 750 是设计稿的宽度
+    </script>
+</head>
+
+<body>
+    <!-- 现在假设有一个元素，需要占据屏幕的一半，也就是我们从设计稿量出来应该为 375px -->
+    <!-- 设备宽度为 375px / 2 = 187.5px -->
+    <!-- 接下来我们还需要计算 187.5px 究竟为多少列 -->
+    <!-- 每一列的宽度为 375/16 = 23.4375px -->
+    <!-- 计算一共多少列：187.5/23.4375=8 列 -->
+    <div></div>
+
+</body>
+
+</html>

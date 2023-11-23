@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绘制圆柱体</title>
+</head>
+
+<body>
+    <canvas width="500" height="500" id="oCanvas"></canvas>
+    <script src="./cuon-matrix.js"></script>
+    <script type="notjs" id="vertex">
+        attribute vec3 a_position;
+        attribute vec4 a_color;
+        varying vec4 v_color;
+        uniform mat4 u_Matrix;
+        void main () {
+            gl_Position = u_Matrix * vec4(a_position,  1);
+            v_color = a_color;
+        }
+    </script>
+    <script type="notjs" id="fragment">
+        precision mediump float;
+        varying vec4 v_color;
+        void main () {
+            gl_FragColor = v_color;
+        }
+    </script>
+    <script>
+        var oCanvas = document.getElementById('oCanvas');
+        var gl = oCanvas.getContext('webgl');
+        if (!gl) {
+            alert('浏览器不支持webgl');
+        }
+
+        // var str = ""
+        // 创建着色器函数
+        function createShader(gl, type, source) {
+            var shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+            if (success) {
+                return shader;
+            }
+            console.log(gl.getShaderInfoLog(shader));
+        }
+
+        var vetexStr = document.getElementById('vertex').innerText;
+        var fragmentStr = document.getElementById('fragment').innerText;
+        var vertexShader = createShader(gl, gl.VERTEX_SHADER, vetexStr);
+        var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentStr);
+
+        function createProgram(gl, vertexShader, fragmentShader) {
+            var program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            var success = gl.getProgramParameter(program, gl.LINK_STATUS);
+            if (success) {
+                return program;
+            }
+            console.log(gl.getProgramInfoLog(shader));
+        }
+        var program = createProgram(gl, vertexShader, fragmentShader);
+        console.log(program);
+        gl.useProgram(program);
+
+
+        var a_position = gl.getAttribLocation(program, "a_position");
+        var a_color = gl.getAttribLocation(program, "a_color");
+        var u_Matrix = gl.getUniformLocation(program, "u_Matrix");
+        var positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        var indexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+        gl.enable(gl.DEPTH_TEST);
+        // 背面隐藏
+        gl.enable(gl.CULL_FACE);
+        // 设置旋转角度
+        var deg = 1;
+        // 创建视觉矩阵
+        var viewMatrix = new Matrix4();
+        viewMatrix.setOrtho(-1, 1, -1, 1, 100, -100);
+        // 创建旋转矩阵
+        var projectMatrix = new Matrix4();
+        function rotate() {
+            // 设置旋转矩阵
+            projectMatrix.setRotate(deg, 1, 1, 0);
+            // 将视图矩阵与旋转矩阵结合
+            var matrix = viewMatrix.multiply(projectMatrix);
+            // 传入顶点着色器中
+            gl.uniformMatrix4fv(u_Matrix, false, matrix.elements);
+            // 绘制
+            draw();
+            requestAnimationFrame(rotate);
+        }
+        // 创建球体  传入参数  球体半径   将y轴分割出多少个平行面 ， 每个面分割出多少个三角形
+        function createSqure(squreRadius, circleCount, traingleCount) {
+            var circleAngle = Math.PI / circleCount; 
+            var traingleAngle = Math.PI * 2 / traingleCount;
+            var positions = [];
+            for (var i = 0; i <= circleCount; i++) {
+                var y = squreRadius * Math.cos(circleAngle * i);
+                var radius = squreRadius *  Math.sin(circleAngle * i);
+                for (var j = 0; j <= traingleCount; j ++) {
+                    var x = radius * Math.cos(traingleAngle * j);
+                    var z = radius * Math.sin(traingleAngle * j);
+                    positions.push(x, y, z, Math.random(), Math.random(), Math.random());
+                }
+            }
+            var indices = [];
+            for (var i = 0; i < circleCount; i++) {
+                for (var j = 0; j < traingleCount; j ++) {
+                    var v0 = i * (traingleCount + 1) + j;
+                    var v1 = (i + 1) * (traingleCount + 1) + j;
+                    var v2 = (i + 1) * (traingleCount + 1) + j + 1;
+                    var v3 = i * (traingleCount + 1) + j + 1;
+                    indices.push(v0, v1, v2, v2, v3, v0);
+                }
+            }
+            return {
+                positions,
+                indices
+            }
+        }
+        var squre = createSqure(0.5, 20, 20);
+        // 创建柱体   传入参数
+       
+        function createCone(topRadius, bottomRadius, height, horizantialCount, verticalCount) {
+            var positions = [];
+            var indices = [];
+            var angle = Math.PI * 2 / verticalCount;
+            for (var i = -1; i <= horizantialCount + 1; i++) {
+                // var y = (1 / 2 - i / horizantialCount) * height;
+                var y = height / 2 - i / horizantialCount * height;
+                var radius = topRadius + i * (bottomRadius - topRadius) / horizantialCount;
+                if (i == -1) {
+                    radius = 0;
+                    y = height / 2;
+                } else if (i == horizantialCount + 1) {
+                    radius = 0;
+                    y = - height / 2;
+                }
+                for (var j = 0; j <= verticalCount; j ++) {
+                    var x = radius * Math.cos(j * angle);
+                    var z = radius * Math.sin(j * angle);
+                    positions.push(x, y, z, Math.random(), Math.random(), Math.random());
+                }
+            }
+            for (var i = 0; i < horizantialCount + 2; i ++) {
+                for (var j = 0; j < verticalCount; j++) {
+                    var v0 = i * (verticalCount + 1) + j;
+                    var v1 = i * (verticalCount + 1) + j + 1;
+                    var v2 = (i + 1) * (verticalCount + 1) + j + 1;
+                    var v3 = (i + 1) * (verticalCount + 1) + j;
+                    indices.push(v0, v1, v2, v2, v3, v0);
+                }
+            }
+            return {
+                positions,
+                indices
+            }
+        }
+        
+        
+        var cone = createCone(0, 0.5, 1, 10, 10);
+        function draw() {
+            
+            // 绑定缓冲区数据  
+            // 第一个参数绑定的缓冲区  
+            //  第二个参数 传入的数据（要求时强类型语言需要你用类型化数组转换一下） 
+            // 第三个参数是绘制的方式一般为gl.STATIC_DRAW 表示不会频繁改变缓冲区中的数据（webgl会根据这个参数做一些优化处理）
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(cone.positions), gl.STATIC_DRAW);
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(cone.indices), gl.STATIC_DRAW);
+            // 为变量分配数据  
+            // 第一个参数是为哪个变量分配数据
+            // 第二个参数是这个变量拥有数据的分量个数
+            // 第三个参数是数据类型
+            // 第四个参数是 如果是非浮点型数据是否将数据进行归一化  如果设置为true 数值类型字节大小在-128到127之间的数（BYTE）回转传承-1.0 到1.0之间，数值类型字节大小在0 到255之间的数（UNSIGNED_BYTE）变为0.0 到1.0之间，SHORT也是转换到-1.0 - 1.0之间，如果该值为false  则按照用户输入的数据处理。
+            // 第四个参数说白了就是只有在第三个参数除了为FLOAT之外的（即为UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT, INT, UNSIGNED_INT）时实用  
+            // 第五个参数为两个顶点之间的字节数，也就是每个顶点的字节数，如果设置为0 则代表两个顶点之间字节数为 顶点数据分量 * 每个元素的字节数
+            // 第六个参数为当前变量数据是从每个顶点数据的哪一位开始取
+            gl.vertexAttribPointer(a_position, 3, gl.FLOAT, false, 4 * 6, 0);
+            gl.vertexAttribPointer(a_color, 3, gl.FLOAT, false, 4 * 6, 4 * 3);
+            // 启用这个位置数据
+            gl.enableVertexAttribArray(a_position);
+            gl.enableVertexAttribArray(a_color);
+            // 绘制三角形
+            gl.drawElements(gl.TRIANGLES, cone.indices.length, gl.UNSIGNED_SHORT, 0);
+            // gl.drawArrays(gl.TRIANGLE_FAN, 0, 6);
+        }
+
+
+        // draw();
+        rotate()
+
+    </script>
+</body>
+
+</html>

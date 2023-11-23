@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="axios.js"></script>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        .red {
+            color: red;
+        }
+        .blue {
+            color: blue;
+        }
+        #chat {
+            position: relative;
+            width: 400px;
+            height: 600px;
+            margin: 0px auto 0px auto;
+            border: 1px solid black;
+        }
+        .name {
+            position: relative;
+            width: 100%;
+            height: 30px;
+            margin: 10px 0px 0px 0px;
+            font-size: 0px;
+        }
+        .name span {
+            position: absolute;
+            display: block;
+            left: 0px;
+            top: 0px;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            margin: 0px;
+            padding: 0px 0px 0px 20px;
+            font-size: 16px;
+        }
+        .name input {
+            position: absolute;
+            display: block;
+            left: 80px;
+            top: 0px;
+            width: 200px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 5px;
+            border: 1px solid black;
+            outline: medium;
+            padding: 0px 0px 0px 10px;
+            font-size: 16px;
+        }
+        #sendMsg {
+            position: absolute;
+            width: 70%;
+            height: 30px;
+            border: 1px solid black;
+            left: 0px;
+            bottom: 5px;
+            border-radius: 5px;
+            padding: 0px 0px 0px 10px;
+            margin: 0px 0px 0px 20px;
+            font-size: 16px;
+        }
+        ul {
+            height: 500px;
+            margin: 10px 0px 0px 0px;
+            overflow-Y: scroll;
+        }
+        li {
+            list-style: none;
+            margin: 10px 0px 0px 20px;
+        }
+        button {
+            position: absolute;
+            width: 10%;
+            height: 30px;
+            border: 1px solid black;
+            right: 30px;
+            bottom: 5px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="chat">
+        <div class="name">
+            <span>姓名：</span>
+            <input type="text" value="" v-model="name" placeholder="请输入用户名">
+        </div>
+        <ul>
+            <li v-for="(msg) in msgList">
+                <div v-bind:class="{red: msg.name == name, blue: msg.name != name}">{{msg.name}}: <span>{{msg.msg}}</span></div>
+            </li>
+        </ul>
+        <input type="text" value="" v-model="sendText" id="sendMsg" placeholder="请输入内容，按回车键入"> <button v-on:click="sendMsg">发送</button>
+    </div>
+
+    <script type="module">
+        import Due from "./core/index.js";
+        let chat = new Due({
+            el: "chat",
+            data: {
+                name: "",
+                msgList: [],
+                sendText: "",
+                kkk: "blue"
+            },
+            methods: {
+                sendMsg: function () {
+                    axios({
+                        method: "get",
+                        url: "https://developer.duyiedu.com/edu/groupChat/sendMsg?name=" + this.name + "&msg=" + this.sendText
+                    }).then(function (resp) {
+                        console.log("发送成功");
+                    }).catch(function () {
+                        console.log("发送失败");
+                    });
+                    this.sendText = "";
+                }
+            },
+            created: function () {
+                setInterval(function () {
+                    axios({
+                        method: "get",
+                        url: "https://developer.duyiedu.com/edu/groupChat/getMsgList"
+                    }).then(function (resp) {
+                        chat.msgList = resp.data;
+                        var ul = document.getElementsByTagName("ul")[0];
+                        ul.scrollTop = ul.scrollHeight;
+                    }).catch(function (event) {
+                        console.log(event);
+                    });
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>

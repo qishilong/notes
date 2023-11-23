@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+			}
+			div{
+				width: 400px;
+				height: 100px;
+				background: green;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 
+			1、CSS像素（设备独立像素、逻辑像素）
+				1、CSS中使用的一个抽象的概念，单位是px
+				2、值是相对的，并不是绝对的
+
+			2、设备像素（物理像素）
+				1、屏幕的物理像素，任何设备屏幕的物理像素的数量都是固定不变的，单位是pt（点）
+				2、一般指的是手机的分辨率
+				2、1pt = 1/72英寸（inch）
+			
+			3、屏幕尺寸
+				1、指的是屏幕对角线的长度
+				2、注意英寸是长度单位，不是面积单位
+				3、1英寸（inch）=2.54厘米（cm）
+				4、屏幕尺寸=屏幕斜边的像素/PPI
+
+			4、像素密度（PPI）	每英寸上像素（设备像素）的数量
+				1、PPI的值越高，代表在一定尺寸的屏幕上像素数量越多，屏幕越清晰
+				2、它是一个定值，是一个固定的参数
+				3、https://www.sven.de/dpi/
+				4、PPI=屏幕斜边的像素/屏幕尺寸
+				5、同一尺寸下，PPI提高了一倍，那像素会提高4倍
+			
+			5、像素比（DPR）
+				DPR=物理像素/css像素
+				获取：window.devicePixelRatio
+
+				iphone6
+				375 × 667		设备独立像素，屏幕尺寸
+				750 × 1334		设备像素，屏幕分辨率
+				2				像素比
+			
+			https://www.sven.de/dpi/
+			https://www.w3.org/TR/CSS2/syndata.html#length-units									https://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions
+		 -->
+		 <script>
+			 const margin=Math.sqrt(Math.pow(1080,2)+Math.pow(1920,2));	//屏幕斜边的像素
+			 console.log(margin);	//2202.9071700822983
+			 console.log(margin/401);	//5.493534089980794 屏幕尺寸
+			 console.log(margin/5.5);	//400.52857637859967	PPI
+
+
+			//ppi增加n倍，物理像素会增加n*n倍。同时每个物理像素的大小会缩小1/4(增加2倍)
+		 </script>
+		 <div></div>
+	</body>	
+</html>

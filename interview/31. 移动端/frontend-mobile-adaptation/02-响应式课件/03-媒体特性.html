@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			/* 屏幕的尺寸在400-500之间条件满足 */
+			div{
+				width: 100px;
+				height: 100px;
+				background: red;
+			}
+
+			/* 屏幕尺寸大于500的时候条件满足 */
+			@media (min-width:500px){
+				div{
+					background: green;
+				}
+			}
+
+			/* 屏幕尺寸小于400的时候条件满足 */
+			@media (max-width:400px){
+				div{
+					background: blue;
+				}
+			}
+
+			@media (orientation:landscape){
+				div{
+					width: 400px;
+					height: 100px;
+				}
+			}
+			@media (orientation:portrait){
+				div{
+					width: 100px;
+					height: 400px;
+				}
+			}
+
+			/* 800*600的时候宽高比为4:3 */
+			@media (aspect-ratio:4/3){
+				div{
+					border: 10px solid #000;
+				}
+			}
+
+			/* 屏幕的像素比为2的时候条件满足 */
+			@media (-webkit-device-pixel-ratio:2){
+				div::after{
+					content: '陈学辉';
+					font-size: 50px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+			媒体特性
+				width			宽度
+					min-width	最小宽度，宽度只能比这个值大
+				height			高度
+					max-height	最大高度，高度只能比这个值小
+				orientation		方向
+					landscape	宽度大于高度（横屏）
+					portrait	高度大于宽度（竖屏）
+				aspect-ratio	宽高比
+				-webkit-device-pixel-ratio 	像素比（webkit内核私有的属性）
+		-->
+		<div></div>
+	</body>
+</html>

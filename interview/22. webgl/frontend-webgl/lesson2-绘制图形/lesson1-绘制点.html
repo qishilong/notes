@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绘制点</title>
+</head>
+
+<body>
+    <canvas width="500" height="500" id="oCanvas"></canvas>
+    <script type="notjs" id="vertex">
+        attribute vec2 a_position;
+        attribute vec4 a_color;
+        uniform vec2 screenSize;
+        varying vec4 v_color;
+        void main () {
+            float x = a_position.x * 2.0 / screenSize.x  - 1.0;
+            float y = 1.0 - (a_position.y * 2.0 / screenSize.y);
+            gl_Position = vec4(x, y, 0, 1);
+            gl_PointSize = 10.0;
+            v_color = a_color;
+        }
+    </script>
+    <script type="notjs" id="fragment">
+        precision mediump float;
+        varying vec4 v_color;
+        void main () {
+            gl_FragColor = v_color;
+        }
+    </script>
+    <script>
+        var oCanvas = document.getElementById('oCanvas');
+        var gl = oCanvas.getContext('webgl');
+        if (!gl) {
+            alert('浏览器不支持webgl');
+        }
+
+        // var str = ""
+        // 创建着色器函数
+        function createShader(gl, type, source) {
+            var shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+            if (success) {
+                return shader;
+            }
+            console.log(gl.getShaderInfoLog(shader));
+        }
+
+        var vetexStr = document.getElementById('vertex').innerText;
+        var fragmentStr = document.getElementById('fragment').innerText;
+        var vertexShader = createShader(gl, gl.VERTEX_SHADER, vetexStr);
+        var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentStr);
+
+        function createProgram(gl, vertexShader, fragmentShader) {
+            var program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            var success = gl.getProgramParameter(program, gl.LINK_STATUS);
+            if (success) {
+                return program;
+            }
+            console.log(gl.getProgramInfoLog(shader));
+        }
+        var program = createProgram(gl, vertexShader, fragmentShader);
+        console.log(program);
+        gl.useProgram(program);
+
+
+        var a_position = gl.getAttribLocation(program, "a_position");
+        var screenSize = gl.getUniformLocation(program, 'screenSize');
+        var a_color = gl.getAttribLocation(program, "a_color");
+        gl.uniform2f(screenSize, oCanvas.width, oCanvas.height);
+        function bindEvent() {
+            var points = [];
+            oCanvas.onmousedown = function (e) {
+                gl.clearColor(0, 0, 1, 1);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+                var x = e.offsetX;
+                var y = e.offsetY;
+                var color = randomColor();
+                // console.log(x, y)
+                points.push({
+                    x,
+                    y,
+                    color,
+                });
+                for (var i = 0; i < points.length; i++) {
+                    var item_color = points[i].color;
+                    gl.vertexAttrib2f(a_position, points[i].x, points[i].y);
+                    gl.vertexAttrib4f(a_color, item_color.r, item_color.g, item_color.b, item_color.a);
+                    gl.drawArrays(gl.POINTS, 0, 1);
+                }
+            }
+        }
+
+        function randomColor() {
+            var r = Math.random();
+            var g = Math.random();
+            var b = Math.random();
+            var a = 0.5 + Math.random() * 0.5;
+            return {
+                r,
+                g,
+                b,
+                a
+            }
+        }
+
+        bindEvent();
+
+
+    </script>
+</body>
+
+</html>

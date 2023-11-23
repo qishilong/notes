@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<title></title>
+	</head>
+	<body style="height:2000px">
+		<!-- 
+			导航栏
+				父级
+					1、导航栏需要一个父级，添加.navbar .navbar-expand-*
+						.navbar				标准导航栏
+						.navbar-expand-*	根据屏幕尺寸切换成竖型导航（如果没有，直接显示为竖型）
+				子组件
+					1、logo				.navbar-brand
+					2、导航				.navbar-nav
+						li				.nav-item
+						a				.nav-link	
+					3、折叠插件			.navbar-toggler
+					4、表单控件			.form-inline
+					5、垂直居中的文本	.navbar-text 
+		 -->
+		 <!-- 简易导航 -->
+		 <nav class="navbar navbar-expand-lg bg-light">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="#">百度</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">阿里</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">京东</a>
+				</li>
+			</ul>
+		</nav>
+
+		<hr>
+		<!-- 带logo的导航，图片会垂直居中 -->
+		<nav class="navbar navbar-expand-sm bg-light">
+			<a class="navbar-brand" href="#">
+				<img src="https://www.starbucks.com.cn/assets/images/logo.svg" alt="">星巴克
+			</a>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="#">百度</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">阿里</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">京东</a>
+				</li>
+			</ul>
+		</nav>
+
+		<hr>
+		<!-- 
+			折叠导航栏
+				1、折叠导航栏会根据你给的尺寸进行折叠
+				2、需要js文件
+				3、在nav里给一个按钮（标签类型随意），需添加class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav"
+				4、把导航的内容放到一个层里，需添加class="collapse navbar-collapse" id="navbarNav"
+				5、按钮的data-target属性对应导航父级的id属性
+		 -->
+		<nav class="navbar navbar-expand-lg bg-light">
+			<a class="navbar-brand" href="#">
+				<img src="https://www.starbucks.com.cn/assets/images/logo.svg" alt="">星巴克
+			</a>
+			<span class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">展开</span>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="#">百度</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">阿里</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">京东</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<hr>
+		<!-- 导航栏使用下拉菜单 -->
+		<nav class="navbar navbar-expand-sm bg-light">
+			<a class="navbar-brand" href="#">
+				<img src="https://www.starbucks.com.cn/assets/images/logo.svg" alt="">星巴克
+			</a>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="#">百度</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">阿里</a>
+				</li>
+			
+				<!-- 下拉菜单 -->
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">京东</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">京东金融</a>
+						<a class="dropdown-item" href="#">京东超市</a>
+						<a class="dropdown-item" href="#">京东白条</a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+
+		<hr>
+		<!-- 导航栏里使用表单与按钮 -->
+		<nav class="navbar navbar-expand-sm bg-light">
+			<a class="navbar-brand" href="#">
+				<img src="https://www.starbucks.com.cn/assets/images/logo.svg" alt="">星巴克
+			</a>
+			<ul class="navbar-nav mr-auto">	<!-- mr-auto：让它右边的列靠右 -->
+				<li class="nav-item">
+					<a class="nav-link" href="#">百度</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">阿里</a>
+				</li>
+			
+				<!-- 下拉菜单 -->
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">京东</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">京东金融</a>
+						<a class="dropdown-item" href="#">京东超市</a>
+						<a class="dropdown-item" href="#">京东白条</a>
+					</div>
+				</li>
+			</ul>
+
+			<!-- 表单的固定写法，父级要给一个form-inline -->
+			<form class="form-inline">
+				<input class="form-control mr-sm-2">	<!-- mr-sm-2为离右侧的间距，form-control为表单元素上的样式 -->
+				<button class="btn btn-outline-success" type="submit">搜索</button>
+			</form>
+		</nav>
+
+		<hr>
+		<!-- 导航栏里使用文本(加了两端对齐) -->
+		<nav class="navbar navbar-expand-sm bg-light justify-content-between">
+			<a class="navbar-brand" href="#">
+				<img src="https://www.starbucks.com.cn/assets/images/logo.svg" alt="">星巴克
+			</a>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="#">百度</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">阿里</a>
+				</li>
+			
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">京东</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">京东金融</a>
+						<a class="dropdown-item" href="#">京东超市</a>
+						<a class="dropdown-item" href="#">京东白条</a>
+					</div>
+				</li>
+			</ul>
+			<!-- 文本元素，需要给一个 navbar-text -->
+			<span class="navbar-text">陈学辉</span>
+
+			<form class="form-inline">
+				<input class="form-control mr-sm-2">
+				<button class="btn btn-outline-success" type="submit">搜索</button>
+			</form>
+		</nav>
+
+		<hr>
+		<!-- 固定导航栏-->
+		<nav class="navbar navbar-expand-sm bg-light fixed-top">
+			<a class="navbar-brand" href="#">
+				<img src="https://www.starbucks.com.cn/assets/images/logo.svg" alt="">固定顶部导航栏
+			</a>
+		</nav>
+		<nav class="navbar navbar-expand-sm bg-light fixed-bottom">
+			<a class="navbar-brand" href="#">
+				<img src="https://www.starbucks.com.cn/assets/images/logo.svg" alt="">固定底部导航栏
+			</a>
+		</nav>
+
+
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			#box{
+				width: 200px;
+				height: 200px;
+				background: green;
+				color: #fff;
+				font-size: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script>
+			/*
+				移动端事件与pc事件的区别
+					1、触发点
+						pc端
+							mousemove	不需要鼠标按下，但是必需在元素上才能触发
+							mouseup		必需在元素上抬起才能触发 
+						移动端
+							touchmove	必需手指按下才能触发，但是，按下后不在元素上也能触发
+							touchend	不需要在元素上抬起就能触发
+					2、触发顺序
+						touchstart → touchend → mousedown → click → mouseup
+						（pc的事件在移动端里会有延迟，300ms左右）
+					3、touchstart与click的区别
+						touchstart为手指碰到元素就触发，click为手指碰到元素并且抬起才会触发
+			 */
+			const box=document.querySelector('div');
+			//1、触发点
+			/* box.addEventListener('mousedown',()=>{
+				console.log('鼠标按下了');
+			});
+			box.addEventListener('mousemove',()=>{
+				console.log('鼠标移动了');
+			});
+			box.addEventListener('mouseup',()=>{
+				console.log('鼠标抬起了');
+			}); */
+
+			/* box.addEventListener('touchstart',()=>{
+				console.log('手指按下了');
+			});
+			box.addEventListener('touchmove',()=>{
+				console.log('手指移动了');
+			});
+			box.addEventListener('touchend',()=>{
+				console.log('手指抬起了');
+			}); */
+
+
+
+			//2、触发顺序
+			/* box.addEventListener('mousedown',()=>{
+				console.log('鼠标按下了');
+			});
+			box.addEventListener('click',()=>{
+				console.log('鼠标点击了');
+			});
+			box.addEventListener('touchstart',()=>{
+				console.log('手指按下了');
+			});
+			box.addEventListener('touchend',()=>{
+				console.log('手指抬起了');
+			}); */
+
+
+			//3、touchstart与click的区别
+			box.addEventListener('click',()=>{
+				console.log('鼠标点击了');
+			});
+			box.addEventListener('touchstart',()=>{
+				console.log('手指按下了');
+			});
+		</script>
+	</body>
+</html>

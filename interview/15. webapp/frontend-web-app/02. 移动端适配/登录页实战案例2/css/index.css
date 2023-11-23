@@ -1,0 +1,149 @@
+/* 该页面的样式 */
+
+/* 登录页面头部 */
+.login ul{
+    height: 1.5rem;
+    background-color: #db413a;
+    color: #fff;
+    font-size: .52rem;
+    padding:0 .35rem 0 .45rem;
+    display: flex;
+    align-items: center;
+}
+
+/* 返回按钮 */
+.login ul li:first-child a {
+    display: block;
+    width: 0.55rem;
+    height: 0.55rem;
+    background: url('../img/arrows.png') no-repeat center/cover;
+}
+
+.login ul li:first-child{
+    padding-right: .45rem;
+    border-right: .01rem solid #a8261d;
+}
+
+/* 登录标题 */
+.login ul li:nth-child(2){
+    padding-left: .45rem;
+    flex-grow: 1;
+}
+
+/* 忘记密码 */
+.login ul li:last-child a{
+    font-size: .46rem;
+    color:#fff;
+}
+
+/* 用户头像 */
+.container_login .user_pic{
+    width: 2rem;
+    height: 2rem;
+    background: url("../img/avater.png") no-repeat center/cover;
+    margin: .72rem auto .8rem;
+    border: .08rem solid #e6e8e7;
+    border-radius:50%
+}
+
+/* 美团账号登录 */
+.meituan_login{
+    font-size: .4rem;
+    color: #999;
+    padding-left: .45rem;
+}
+
+/* 输入框表单 */
+.user_input{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 3rem;
+    padding: 0 .45rem;
+    background: #fff;
+    margin: .36rem 0 .6rem;
+    border-top: .01rem solid #e4e4e4;
+    font-size: .46rem;
+}
+
+.user_input input{
+    flex-grow: 1;
+}
+
+.user_input div{
+    height: 1.543m;
+    line-height: 1.5rem;
+    flex-grow: 1;
+}
+
+/* 按钮组相关样式 */
+.submit{
+    padding: 0 .45rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.submit button{
+    width: 9.9rem;
+    height: 1.35rem;
+    background:#f14140;
+    border: .01rem solid #d2564c;
+    border-radius: .1rem;
+    color:#fff;
+    font-size: .46rem;
+}
+
+.submit a{
+    color: #fd4a37;
+    font-size: .38rem;
+    line-height: 1.4rem;
+}
+
+/* 底部第三方账号登录 */
+.container_login footer{
+    padding:.5rem .75rem 0;
+}
+footer p{
+    font-size: .44rem;
+    color: #959595;
+}
+
+.container_login footer p::before,
+.container_login footer p::after{
+    content:"";
+    display: inline-block;
+    width: 2.85rem;
+    border-bottom: .08rem dotted #959595;
+}
+
+.container_login footer p::before{
+    margin: 0 .2rem .12rem 0;
+}
+
+.container_login footer p::after{
+    margin: 0 0 .12rem .2rem;
+}
+
+.container_login footer ul{
+    display:flex;
+    text-align: center;
+    height: 3.8rem;
+    align-items: center;
+    font-size: .38rem;
+}
+
+.container_login footer ul li{
+    flex-grow: 1;
+}
+
+.container_login footer ul img{
+    width: 1.22rem;
+    height: 1.22rem;
+}
+
+.container_login footer ul span{
+    display:block;
+    color: #000;
+}
+

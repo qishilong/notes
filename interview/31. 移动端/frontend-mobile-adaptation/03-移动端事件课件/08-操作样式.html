@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			div{
+				width: 200px;
+				height: 200px;
+				background: green;
+
+				transform: rotate(60deg) scale(0.5) translateY(100px);
+			}
+		</style>
+	</head>
+	<body>
+		<div></div>
+		<section style="width:100px;height:100px;background:grey;transform:rotate(60deg) scale(0.5) translateX(100px)"></section>
+		<script>
+			const css=(el,attr,value)=>{
+				if(!value){	//如果用户没有给第三个参数，就代表是获取样式
+					//value=parseFloat(getComputedStyle(el)[attr]);
+
+					if(attr=='transform'){	//要获取css3的属性
+						value=getComputedStyle(el)[attr];
+					}else{
+						value=parseFloat(getComputedStyle(el)[attr]);
+					}
+
+					return value;
+				}
+
+				if(attr=='opacity'){
+					el.style[attr]=value;	//透明度不需要加单位
+				}else{
+					el.style[attr]=value+'px';	//位置大小属性需要加单位
+				}
+			}
+
+			const box=document.querySelector('div');
+			console.log(css(box,'width'));	//200
+			css(box,'height',300);
+			css(box,'opacity',0.5);
+
+			console.log(css(box,'transform'));	//matrix(0.25, 0.433013, -0.433013, 0.25, -43.3013, 25)
+
+			const section=document.querySelector('section');
+			console.log(section.style.transform);
+		</script>
+	</body>
+</html>

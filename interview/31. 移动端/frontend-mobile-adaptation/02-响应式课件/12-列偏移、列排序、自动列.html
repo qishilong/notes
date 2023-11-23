@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<title></title>
+		<style>
+			.row div{
+				background: green;
+				color: #fff;
+				height: 100px;
+				border: 1px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+			列偏移
+				offset-xl-*		
+					offset		偏移
+					xl			列前缀（xl,lg,md,sm）
+					*			列偏移的数量，不能大于11
+			
+			列排序
+				order-xl-*		
+					order		排序
+					xl			列前缀（xl,lg,md,sm），也可以省略
+					*			数字，数字越大越往后，最大值为12
+
+			自动列
+				mr-auto			使右侧的列远离到容器的最右边
+				ml-auto			使左侧的列远离到容器的最左边
+		-->
+		<div class="container">
+			<div class="row">
+				<div class="col">1</div>
+				<div class="col">2</div>
+				<div class="col">3</div>
+				<div class="col">4</div>
+				<div class="col">5</div>
+				<div class="col">6</div>
+				<div class="col">7</div>
+				<div class="col">8</div>
+				<div class="col">9</div>
+				<div class="col">10</div>
+				<div class="col">11</div>
+				<div class="col">12</div>
+			</div>
+
+			<!-- 列偏移 -->
+			<div class="row">
+				<div class="offset-xl-2 offset-lg-3 offset-md-4 offset-sm-5">列偏移</div>
+			</div>
+
+			<!-- 列排序 -->
+			<div class="row">
+				<div class="col-xl-3 order-xl-2">1列</div>
+				<div class="col-xl-3 order-xl-1">2列</div>
+				<div class="col-xl-3 order-xl-3">3列</div>
+			</div>
+
+			<!-- 自动列 -->
+			<div class="row">
+				<div class="col-xl-3 mr-auto">1列</div>
+				<div class="col-xl-3">2列</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-3 ml-auto">1列</div>
+				<div class="col-xl-3">2列</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-3">1列</div>
+				<div class="col-xl-3 ml-auto">2列</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- 创建canvas -->
+    <canvas id="oCanvas" width="500" height="400" ></canvas>
+    <!-- 顶点着色器 -->
+    <script type="notjs" id="vertex">
+        attribute vec4 a_position;
+        void main() {
+            gl_Position = a_position;
+            gl_PointSize = 10.0;
+        }
+    </script>
+    <script type="notjs" id="fragment">
+        precision mediump float;
+        void main() {
+            gl_FragColor = vec4(0, 0, 0, 1.0);
+        }
+
+    </script>
+    <script>
+        var oCanvas = document.getElementById('oCanvas');
+        // 获取webgl上下文对象
+        var gl = oCanvas.getContext('webgl');
+        if (!gl) {
+            console.log('浏览器不支持webgl');
+        }
+
+        function createShader (gl, type, source) {
+            var shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+            if (success) {
+                return shader;
+            }
+
+            console.log(gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+        }
+        var vertexStr = document.getElementById('vertex').innerText;
+        var fragmentStr = document.getElementById('fragment').innerText;
+
+        var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexStr);
+        var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentStr);
+        function createProgram(gl, vertexShader, fragmentShader) {
+            var program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            var success = gl.getProgramParameter(program, gl.LINK_STATUS);
+            if (success) {
+                return program;
+            }
+            console.log(gl.getProgramInfoLog(program))
+        }
+        var program = createProgram(gl, vertexShader, fragmentShader);
+        var a_position = gl.getAttribLocation(program, 'a_position');
+        
+        // var pointBuffer = gl.createBuffer();
+        // gl.bindBuffer(gl.ARRAY_BUFFER, pointBuffer);
+
+        var points = [];
+        gl.useProgram(program);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        oCanvas.onmousedown = function (e) {
+            console.log(e.offsetX, e.offsetY);
+            var x = parseFloat(e.offsetX / oCanvas.width * 2 - 1);
+            var y = parseFloat(1 - e.offsetY / oCanvas.height * 2);
+            points.push([x, y, 0.0, 1.0]);
+            for (var i = 0; i < points.length; i++) {
+                gl.vertexAttrib4f('a_position', points[i][0], points[i][1],points[i][2],points[i][3] );
+                gl.drawArrays(gl.POINTS, 0, 1);
+            }
+            
+        }
+
+
+    
+    
+    </script>
+</body>
+</html>

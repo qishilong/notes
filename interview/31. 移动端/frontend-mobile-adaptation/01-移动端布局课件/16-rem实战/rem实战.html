@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<link rel="stylesheet" href="css/index.css">
+		<script>
+			(function(doc, win, designWidth) {
+				var html = doc.documentElement;
+				
+				function refreshRem () {
+					var clientWidth = html.getBoundingClientRect().width;	//取宽度还可以用这种方式
+					
+					if (clientWidth >= designWidth) {
+						html.style.fontSize = '100px';
+					} else {
+						html.style.fontSize = 100 * (clientWidth / designWidth) + 'px';
+					}
+
+					//html.style.fontSize = 100 * (clientWidth / designWidth) + 'px';
+				};
+				
+				doc.addEventListener('DOMContentLoaded', refreshRem);
+			})(document, window, 750);
+		</script>
+	</head>
+	<body>
+		<header id="header">
+			<a href="#">北京市</a>
+			<div>
+				<input type="text" value="输入店铺、商品等">
+			</div>
+			<a href="#">我的</a>
+		</header>
+		<section id="banner">
+			<a href="#"><img src="images/banner.jpg" alt=""></a>
+		</section>
+		<nav id="nav">
+			<ul>
+				<li>
+					<a href="#">
+						<img src="images/circle_01.png" alt="">
+						<span>餐饮住宿</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="images/circle_02.png" alt="">
+						<span>汽车美容</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="images/circle_03.png" alt="">
+						<span>生活服务</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="images/circle_04.png" alt="">
+						<span>休闲娱乐</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="images/circle_05.png" alt="">
+						<span>教育培训</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="images/circle_06.png" alt="">
+						<span>家居建材</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="images/circle_07.png" alt="">
+						<span>酒水饮料</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<img src="images/circle_08.png" alt="">
+						<span>婚纱婚庆</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+		<section id="ad1" class="clearfix">
+			<a href="#"><img src="images/img_01.jpg" alt=""></a>
+			<a href="#"><img src="images/img_02.jpg" alt=""></a>
+			<a href="#"><img src="images/img_03.jpg" alt=""></a>
+		</section>
+
+		<section id="ad2">
+			<a href="#"><img src="images/img_04.jpg" alt=""></a>
+		</section>
+
+		<section id="list">
+			<h3><span>综合推荐</span></h3>
+			<article>
+				<a href="#">
+					<div class="img">
+						<img src="images/img_05.jpg" alt="">
+					</div>
+					<div class="text">
+						<h4>呦呦奶茶</h4>
+						<p>销售各类散茶、品牌茶叶、茶具。全品一展示茶叶茶具批牌茶叶、茶具。全品一展示茶叶茶具发商</p>
+						<div>
+							剩余领取<strong>0</strong>份<span class="discount">8.0 折</span><span class="red">幸运红包</span>
+						</div>
+					</div>
+				</a>
+			</article>
+			<article>
+				<a href="#">
+					<div class="img">
+						<img src="images/img_05.jpg" alt="">
+					</div>
+					<div class="text">
+						<h4>呦呦奶茶</h4>
+						<p>销售各类散茶、品牌茶叶、茶具。全品一展示茶叶茶具批牌茶叶、茶具。全品一展示茶叶茶具发商</p>
+						<div>
+							剩余领取<strong>0</strong>份<span class="discount">8.0 折</span><span class="red">幸运红包</span>
+						</div>
+					</div>
+				</a>
+			</article>
+			<article>
+				<a href="#">
+					<div class="img">
+						<img src="images/img_05.jpg" alt="">
+					</div>
+					<div class="text">
+						<h4>呦呦奶茶</h4>
+						<p>销售各类散茶、品牌茶叶、茶具。全品一展示茶叶茶具批牌茶叶、茶具。全品一展示茶叶茶具发商</p>
+						<div>
+							剩余领取<strong>0</strong>份<span class="discount">8.0 折</span><span class="red">幸运红包</span>
+						</div>
+					</div>
+				</a>
+			</article>
+			<article>
+				<a href="#">
+					<div class="img">
+						<img src="images/img_05.jpg" alt="">
+					</div>
+					<div class="text">
+						<h4>呦呦奶茶</h4>
+						<p>销售各类散茶、品牌茶叶、茶具。全品一展示茶叶茶具批牌茶叶、茶具。全品一展示茶叶茶具发商</p>
+						<div>
+							剩余领取<strong>0</strong>份<span class="discount">8.0 折</span><span class="red">幸运红包</span>
+						</div>
+					</div>
+				</a>
+			</article>
+		</section>
+	</body>
+</html>

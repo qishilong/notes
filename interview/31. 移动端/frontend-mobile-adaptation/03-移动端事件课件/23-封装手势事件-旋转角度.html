@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			.box{
+				width: 200px;
+				height: 200px;
+				background: green;
+				color: #fff;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">kaivon</div>
+		<script>
+			/*
+				gesTure({
+					el:要添加事件的元素,
+					start(){	//对应gesturestart
+						//按下时要操作的事件
+					}
+					change(){	//对应gesturechange
+						//手指移动时的回调
+						//el.rotation	start与move的手指旋转角度的差值
+						//el.scale		start与move的手指间的距离的比值
+					}
+					end(){	//对应gestureend
+						//手指抬起时候的回调函数
+					}
+				})
+			 */
+			const gesTure=({el,start,change,end})=>{
+				let isGesture=false;
+				let startPointDis=0;
+				let startPointDeg=0;	//按下时候旋转的角度
+				
+				el.addEventListener('touchstart',ev=>{
+					const touch=ev.touches;
+
+					if(touch.length>=2){
+						isGesture=true;
+
+						startPointDis=getPointDis(touch[0],touch[1],'distance');
+
+						startPointDeg=getPointDis(touch[0],touch[1],'angle');	//在按下的时候获取一下旋转的角度
+
+						start&&start.call(el,ev);
+					}
+				});
+
+				el.addEventListener('touchmove',ev=>{
+					const touch=ev.touches;
+
+					if(touch.length>=2 && isGesture){
+						isGesture=true;
+
+						const movePointDis=getPointDis(touch[0],touch[1],'distance');
+						el.scale=movePointDis/startPointDis;
+
+						const movePointDeg=getPointDis(touch[0],touch[1],'angle');	//手指移动时候的角度
+						el.rotation=movePointDeg-startPointDeg;
+
+
+						change&&change.call(el,ev);
+					}
+				});
+
+				el.addEventListener('touchend',ev=>{
+					if(isGesture){
+						end&&end.call(el,ev);
+					}
+
+					isGesture=false;
+				});
+
+				//求两点之间的距离以及度数（与x轴之间的度数）
+				function getPointDis(p1,p2,type){
+					let x=p2.pageX-p1.pageX;
+					let y=p2.pageY-p1.pageY;
+
+					switch(type){
+						case 'distance':
+							return Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+							break;
+						case 'angle':
+							//Math.atan2的计算方式：先拿第二个参数的x、y轴分别减去第一个参数的x、y轴的值。得出的是一个坐标。这个坐标与x轴之间的旋转度数就是两条边之间的旋转度数的差值。如果这个坐标在x轴的上方，按逆时针旋转，值为负值。如果这个坐标在x轴的下方，按顺时针旋转，值为正值
+							//Math.atan2这个方法算出来的是一个弧度，需要把它转成角度：弧度*180/Math.PI
+							return Math.atan2(y,x)*180/Math.PI;
+							break;
+					}
+				}
+			}
+
+
+			function getPointDis(p1,p2,type){
+					let x=p2.pageX-p1.pageX;
+					let y=p2.pageY-p1.pageY;
+
+					switch(type){
+						case 'distance':
+							return Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+							break;
+						case 'angle':
+							//Math.atan2这个方法算出来的是一个弧度，需要把它转成角度：弧度*180/Math.PI
+							return Math.atan2(y,x)*180/Math.PI;
+							break;
+					}
+				}
+			//console.log(getPointDis({pageX:0,pageY:0},{pageX:100,pageY:100},'angle'));	//(100,100)	45
+			//console.log(getPointDis({pageX:0,pageY:0},{pageX:100,pageY:0},'angle'));	//(100,0)	0
+
+			//console.log(getPointDis({pageX:30,pageY:-30},{pageX:-100,pageY:-100},'angle'));	//(-130,-70)
+
+			console.log(getPointDis({pageX:-45,pageY:20},{pageX:0,pageY:45},'angle'));//{45,30}
+
+
+
+
+			const box=document.querySelector('.box');
+
+			gesTure({
+				el:box,
+				start(){
+					//box.innerHTML=box.scale;
+				},
+				change(){
+					//box.innerHTML='两个手指移动了';
+					box.innerHTML=box.scale+'<br>'+box.rotation;
+				},
+				end(){
+					box.innerHTML='两个手抬起了';
+				}
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			body {
+			  margin: 0;
+			}
+			#wrap{
+				height: 100vh;
+				overflow: hidden;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			.list{
+				height: 100vh;
+				overflow: hidden;
+				background: #ccc;
+				border: 1px solid #f00;
+				box-sizing: border-box;
+			}
+			.list li{
+				font-size: 30px;
+				line-height: 40px;
+			}
+		</style>
+		<script src="js/css.js"></script>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="list">
+				<ul>
+					<LI><a href="#">这是一个很长很长的列表1</a></LI>
+				</ul>
+			</div>
+		</div>
+		<script>
+			/* 
+				swiper({
+					wrap:父级元素,
+					dir:拖动的方向，'x'=>左右滑，'y'=>上下滑,
+					start(){
+						//手指按下时候的回调函数
+					},
+					end(){
+						//手指抬起后的回调函数
+					}
+				});
+			 */
+			
+			 //生成内容
+			const ul=document.querySelector('.list ul');
+			for(let i=0;i<30;i++){
+				let li=document.createElement('li');
+				li.innerHTML=`<a href="#">这是一个很长很长的列表${i}</a>`;
+				ul.appendChild(li);
+			}
+
+			const swiper=({wrap,dir='y',start,end})=>{
+				const scroll=wrap.children[0];	//要滚动的元素
+				let startPoint={},	//手指按下的位置
+					startEle={},
+					distance={},	//移动的距离
+					targetEle={};	//元素拖动时候的位置
+				
+				wrap.addEventListener('touchstart',ev=>{
+					start&&start.call(wrap,ev);	//按下时的回调函数
+
+					startPoint={
+						x:ev.changedTouches[0].pageX,
+						y:ev.changedTouches[0].pageY
+					};
+
+					startEle={
+						x:css(scroll,'translateX'),
+						y:css(scroll,'translateY')
+					}
+				});
+
+				wrap.addEventListener('touchmove',ev=>{
+					distance={
+						x:ev.changedTouches[0].pageX-startPoint.x,
+						y:ev.changedTouches[0].pageY-startPoint.y
+					};
+					targetEle={
+						x:startEle.x+distance.x,
+						y:startEle.y+distance.y
+					};
+
+					//
+					/* var obj={};
+					var attr='translate'+dir.toUpperCase();
+					obj[attr]=10;
+					console.log(obj); */
+
+					//要根据用户传入的dir参数决定现在往哪个方向走
+					//['translate'+dir.toUpperCase()]	es6里面的属性名表达式
+					css(scroll,{['translate'+dir.toUpperCase()]:targetEle[dir]});
+				});
+
+				wrap.addEventListener('touchend',ev=>{
+					end&&end.call(wrap,ev);	//抬起时的回调函数
+				});
+			};
+
+
+			const list=document.querySelector('.list');
+			swiper({
+				wrap:list,
+				start(){
+					console.log('手指按下了！');
+				},
+				end(){
+					console.log('手指抬起了！');
+				}
+			});
+		</script>
+	</body>
+</html>

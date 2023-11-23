@@ -1,0 +1,197 @@
+body {
+	font-family: helvetica;
+	max-width: 750px;
+	margin: 0 auto;
+
+	font-size: 12px;	/* 需要限制一个字体大小，要不然的话默认字体大小也会跟着变 */
+}
+body * {
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-text-size-adjust: 100%;
+}
+a,button,input {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+button,input {
+	-webkit-appearance: none;
+	border-radius: 0;
+}
+a {
+	text-decoration: none;
+}
+input {
+	outline: none;
+	vertical-align: middle;
+	padding: 0;
+}
+ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+img{
+	vertical-align: middle;
+}
+h1,h2,h3,h4,p{
+	margin: 0;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.clearfix:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+html{
+	font-size: 9.259259259259261vw;
+}
+@media screen and (min-width: 750px){
+	html{
+		font-size: 69.445px;	/* 页面达到750的时候1vw=750/100=7.5px，这时根字体的大小为9.259259259259261vw，此时转成px为7.5*9.259259259259261=69.444px */
+	}
+}
+
+/* header */
+#header{
+	/* height: 58.666666666666664px; */
+	height: calc(176px / 3);
+	background: #46ae00;
+}
+#header h1 img{
+	width: calc(517px / 3);
+}
+.bar{
+	font-size: 0;
+}
+.bar a{
+	display: inline-block;
+	height: calc(176px / 3);
+	margin-right: 0.3rem;
+}
+.bar a:nth-child(1){
+	width: calc(80px / 3);
+	background: url(../images/ico_01.png) no-repeat center;
+	background-size: 100%;
+}
+.bar a:nth-child(2){
+	width: calc(85px / 3);
+	background: url(../images/ico_02.png) no-repeat center;
+	background-size: 100%;
+}
+
+/* scroll */
+#scroll{
+	overflow: auto;
+	position: absolute;
+	top: calc(176px / 3);
+	bottom: 60px;
+
+	max-width: 750px;
+
+	-webkit-overflow-scrolling: touch;
+}
+
+/* banner */
+#banner{
+	height: 5.40rem;
+	position: relative;
+}
+.moveWrap img{
+	width: 100%;
+}
+.control{
+	width: 100%;
+	position: absolute;
+	bottom: 0.34rem;
+	font-size: 0;
+	text-align: center;
+}
+.control span{
+	display: inline-block;
+	width: 0.24rem;
+	height: 0.24rem;
+	background: #ddd;
+	border-radius: 50%;
+	margin: 0 0.08rem;
+}
+.control span.active{
+	background: #46ae00;
+}
+
+/* nav */
+#nav{
+	padding: 0.5rem 0;
+}
+#nav a{
+	width: 25%;
+	float: left;
+	text-align: center;
+}
+#nav a img{
+	width: 1.8rem;
+	height: 1.8rem;
+	display: block;
+	margin: 0 auto 0.16rem auto;
+}
+#nav a span{
+	font-size: 0.4rem;
+	color: #666; 
+}
+
+/* ad */
+#ad img{
+	width: 100%;
+}
+
+/* item */
+.item{
+	display: flex;
+	justify-content: space-between;
+	background: #f5f5f5;
+	padding: 0.2rem;
+	padding-bottom: 0;
+}
+.pb{
+	padding-bottom: 0.2rem;
+}
+.item div img{
+	width: 4.5rem;
+	height: 6.4rem;
+}
+.item div.coloum{
+	display: flex;
+	width: 5.7rem;
+	flex-wrap: wrap;
+	align-content: space-between;
+}
+.item div.coloum img{
+	width: 5.7rem;
+	height: 3.1rem;
+}
+
+/* footer */
+#footer{
+	height: 60px;
+	display: flex;
+	justify-content: space-around;
+	background: #fff;
+	margin-top: 0.2rem;
+	box-shadow: 0 -0.06rem 0.06rem #dcdcdc;
+	
+	width: 100%;
+	max-width: 750px;
+	position: absolute;
+	bottom: 0;
+}
+#footer img{
+	width: calc(160px / 3);
+}
+
+
+

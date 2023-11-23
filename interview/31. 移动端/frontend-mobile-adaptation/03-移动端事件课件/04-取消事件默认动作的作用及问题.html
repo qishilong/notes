@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			li{
+				line-height: 50px;
+			}
+			li a{
+				font-size: 30px;
+			}
+			input{
+				border: 1px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="page">
+			<img src="images/img_01.jpg" alt="" width="100%">
+			<input type="text">
+			<ul>
+				<li><a href="http://www.baidu.com">度娘</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+				<li><a href="#">这是一个很长很长的链接</a></li>
+			</ul>
+		</div>
+		<script>
+			 /* 
+				取消事件默认动作的作用
+					1、touchmove
+						1、阻止了浏览器的滚动条
+						2、阻止了用户双指缩放
+					2、touchstart
+						1、解决ios10+及部分安卓机通过设置viewport禁止用户缩放的功能（双指滑动、双击）
+						2、解决事件点透问题
+						3、阻止图片文字被选中
+						4、阻止了长按元素会弹出系统菜单
+						5、阻止了浏览器回弹的效果
+						6、阻止了浏览器的滚动条
+						7、阻止了鼠标的事件
+						8、阻止了input框的输入功能
+			  */
+			/* document.addEventListener('touchstart',ev=>{
+				ev.preventDefault();
+			},{passive:false}); */
+
+			const page=document.querySelector('.page');
+			page.addEventListener('touchstart',ev=>{
+				ev.preventDefault();
+			});
+		</script>
+	</body>
+</html>

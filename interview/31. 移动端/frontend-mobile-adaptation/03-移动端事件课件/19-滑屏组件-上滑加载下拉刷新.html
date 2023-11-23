@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			body {
+			  margin: 0;
+			}
+
+			#wrap{
+				height: 100vh;
+				overflow: hidden;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			.banner{
+				height: 20vh;
+				box-sizing: border-box;
+				border: 1px solid #00f;
+				overflow: hidden;
+			}
+			.banner ul{
+				width: 400vw;
+				height: 100%;
+			}
+			.banner li{
+				height: 100%;
+				float: left;
+				box-sizing: border-box;
+				border-right: 1px solid #fff;
+			}
+			.banner ul li a{
+				display: block;
+				width: 100vw;
+				height: 100%;
+				
+				text-align: center;
+				font-size: 50px;
+				color: #fff;
+				background: #232323;
+			}
+
+			.list{
+				height: 80vh;
+				overflow: hidden;
+				background: #ccc;
+				border: 1px solid #f00;
+				box-sizing: border-box;
+				position: relative;
+			}
+			.list li{
+				font-size: 30px;
+				line-height: 50px;
+			}
+
+			.moveWrap{
+				position: relative;
+				z-index: 2;
+				background: #ccc;
+				transform: translateY(10px);
+			}
+			.footer{
+				text-align: center;
+				background: green;
+				line-height: 40px;
+			}
+			.header{
+				position: absolute;
+				top: 0;
+				width: 100%;
+				text-align: center;
+				line-height: 40px;
+				font-size: 20px;
+			}
+			.scrollBar{
+				z-index: 3;
+			}
+		</style>
+		<script src="js/swiper.js"></script>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="banner">
+				<ul>
+					<li><a href="#">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+				</ul>
+			</div>
+			<div class="list">
+				<!-- <ul></ul> -->
+				<div class="moveWrap">
+					<ul>
+						<!-- <li><a href="#">这是一个很长的列表${i}</a></li>
+						<li><a href="#">这是一个很长的列表${i}</a></li>
+						<li><a href="#">这是一个很长的列表${i}</a></li>
+						<li><a href="#">这是一个很长的列表${i}</a></li>
+						<li><a href="#">这是一个很长的列表${i}</a></li>
+						<li><a href="#">这是一个很长的列表${i}</a></li>
+						<li><a href="#">这是一个很长的列表${i}</a></li>
+						<li><a href="#">这是一个很长的列表${i}</a></li>
+						<li><a href="#">这是一个很长的列表${i}</a></li> -->
+					</ul>
+					<footer class="footer">正在加载数据...</footer>
+				</div>
+				<header class="header">松开推荐</header>
+			</div>
+		</div>
+		<script>
+			//创造一下假数据
+			let data=[];	//用来存储请求过来的数据的
+			for(let i=0;i<200;i++){
+				data[i]=`这是第${i}条数据`;
+			}
+
+			//生成列表
+			const ul=document.querySelector('.list ul');
+			//ln=>每次请求的数据条数，pn=>请求第几页数据
+			const createList=(ln=20,pn=0)=>{	//用来生成结构的
+				let start=ln*pn,
+					end=start+ln;
+
+				for(let i=start;i<end;i++){
+					let li=document.createElement('li');
+					li.innerHTML=`<a href="#">${data[i]}</a>`;
+					ul.appendChild(li);
+				}
+			}
+			createList();
+
+			let n=0;
+			const list=document.querySelector('.list');
+			swiper({
+				wrap:list,
+				scrollBar:true,
+				toTop(){
+					console.log('页面要刷新了！');
+				},
+				toEnd(){
+					n++;
+					setTimeout(()=>{
+						createList(20,n);
+					},1000);
+
+					//console.log('页面要加载数据');
+
+				}
+			});
+		</script>
+	</body>
+</html>

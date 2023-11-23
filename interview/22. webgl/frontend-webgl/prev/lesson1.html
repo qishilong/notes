@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="oCanvas" width="500" height="500"></canvas>
+    <script type="notjs" id="vertex">
+        // attribute 代表变量为属性变量  即与顶点特征有关   vec4 代表该变量 由四位浮点数组成（x, y, z, a）矢量  a_position 变量名称  
+        attribute vec2 a_position;
+        uniform vec2 u_position;
+        void main() {
+            // 绘图的坐标系与canvas 坐标系不同
+            vec2 temp = a_position / u_position * 2.0 - 1.0;
+            gl_Position = vec4(temp, 0, 1.0);
+        }
+    </script>
+    <script type="notjs" id="fragment">
+        // precision 默认精准度   mediump 中精准度  float浮点型 
+        precision mediump float;
+        uniform vec4 f_color;
+        void main() {
+            gl_FragColor = f_color;
+        }
+    </script>
+    <script>
+        var oCanvas = document.getElementById('oCanvas');
+        var gl = oCanvas.getContext('webgl');
+
+        if (!gl) {
+            console.log('浏览器不识别webgl');
+        }
+        var vertex = document.getElementById('vertex').innerText;
+        var fragment = document.getElementById('fragment').innerText;
+
+        // 创建着色器   gl 代表绘图上下文对象  type代表创建的着色器类型  source  着色器程序
+        function createShader(gl, type, source) {
+            // 创建着色器对象
+            var shader = gl.createShader(type);
+            // 将着色器程序与着色器对象结合
+            gl.shaderSource(shader, source);
+            // 编译着色器 
+            gl.compileShader(shader);
+            // 判断着色器是否生成成功
+              var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+            //   若成功返回着色器对象
+            if (success) {
+                return shader;
+            }
+            // 不成功打印错误信息
+            console.log(gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+        }
+      
+        var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertex);
+        var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragment);
+
+        function createProgram(gl, vertexShader, fragmentShader) {
+            // 创建一个空程序
+            var program = gl.createProgram();
+            // 向程序中添加着色器程序
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            // 将两个程序相连接
+            gl.linkProgram(program);
+            // 返回程序
+            return program;
+        }
+
+        var program = createProgram(gl, vertexShader, fragmentShader);
+
+        var a_position = gl.getAttribLocation(program, 'a_position');
+        var u_position = gl.getUniformLocation(program, 'u_position');
+        var f_color = gl.getUniformLocation(program, 'f_color');
+        var positionBuffer = gl.createBuffer();
+        // 绑定缓冲区
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        // var positions = [
+        //     500.0, 100.0,
+        //     100.0, 100.0,
+        //     500.0, 200.0,
+        // ];
+        
+        // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+
+        gl.viewport(0,0, oCanvas.width, oCanvas.height);
+        gl.clearColor(0,0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.useProgram(program);
+        gl.enableVertexAttribArray(a_position);
+        // 同步缓冲区数据
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+        var size = 2;
+        var type = gl.FLOAT;
+        var normalize = false;
+        var stride = 0;
+        var offset = 0;
+        gl.vertexAttribPointer(a_position, size,type, normalize, stride, offset);
+        gl.uniform2f(u_position, gl.canvas.width, gl.canvas.height);
+        
+
+        for (var i = 0; i < 50; i ++) {
+            var x = randomFloat(500);
+            var y = randomFloat(500);
+            renderRect(gl, x, y, randomFloat(300), randomFloat(300));
+            gl.uniform4f(f_color, Math.random(), Math.random(), Math.random(), 1);
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+        }
+        function randomFloat(range) {
+            return Math.random() * range;
+        }
+        function  renderRect(gl, x, y, width, height) {
+            var x1 = x;
+            var x2 = x + width;
+            var y1 = y; 
+            var y2 = y + height;
+            var positions = [
+                x1, y1,
+                x2, y1,
+                x2, y2,
+                x1, y2,
+                x2, y2,
+                x1, y1,
+            ];
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+        }
+
+
+    </script>   
+</body>
+</html>

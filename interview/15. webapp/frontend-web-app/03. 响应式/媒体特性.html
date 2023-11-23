@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+        /* 屏幕尺寸要大于500的时候 */
+        @media (min-width:500px){
+            div{
+                background: blue;
+            }
+        }
+        /* 屏幕尺寸小于400px的时候 */
+        @media (max-width:400px){
+            div{
+                background:green;
+            }
+        }
+        /* 横屏的时候对应的样式 */
+        @media (orientation: landscape){
+            div{
+                width: 400px;
+                height: 100px;
+            }
+        }
+        /* 竖屏的时候对应的样式 */
+        @media (orientation:portrait){
+            div{
+                width: 100px;
+                height: 400px;
+            }
+        }
+        /* 设置宽高比是 4:3 的时候所对应的样式 800x600 */
+        @media (aspect-ratio:4/3){
+            div{
+                border: 10px dashed black;
+            }
+        }
+        /* 根据 DPR 像素比来设置样式 */
+        @media (-webkit-device-pixel-ratio:2){
+            div::after{
+                content: "根据像素比设置样式";
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+</html>

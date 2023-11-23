@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" href="css/index.css">
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<!-- 
+					显示与隐藏
+						https://v4.bootcss.com/docs/4.0/utilities/display/
+					边框
+						https://getbootstrap.com/docs/4.0/utilities/borders/
+
+					间距
+						https://v4.bootcss.com/docs/4.0/utilities/spacing/
+						mt-3	margin-top:3rem
+						mb-3	margin-bottom:3rem
+						my-3	margin:3rem 0;
+						py-3	padding:3rem 0;
+
+					弹性盒模型
+						https://getbootstrap.com/docs/4.0/utilities/flex/
+				-->
+				<!-- 左边的内容 -->
+				<section class="col-lg-4 border-right">
+					<div class="row align-items-center p-4 d-none d-sm-flex navContent">
+						<a href="#"><img src="images/logo.svg" alt=""></a>
+						<ul class="nav mr-auto">
+							<li class="nav-item">
+								<a href="#" class="nav-link text-dark">门店</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link text-dark">我的账户</a>
+							</li>
+							<li class="nav-item">
+								<a href="#" class="nav-link text-dark">菜单</a>
+							</li>
+						</ul>
+						<a href="#"><img src="images/icon-hamburger.svg" alt=""></a>
+					</div>
+
+					<div class="d-flex align-items-center login">
+						<div class="px-5">
+							<h1 class="py-3">心情惬意，来杯咖啡吧 ☕</h1>
+							<div class="d-none d-sm-block my-3">
+								<a href="#">
+									<img src="images/icon-account.svg" alt="">
+									<span>登录</span>
+								</a>
+								<a href="#" class="btn btn-outline-success ml-4 register">注册</a>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- 右边的内容 -->
+				<section class="col-lg-8 bg-light">
+					<div class="row">
+						<!-- 
+							响应式图片
+								img-fluid		图片响应式
+								img-thumbnail	图片缩略图
+								https://v4.bootcss.com/docs/4.0/content/images/
+							-->
+						<div id="pic" class="carousel slide" data-ride="carousel">
+							<ul class="carousel-indicators">
+								<li data-target="#pic" data-slide-to="0" class="active"></li>
+								<li data-target="#pic" data-slide-to="1"></li>
+								<li data-target="#pic" data-slide-to="2"></li>
+								<li data-target="#pic" data-slide-to="3"></li>
+							</ul>
+							<div class="carousel-inner">
+								<div class="carousel-item active">
+									<img class="img-fluid" src="images/kv1.jpg">
+								</div>
+								<div class="carousel-item">
+									<img class="img-fluid" src="images/kv2.jpg">
+								</div>
+								<div class="carousel-item">
+									<img class="img-fluid" src="images/kv3.jpg">
+								</div>
+								<div class="carousel-item">
+									<img class="img-fluid" src="images/kv4.jpg">
+								</div>
+							</div>
+							<a class="carousel-control-prev" href="#pic" data-slide="prev">
+								<span class="carousel-control-prev-icon"></span>
+							</a>
+							<a class="carousel-control-next" href="#pic" data-slide="next">
+								<span class="carousel-control-next-icon"></span>
+							</a>
+						</div>
+					</div>
+
+					<div class="row py-4">
+						<div class="col-sm-4 my-2 my-sm-0"><a href="#"><img class="img-fluid img-thumbnail" src="images/img_01.jpg" alt=""></a></div>
+						<div class="col-sm-4 my-2 my-sm-0"><a href="#"><img class="img-fluid img-thumbnail" src="images/img_02.jpg" alt=""></a></div>
+						<div class="col-sm-4 my-2 my-sm-0"><a href="#"><img class="img-fluid img-thumbnail" src="images/img_03.jpg" alt=""></a></div>
+					</div>
+
+					<!-- 星享俱乐部 -->
+					<div class="row py-5 bg-white justify-content-around align-items-center star">
+						<div class="col-sm-5">
+							<h2>星享俱乐部</h2>
+							<p class="py-3 text-muted">开启您的星享之旅，星星越多、会员等级越高、好礼越丰富。<a href="#">了解更多 ›</a></p>
+							<div>
+								<button class="btn btn-outline-success btn-lg">注册</button>
+								<button class="btn btn-outline-success btn-lg ml-2">登录</button>
+							</div>
+						</div>
+						<div class="col-sm-4 mt-5 mt-sm-0">
+							<img class="img-fluid" src="images/logo-msr-new.svg" alt="">
+						</div>
+					</div>
+
+					<!-- 
+							盒模型
+								https://getbootstrap.com/docs/4.0/utilities/display/
+							定位
+								https://getbootstrap.com/docs/4.0/utilities/position/
+							
+							宽度100%：w-100
+						 -->
+
+					<!-- 星巴克精选 -->
+					<div class="row pb-5 betters">
+						<div class="text col-12">
+							<h3 class="text-center text-dark my-4">星巴克精选</h3>
+							<p class="text-center text-muted">在星巴克天猫旗舰店发现更多咖啡心意</p>
+						</div>
+						<ul class="row justify-content-around px-5">
+							<li class="col-6 col-md-3">
+								<a href="#" class="w-100 text-center px-2 rounded d-inline-block position-relative">
+									<img src="images/tmall-card-01.png" class="img-fluid" alt="">
+									<h4 class="my-2 text-dark">会员星礼包</h4>
+									<p class="mb-3 text-muted">星享卡新升级<br>更多心意好礼</p>
+									<p class="caption">了解更多 ›</p>
+								</a>
+							</li>
+							<li class="col-6 col-md-3">
+								<a href="#" class="w-100 text-center px-2 bg-white rounded d-inline-block position-relative">
+									<img src="images/tmall-card-02.png" class="img-fluid" alt="">
+									<h4 class="my-2 text-dark">星礼卡</h4>
+									<p class="mb-3 text-muted">用一份心礼<br>让心意相随</p>
+									<p class="caption">了解更多 ›</p>
+								</a>
+							</li>
+							<li class="col-6 col-md-3">
+								<a href="#" class="w-100 text-center px-2 bg-white rounded d-inline-block position-relative">
+									<img src="images/tmall-card-03.png" class="img-fluid" alt="">
+									<h4 class="my-2 text-dark">电子产品券</h4>
+									<p class="mb-3 text-muted">心意<br>从这一杯开始</p>
+									<p class="caption">了解更多 ›</p>
+								</a>
+							</li>
+							<li class="col-6 col-md-3">
+								<a href="#" class="w-100 text-center px-2 bg-white rounded d-inline-block position-relative">
+									<img src="images/tmall-card-04.png" class="img-fluid" alt="">
+									<h4 class="my-2 text-dark">咖啡生活</h4>
+									<p class="mb-3 text-muted">星巴克<br>用心制作</p>
+									<p class="caption">了解更多 ›</p>
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					<!-- 1912 派克街 | 咖啡星讲堂 -->
+					<div class="row bg-white teach">
+						<div class="text col-12">
+							<h3 class="text-center text-dark my-4">1912 派克街 | 咖啡星讲堂</h3>
+							<p class="text-center text-muted">在星巴克天猫旗舰店发现更多咖啡心意</p>
+						</div>
+						
+						<!-- 
+							清除浮动
+								https://v4.bootcss.com/docs/4.0/utilities/clearfix/
+						 -->
+						<div class="col-12">
+							<div class="scroll clearfix pl-3">
+								<ul>
+									<li>
+										<a href="#">
+											<img src="images/scroll_img_01.jpg" alt="">
+											<span>咖啡知识</span>
+											<p>咖啡的起源与培植</p>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<img src="images/scroll_img_02.jpg" alt="">
+											<span>咖啡品鉴</span>
+											<p>咖啡调制</p>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<img src="images/scroll_img_03.jpg" alt="">
+											<span>咖啡知识</span>
+											<p>咖啡烘焙</p>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<img src="images/scroll_img_04.jpg" alt="">
+											<span>咖啡品鉴</span>
+											<p>手冲咖啡</p>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<!-- footer -->
+					<footer class="fotter fixed-bottom d-sm-none bg-white">
+						<ul class="row justify-content-around  py-2 ">
+							<li class="col-2 text-center">
+								<a href="#" class="text-muted">
+									<img src="images/icon-home.svg" alt="" class="d-block mx-auto">
+									<span>首页</span>
+								</a>
+							</li>
+							<li class="col-2 text-center">
+								<a href="#" class="text-muted">
+									<img src="images/icon-stores.svg" alt="" class="d-block mx-auto">
+									<span>门店</span>
+								</a>
+							</li>
+							<li class="col-2 text-center">
+								<a href="#" class="text-muted">
+									<img src="images/icon-account.svg" alt="" class="d-block mx-auto">
+									<span>我的账户</span>
+								</a>
+							</li>
+							<li class="col-2 text-center">
+								<a href="#" class="text-muted">
+									<img src="images/icon-menu.svg" alt="" class="d-block mx-auto">
+									<span>菜单</span>
+								</a>
+							</li>
+							<li class="col-2 text-center">
+								<a href="#" class="text-muted">
+									<img src="images/icon-more.svg" alt="" class="d-block mx-auto">
+									<span>更多</span>
+								</a>
+							</li>
+						</ul>
+					</footer>
+				</section>
+			</div>
+		</div>
+
+
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	</body>
+</html>

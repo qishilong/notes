@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>纹理</title>
+</head>
+
+<body>
+    <canvas width="500" height="500" id="oCanvas"></canvas>
+    <script type="notjs" id="vertex">
+        /*
+            a_position: 顶点坐标
+            a_TexCoord: 纹理坐标
+            screenSize: canvas画布大小
+            v_TexCoord: 传递给片元着色器的纹理坐标
+        */
+        attribute vec2 a_position;
+        attribute vec2 a_TexCoord;
+        uniform vec2 screenSize;
+        varying vec2 v_TexCoord;
+        void main () {
+            /* 
+                坐标转换  将canvas 坐标转化为webgl的坐标
+            */
+            float x = a_position.x * 2.0 / screenSize.x  - 1.0;
+            float y = 1.0 - (a_position.y * 2.0 / screenSize.y);
+            gl_Position = vec4(x, y, 0, 1);
+            /*
+                将纹理坐标传递给片元着色器
+             */
+            v_TexCoord = a_TexCoord;
+        }
+    </script>
+    <script type="notjs" id="fragment">
+        precision mediump float;
+        varying vec2 v_TexCoord;
+        /*
+            纹理图像源数据
+        */
+        uniform sampler2D u_Sampler;
+        void main () {
+            /*
+                texture2D： 将纹理图像上指定的位置(纹理坐标)纹素颜色信息取出 
+            */
+            gl_FragColor = texture2D(u_Sampler, v_TexCoord);
+        }
+    </script>
+    <script>
+        var oCanvas = document.getElementById('oCanvas');
+        var gl = oCanvas.getContext('webgl');
+        if (!gl) {
+            alert('浏览器不支持webgl');
+        }
+
+        // var str = ""
+        // 创建着色器函数
+        function createShader(gl, type, source) {
+            var shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+            if (success) {
+                return shader;
+            }
+            console.log(gl.getShaderInfoLog(shader));
+        }
+
+        var vetexStr = document.getElementById('vertex').innerText;
+        var fragmentStr = document.getElementById('fragment').innerText;
+        var vertexShader = createShader(gl, gl.VERTEX_SHADER, vetexStr);
+        var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentStr);
+
+        function createProgram(gl, vertexShader, fragmentShader) {
+            var program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            var success = gl.getProgramParameter(program, gl.LINK_STATUS);
+            if (success) {
+                return program;
+            }
+            console.log(gl.getProgramInfoLog(shader));
+        }
+        var program = createProgram(gl, vertexShader, fragmentShader);
+        console.log(program);
+        gl.useProgram(program);
+
+
+        var a_position = gl.getAttribLocation(program, "a_position");
+        var pointsize = gl.getAttribLocation(program, "pointsize");
+        var screenSize = gl.getUniformLocation(program, 'screenSize');
+        var a_TexCoord = gl.getAttribLocation(program, "a_TexCoord");
+        var u_Sampler = gl.getUniformLocation(program, 'u_Sampler');
+        gl.uniform2f(screenSize, oCanvas.width, oCanvas.height);
+        // gl.vertexAttrib4f(a_color, 1, 0, 0, 1);
+        var positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        var indexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+        var img = new Image();
+        img.src = "./4.jpg";
+        var texture = gl.createTexture();
+
+        img.onload = function () {
+            // 激活纹理单元
+            gl.activeTexture(gl.TEXTURE0);
+            // 绑定纹理对象  
+            // bindTexture 第一个参数 是webgl中的纹理对象 （gl.TEXTURE_2D, gl.TEXTURE_CUBE_MAP）
+            // 第二个参数为 要绑定的纹理对象
+            gl.bindTexture(gl.TEXTURE_2D, texture);
+           
+            // 纹理图片  32 * 32 ---》 200 * 150
+            //  256 * 256 
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            // 配置纹理图像
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+            gl.uniform1i(u_Sampler, 0);
+            draw();
+        }
+        function draw() {
+            // 绑定缓冲区数据  
+            // 第一个参数绑定的缓冲区  
+            //  第二个参数 传入的数据（要求时强类型语言需要你用类型化数组转换一下） 
+            // 第三个参数是绘制的方式一般为gl.STATIC_DRAW 表示不会频繁改变缓冲区中的数据（webgl会根据这个参数做一些优化处理）
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                50, 50, 0, 0,
+                50, 200, 0, 1,
+                250, 200, 1, 1,
+                250, 200, 1, 1,
+                250, 50, 1, 0,
+                50, 50, 0, 0,
+            ]), gl.STATIC_DRAW);
+            // gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array([
+            //     0, 1, 2,
+            //     2, 3, 0,
+            // ]), gl.STATIC_DRAW);
+            // 为变量分配数据  
+            // 第一个参数是为哪个变量分配数据
+            // 第二个参数是这个变量拥有数据的分量个数
+            // 第三个参数是数据类型
+            // 第四个参数是 如果是非浮点型数据是否将数据进行归一化  如果设置为true 数值类型字节大小在-128到127之间的数（BYTE）回转传承-1.0 到1.0之间，数值类型字节大小在0 到255之间的数（UNSIGNED_BYTE）变为0.0 到1.0之间，SHORT也是转换到-1.0 - 1.0之间，如果该值为false  则按照用户输入的数据处理。
+            // 第四个参数说白了就是只有在第三个参数除了为FLOAT之外的（即为UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT, INT, UNSIGNED_INT）时实用  
+            // 第五个参数为两个顶点之间的字节数，也就是每个顶点的字节数，如果设置为0 则代表两个顶点之间字节数为 顶点数据分量 * 每个元素的字节数
+            // 第六个参数为当前变量数据是从每个顶点数据的哪一位开始取
+            gl.vertexAttribPointer(a_position, 2, gl.FLOAT, false, 4 * 4, 0);
+            // 为纹理坐标传递数据
+            gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, 4 * 4, 4 * 2);
+            // 启用这个位置数据
+            gl.enableVertexAttribArray(a_position);
+            gl.enableVertexAttribArray(a_TexCoord);
+            // 绘制三角形
+            // gl.drawElements(gl.TRIANGLE_STRIP, 6, gl.UNSIGNED_SHORT, 0);
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+        }
+
+
+        draw();
+
+
+    </script>
+</body>
+
+</html>

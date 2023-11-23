@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    手机摇一摇，改变手机屏幕颜色。
+    <p>x 方向</p>
+    <p id="x"></p>
+
+    <p>y 方向</p>
+    <p id="y"></p>
+
+    <p>z 方向</p>
+    <p id="z"></p>
+    <script>
+      if(window.DeviceMotionEvent){
+        var speed = 20; // 自定义的摇一摇的动作幅度
+        // 记录当前 3 个轴的加速度
+        var cx = cy = cz = 0;
+        // 记录上一次 3 个轴的加速度
+        var lastX = lastY = lastZ = 0;
+        window.addEventListener("devicemotion", function(event){
+          var motion = event.accelerationIncludingGravity;
+          cx = motion.x.toFixed(2);
+          cy = motion.y.toFixed(2);
+          cz = motion.z.toFixed(2);
+          // 接下来我就需要和上一次做比较
+          if(
+            Math.abs(cx - lastX) > speed ||
+            Math.abs(cy - lastY) > speed ||
+            Math.abs(cz - lastZ) > speed
+          ){
+            // 上面只要有一个轴的加速度大于自定义的幅度，就认为是摇一摇
+            // 设置随机的颜色
+            var r = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            document.body.style.backgroundColor = "rgb(" + r + "," + g + "," + b + ")";
+            // 还可以将数据打印出来看一下
+            document.getElementById("x").innerHTML = cx;
+            document.getElementById("y").innerHTML = cy;
+            document.getElementById("z").innerHTML = cz;
+          }
+        });
+      } else {
+        alert("对不起，您的手机不支持摇一摇功能！");
+      }
+    </script>
+  </body>
+</html>

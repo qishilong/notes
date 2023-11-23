@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			.box{
+				width: 200px;
+				height: 200px;
+				background: green;
+				color: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"></div>
+		<script>
+			/*
+				deviceorientation	方向变化事件
+					alpha	设备围绕z轴方向旋转的度数，范围：0~360（顶部指向地球的北极，alpha此时为0）
+					beta	设备围绕x轴方向旋转的度数，由前向后，范围：-180~180
+					gamma	设备围绕y轴方向旋转的度数，由左向右，范围：-90~90
+			 */
+
+			const box=document.querySelector('.box');
+			window.addEventListener('deviceorientation',ev=>{
+				//cosnole.log(ev);
+				box.innerHTML=`z轴偏移的度数为：${ev.alpha}<br>
+								x轴偏移的度数为：${ev.beta}<br>
+								y轴偏移的度数为：${ev.gamma}`;
+			})
+		</script>
+	</body>
+</html>

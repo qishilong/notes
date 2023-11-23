@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+			}
+			#banner{
+				position: relative;
+				width: 100vw;
+				overflow: hidden;
+			}
+			.wrap{
+				width: 300vw;
+				display: flex;
+			}
+			.wrap a{
+				width: 100vw;
+			}
+			.wrap a img{
+				width: 100%;
+				vertical-align: middle;
+			}
+
+			.circle{
+				position: absolute;
+				bottom: 3vw;
+				width: 100vw;
+				display: flex;
+				justify-content: center;
+			}
+			.circle span{
+				width: 4vw;
+				height: 4vw;
+				background: #ddd;
+				border-radius: 50%;
+				margin: 0 1.5vw;
+			}
+			.circle span.active{
+				background: green;
+			}
+		</style>
+		<script src="js/transform.js"></script>
+	</head>
+	<body>
+		<section id="banner">
+			<div class="wrap">
+				<a href="#"><img src="images/banner_01.jpg" alt=""></a>
+				<a href="#"><img src="images/banner_02.jpg" alt=""></a>
+				<a href="#"><img src="images/banner_03.jpg" alt=""></a>
+			</div>
+			<div class="circle">
+				<span class="active"></span><span></span><span></span>
+			</div>
+		</section>
+		<script>
+			var banner=document.querySelector('#banner'),
+				wrap=document.querySelector('.wrap'),
+				spans=document.querySelectorAll('.circle span'),
+				imgWidth=banner.offsetWidth;	//一张图片的宽度
+			
+			let startPointX=0,	//按下时手指的坐标
+				disPointX=0,	//手指坐标的差
+				startEleX=0,	//按下时元素的位置
+				cn=0,			//当前图片走的索引数
+				ln=0;			//上一个图片走的索引
+			
+			Transform(wrap);
+
+			//无缝滚动
+			wrap.innerHTML+=wrap.innerHTML;	//复制了一份
+			wrap.style.width=wrap.children.length*imgWidth+'px';
+
+			banner.addEventListener('touchstart',ev=>{
+				startPointX=ev.changedTouches[0].pageX;
+
+				//按下的是第0张图，要做的事情：让wrap走到第2份的第0张，左边就有内容
+				if(cn==0){
+					cn=wrap.children.length/2;
+				}
+
+				//按下的是最后一张图，要做的事情：让wrap走到第0份的最后一张图
+				if(cn==wrap.children.length-1){
+					cn=wrap.children.length/2-1;
+				}
+
+				//console.log(cn);
+
+				wrap.style.transition='';	//不去掉的放在拖动的时候会很慢
+				wrap.translateX=-imgWidth*cn;	//当改变了cn的值后也需要修正一下wrap的位置
+				startEleX=wrap.translateX;	//当wrap的位置改变后，需要去更新一下初始值（元素的位置）
+
+				ev.preventDefault();
+			});
+			banner.addEventListener('touchmove',ev=>{
+				disPointX=ev.changedTouches[0].pageX-startPointX;
+				
+				wrap.translateX=startEleX+disPointX;
+			});
+
+			//自动走
+			banner.addEventListener('touchend',ev=>{
+				//回弹的效果
+				let backWidth=imgWidth/8;	//加弹的距离，超过这个距离才能运动到下一张，小于这个距离就需要回弹
+
+				if(Math.abs(disPointX)>backWidth){	//这个条件满足了说明现拖动的距离已经超过回弹的距离了，可以运动到下一张了
+					//判断现在是往右边拖还是往左边拖
+					if(disPointX<0){	//往左边拖
+						cn++;
+					}
+
+					if(disPointX>0){	//往右边拖
+						cn--;
+					}
+				}
+
+				wrap.style.transition='0.3s';
+				wrap.translateX=-imgWidth*cn;
+
+
+				//修改小圆点的class
+				/* 
+					现在图片的索引：0，1，2，3，4，5 => 0,1,2,0,1,2
+					span标签的索引：0，1，2
+				 */
+
+				 console.log(cn);
+
+				spans[ln].className='';	//先去掉上一个次圆点身上的class
+				spans[cn%(wrap.children.length/2)].className='active';	//先去掉上一个次圆点身上的class
+				ln=cn%(wrap.children.length/2);	//再最后的时候需要去更新一下上一个的索引，更新为这次。相对于下次来说，它的上一次是不是就是当前次
+			});
+		</script>
+	</body>
+</html>

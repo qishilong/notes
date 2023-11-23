@@ -1,0 +1,268 @@
+body {
+	font-family: helvetica;
+	margin: 0 auto;
+
+	/* max-width: 750px; */
+}
+@media screen and (min-width: 750px){
+	body{
+		width: 750px;
+	}
+}
+
+body * {
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-text-size-adjust: 100%;
+}
+a,button,input {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+button,input {
+	-webkit-appearance: none;
+	border-radius: 0;
+}
+a {
+	text-decoration: none;
+}
+input {
+	outline: none;
+	vertical-align: middle;
+	padding: 0;
+}
+ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+img{
+	vertical-align: middle;
+}
+h3,h4,p{
+	margin: 0;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.clearfix:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+/* header */
+#header{
+	height: 50px;
+	line-height: 50px;
+	background: #d22147;
+	font-size: 14px;
+
+	display: flex;
+	align-items: center;
+}
+#header a:nth-of-type(1){
+	color: #fff;
+	text-align: center;
+
+	flex: 0 0 80px;
+}
+#header a:nth-of-type(1)::after{
+	content: '';
+	display: inline-block;
+	width: 12.5px;
+	height: 7px;
+	background: url(../images/ico_01.png) no-repeat center;
+	background-size: cover;
+	margin-left: 4px; 
+}
+
+#header div{
+	flex: 1;
+}
+#header div input{
+	width: 100%;
+	height: 32px;
+	border-radius: 8px;
+	border: none;
+	color: #e2c2c9;
+	text-indent: 34px;
+	background: #ae3e56 url(../images/ico_02.png) no-repeat 8px 5px;
+	background-size: 21px 22px;
+}
+
+#header a:nth-of-type(2){
+	color: #fff;
+	text-align: center;
+
+	flex: 0 0 69px;
+}
+#header a:nth-of-type(2)::before{
+	content: '';
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+	background: url(../images/ico_03.png) no-repeat center;
+	background-size: cover;
+	margin-right: 5px; 
+}
+
+/* banner */
+#banner{
+	text-align: center;
+}
+#banner a img{
+	width: 7.5rem;
+	width: 100%;
+}
+
+/* nav */
+#nav ul{
+	font-size: 0;
+	padding: 0.2rem 0;
+	background: #f2f0f0;
+}
+#nav li{
+	width: 25%;
+	display: inline-block;
+	text-align: center;
+	margin: 0.2rem 0;
+}
+#nav li a{
+	font-size: 0.28rem;
+	color: #525252;
+}
+#nav li img{
+	width: 0.75rem;
+	height: 0.75rem;
+	display: block;
+	margin: 0 auto 0.1rem auto;
+}
+
+/* ad1 */
+#ad1 a{
+	float: left;
+}
+#ad1 a img{
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
+/* ad2 */
+#ad2{
+	background: #f2f0f0;
+	padding: 0.3rem 0;
+}
+#ad2 img{
+	width: 100%;
+}
+
+/* list */
+#list h3{
+	font-size: 0.32rem;
+	line-height: 0.8rem;
+	color: #131313;
+	font-weight: normal;
+	padding-left: 0.2rem;
+
+	/* border-bottom: 1px solid #d2d1d4; */
+	position: relative;
+}
+#list h3::before{
+	content: '';
+	display: inline-block;
+	width: 0.08rem;
+	height: 0.32rem;
+	background: #cc0530;
+	border-radius: 0.05rem;
+	margin-right: 0.2rem;
+	vertical-align: middle;
+}
+#list h3 span{
+	vertical-align: middle;
+}
+/* 解决1px的问题 */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    #list h3:after {
+        content: " ";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px solid #c1c0c5;
+        color: #c1c0c5;
+        transform-origin: 0 0;
+        transform: scaleY(0.5);
+    }
+}
+
+#list article{
+	border-bottom: 1px solid #c1c0c5;
+}
+#list article a{
+	padding: 0.2rem;
+	display: flex;
+}
+#list article .img{
+	flex: 0 0 auto;
+	padding-right: 0.3rem;
+}
+#list article .img img{
+	width: 2.14rem;
+	height: 1.94rem;
+}
+
+#list article .text{
+	flex: 2 2 auto;
+}
+#list article .text h4{
+	font-size: 0.28rem;
+	color: #181818;
+	line-height: 0.61rem;
+	margin-bottom: 0.05rem;
+}
+#list article .text p{
+	font-size: 0.24rem;
+	color: #979797;
+	line-height: 0.36rem;
+	margin-bottom: 0.19rem;
+
+	display: -webkit-box;	
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	-webkit-line-clamp: 2;	/* 设置文本显示的行数 */
+}
+
+#list article .text div{
+	font-size: 0.24rem;
+	height: 0.34rem;
+	line-height: 0.34rem;
+	color: #525252;
+}
+.text div strong{
+	color: #cc0530;
+	margin: 0 0.09rem;
+}
+.text .discount{
+	display: inline-block;
+	width: 0.84rem;
+	height: 0.33rem;
+	color: #fff;
+	padding-left: 0.15rem;
+	margin-left: 0.15rem;
+	box-sizing: border-box;
+
+	background: url(../images/ico_04.gif) no-repeat;
+	background-size: cover;
+	vertical-align: middle;
+}
+.text .red{
+	float: right;
+	background: url(../images/ico_05.png) no-repeat left  0.03rem;
+	background-size: 0.24rem 0.22rem; 
+	padding-left: 0.28rem;
+}
+

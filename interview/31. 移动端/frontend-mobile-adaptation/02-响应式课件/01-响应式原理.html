@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="1.css" media='all'>	<!-- 2、在link标签里使用 -->
+		<style>
+			/* 1、在样式里使用 */
+			@media all{
+				div{
+					width: 100px;
+				}
+			}
+
+			/* 3、在import里使用 */
+			@import url('1.css') (min-width:200px);
+			
+			@media all and (min-width:100px){
+				div{
+					width: 100px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 
+			@media
+			@charset
+			@import
+			@font-face
+			@keyframes
+		 -->
+		<!--	
+			媒体查询(@media)		根据一个或多个基于设备类型、具体特点和环境来应用样式
+				1、媒体类型
+					all			所有设备
+					print		打印机设备
+					screen		彩色的电脑屏幕
+					speech		听觉设备（针对有视力障碍的人士，可以把页面的内容以语音的方式呈现的设备）
+
+					注意：tty、tv、projection、handheld、braille、embossed、aural等几种类型在媒体查询4中已经废弃
+				
+				2、媒体特性
+					width		宽度
+						min-width	最小宽度，宽度只能比这个值大
+					height		高度
+						max-width	最大宽度，宽度只能比这个值小
+					orientation	方向
+						landscape	宽度大于高度（横屏）
+						portrait	高度大于宽度（竖屏）
+					aspect-ratio				宽高比
+					-webkit-device-pixel-ratio 	像素比（webkit内核私有的属性）
+				
+				3、逻辑运算符
+					and		合并多个媒体类型（并且的意思）
+					,		匹配某个媒体查询（或者的意思）
+					not		对媒体查询结果取反
+					only	仅在媒体查询匹配成功后应用样式（防范老旧浏览器）
+				
+				参考：https://drafts.csswg.org/mediaqueries/
+		-->
+	</body>
+</html>

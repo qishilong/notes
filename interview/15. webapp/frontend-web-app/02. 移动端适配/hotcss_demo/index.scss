@@ -1,0 +1,15 @@
+// 这里书写我们的 scss 代码，之后编译为 css
+@import 'px2rem.scss';
+// 需要写上设计稿的尺寸
+$designWidth:750;
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+div{
+    width:px2rem(375);
+    height:px2rem(375);
+    background-color:red;
+}

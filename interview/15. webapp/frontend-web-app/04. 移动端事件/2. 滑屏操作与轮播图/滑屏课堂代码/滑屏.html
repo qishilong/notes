@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        #wrap {
+            height: 100vh;
+            overflow: hidden;
+            border: 5px solid red;
+            box-sizing: border-box;
+        }
+        #list{
+            transition: .4s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <ul id="list">
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表10</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表20</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表10</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表1</a></li>
+            <li><a href="#">这是一个很长很长的列表20</a></li>
+        </ul>
+    </div>
+    <script src="./transform.js"></script>
+    <script>
+        // 手动实现滑动效果
+        // 获取 DOM 元素
+        var wrap = document.querySelector("#wrap"); // 外层的 div
+        var list = document.querySelector("#list");; // 里面的 ul
+        var startPointY = 0, // 手指按下时的 Y 坐标
+            startTop = 0, // 要滑动的元素默认的 top 值
+            movePointY = 0; // 手指移动时的坐标
+        // 这里我们用到了腾讯的第三方库 transform，通过 Transform(DOM节点) 进行一个初始化
+        // 之后我们就可以非常方便的获取以及设置该 DOM 节点和 transform 相关的属性值
+        Transform(list);
+        console.log(list.translateY);
+        wrap.addEventListener('touchstart', ev => {
+            startPointY = ev.changedTouches[0].pageY; // 手指按下时的坐标
+            startTop = list.translateY; // list 元素垂直轴移动的距离
+        })
+        wrap.addEventListener('touchmove', ev=>{
+            // 坐标移动的距离 = 当前的距离 - 按下时的距离
+            movePointY = ev.changedTouches[0].pageY - startPointY;
+            // 元素移动的距离 = 按下时元素的 top + 坐标移动的距离
+            list.translateY = startTop + movePointY;
+        })
+        document.addEventListener('touchstart',ev=>{
+            ev.preventDefault();
+        }, {
+            passive : false
+        })
+    </script>
+</body>
+
+</html>

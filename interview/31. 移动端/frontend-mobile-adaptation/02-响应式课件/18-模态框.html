@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<title></title>
+	</head>
+	<body>
+		<!-- 按钮：用于打开模态框 -->
+		<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">打开窗口</button>
+	   
+	  	<!-- 模态框结构 -->
+		<div class="modal fade" id="myModal">	<!-- 默认为不显示，以及有有固定定位与动画效果，以及id用来与button呼应 -->
+			<div class="modal-dialog">	<!-- 弹出的层，模态框里的内容，需要放在这里 -->
+				<div class="modal-content">
+					<!-- 模态框头部 -->
+					<div class="modal-header">
+						<h4 class="modal-title">模态框头部</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>	<!-- data-dismiss="modal"是用来与关闭功能进行结合的  -->
+					</div>
+			
+					<!-- 模态框主体 -->
+					<div class="modal-body">
+						模态框内容..
+					</div>
+			
+					<!-- 模态框底部 -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+					</div>
+			
+				</div>
+			</div>
+		</div>
+
+		<hr>
+		<!-- 模态框尺寸 -->
+		<button class="btn btn-primary" data-toggle="modal" data-target="#myModal1">打开窗口</button>
+		<div class="modal fade" id="myModal1">
+			<div class="modal-dialog modal-lg">	<!-- 模态框的尺寸：.modal-sm为小的，.modal-lg为大的，需要添加给dialog的层 -->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">模态框头部</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+			
+					<div class="modal-body">
+						模态框内容..
+					</div>
+			
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+					</div>
+			
+				</div>
+			</div>
+		</div>
+
+		<hr>
+		<!-- 垂直居中的模态框 -->
+		<button class="btn btn-primary" data-toggle="modal" data-target="#myModal2">打开窗口</button>
+		<div class="modal fade" id="myModal2">
+			<div class="modal-dialog modal-dialog-centered">	<!-- 垂直居中：.modal-dialog-centered，需要添加给dialog的层 -->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">模态框头部</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+			
+					<div class="modal-body">
+						模态框内容..
+					</div>
+			
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+					</div>
+			
+				</div>
+			</div>
+		</div>
+
+		<hr>
+		<!-- 带输入框的模态框 -->
+		<button class="btn btn-primary" data-toggle="modal" data-target="#myModal3">打开窗口</button>
+		<div class="modal fade" id="myModal3">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">注册</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+			
+					<div class="modal-body">
+						<!-- 表单输入组 -->
+						<form>
+							<div class="form-group">
+								<label for="username" class="col-form-label">用户名:</label>
+								<input type="text" class="form-control" id="username">
+							</div>
+							<div class="form-group">
+								<label for="password" class="col-form-label">密码:</label>
+								<input type="password" class="form-control" id="password">
+							</div>
+						</form>
+					</div>
+			
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+					</div>
+			
+				</div>
+			</div>
+		</div>
+
+
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+		<script>
+			/* 通过js打开关闭 */
+			$('#myModal3').modal('show');
+			setTimeout(function(){
+				$('#myModal3').modal('hide');
+			},2000);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #oCanvas {
+            border: 1px solid #000;
+        }
+    
+    </style>
+</head>
+<body>
+    <canvas id="oCanvas" width="500" height="400"></canvas>
+    <script type="notjs" id="vertex">
+         /*
+          顶点着色器 
+         */
+        attribute vec4 a_position;
+        // uniform vec4 u_transform;
+        // uniform float cosB, sinB;
+
+        uniform mat4 matrix;
+        void main() {
+            // gl_Position = a_position + u_transform;
+            // gl_Position.x = a_position.x + u_transform.x;
+            // gl_Position.y = a_position.y + u_transform.y;
+            // gl_Position.z = a_position.z + u_transform.z;
+            // gl_Position.w = a_position.w;
+           //  gl_Position.x = a_position.x * cosB - a_position.y * sinB;
+            // gl_Position.y = a_position.x * sinB + a_position.y * cosB;
+            // gl_Position.z = a_position.z;
+            // gl_Position.w = a_position.w;
+            gl_Position = matrix * a_position;
+        }
+    </script>
+    <script type="notjs" id="fragment">
+        /*
+            片元着色器 ： 绘制颜色或者纹理的 —— 水彩的作用
+        */
+        precision mediump float;
+
+        void main() {
+            gl_FragColor = vec4(0, 0, 0, 1);
+        }
+
+    </script>
+    <script>
+        var canvas = document.getElementById('oCanvas');
+        var gl = canvas.getContext('webgl');
+        if (!gl) {
+            console.log('浏览器不兼容webgl');
+        }
+
+        var vertex = document.getElementById('vertex').innerText;
+        var fragment = document.getElementById('fragment').innerText;
+
+        // 顶点着色器 gl.VERTEX_SHADER   片元着色器 gl.FRAGMENT_SHADER;
+        function createShader(gl, type, source) {
+            var shader = gl.createShader(type);
+            //  添加数据源
+            gl.shaderSource(shader, source); 
+            gl.compileShader(shader);
+
+            var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+            if (success) {
+                return shader;
+            }
+            console.log(gl.getShaderInfoLog(shader));
+        }
+
+        var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertex);
+        var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragment);
+
+        function createProgram(gl, vertexShader, fragmentShader) {
+            var program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            var success = gl.getProgramParameter(program, gl.LINK_STATUS);
+            if (success) {
+                return program;
+            }
+            console.log(gl.getProgramInfoLog(program));
+        }
+        var program = createProgram(gl, vertexShader, fragmentShader);
+        gl.useProgram(program);
+
+        gl.clearColor(0, 0, 0, 0.5);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        // 获取a_position 存储位置
+        var a_position = gl.getAttribLocation(program, 'a_position');
+        // var cosB = gl.getUniformLocation(program, 'cosB');
+        // var sinB = gl.getUniformLocation(program, 'sinB');
+        // var u_transform = gl.getUniformLocation(program, 'u_transform');
+        var u_matrix = gl.getUniformLocation(program, 'matrix');
+        var positionBuffer = gl.createBuffer();
+        var deg = 0.0;
+       
+       rotate();
+       function rotate() {
+           deg += 1;
+           var deg1 = deg * Math.PI / 180.0;
+           draw(deg1);
+           requestAnimationFrame(rotate);
+       }
+       function draw (deg) {
+          
+        //    旋转
+        // var cosB = Math.cos(deg);
+        // var sinB = Math.sin(deg);
+        // gl.uniformMatrix4fv(u_matrix, false, new Float32Array([
+        //     cosB, sinB, 0, 0, 
+        //     -sinB, cosB, 0, 0,
+        //     0, 0, 1, 0,
+        //     0, 0, 0, 1,
+        // ]))
+        // 平移
+        // var Tx = -0.5, Ty = 0.0, Tz = 0.0;
+        // gl.uniformMatrix4fv(u_matrix, false, new Float32Array([
+        //     1, 0, 0, 0, 
+        //     0, 1, 0, 0,
+        //     0, 0, 1, 0,
+        //     Tx, Ty, Tz, 1,
+        // ]))
+        // 缩放
+        var Sx = 0.5, Sy = 1.5, Sz = 1.0;
+        gl.uniformMatrix4fv(u_matrix, false, new Float32Array([
+            Sx, 0, 0, 0, 
+            0, Sy, 0, 0,
+            0, 0, Sz, 0,
+            0, 0, 0, 1,
+        ]))
+        // gl.uniform1f(cosB, Math.cos(deg));
+        // gl.uniform1f(sinB, Math.sin(deg));
+        
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        // gl.uniform4f(u_transform, 0.0, 0.0, 0.0, 1.0);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+            0.0, 0.0, 0.0, 
+            0.5, 0.5, 0.0,
+            0.0, 0.5, 0.0,
+            0.0, 0.0, 0.0,
+            0.5, 0.0, 0.0,
+            0.5, 0.5, 0.0,
+        ]), gl.STATIC_DRAW);
+        
+        gl.vertexAttribPointer(a_position, 3, gl.FLOAT, true, 0, 0);
+        gl.enableVertexAttribArray(a_position);
+        // gl.vertexAttrib3f(a_position, 0.0, 0.0, 0.0);
+        gl.drawArrays(gl.TRIANGLES, 0, 4);
+       }
+
+    </script>
+</body>
+</html>

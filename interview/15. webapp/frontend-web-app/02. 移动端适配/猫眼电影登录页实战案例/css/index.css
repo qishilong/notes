@@ -1,0 +1,152 @@
+/*登录页面头部*/
+.login ul {
+    display: flex;
+    height: 1.5rem;
+    background: #db403b;
+    color: #fff;
+    font-weight: bold;
+    font-size: .52rem;
+    align-items: center;
+    padding: 0 .35rem 0 .45rem;
+}
+
+/* 返回按钮 */
+.login ul li:first-child a {
+    display: block;
+    width: .55rem;
+    height: .55rem;
+    background: url(../img/arrows.png) no-repeat center;
+    background-size: .55rem .55rem;
+}
+
+.login ul li:first-child {
+    padding-right: .45rem;
+    border-right: 0.01rem solid #ab241e;
+}
+
+
+.login ul li:nth-child(2) {
+    padding-left: .45rem;
+    flex-grow: 1;
+}
+
+/*忘记密码*/
+.containe_login header ul li:nth-child(3) a {
+    font-size: .46rem;
+    color: #fff;
+}
+
+/*用户头像*/
+.containe_login .user_pic {
+    width: 2rem;
+    height: 2rem;
+    background: url(../img/avater.png) no-repeat center;
+    background-size: 2rem 2rem;
+    border: .08rem solid #e6e8e7;
+    border-radius: 50%;
+    margin: .72rem auto .8rem;
+}
+
+/*美团账号登录*/
+.containe_login .meituan_login {
+    font-size: .4rem;
+    color: #969696;
+    padding-left: .45rem;
+}
+
+/*登录/注册输入控件共用部分*/
+.user_input {
+    display: flex;
+    height: 3rem;
+    padding: 0 .45rem;
+    background: #fff;
+    font-size: .46rem; 
+    flex-wrap: wrap;
+    align-items: center;
+    margin: .36rem 0 .6rem;
+    border-top: .01rem solid #e4e4e4;
+}
+
+.user_input input {
+    flex-grow: 1;
+}
+
+/*登录页面输入控件样式*/
+.containe_login .user_input div {
+    height: 1.5rem;
+    flex-grow: 1;
+    line-height: 1.5rem;
+}
+
+/*登录按钮样式*/
+.submit {
+    padding: 0 .45rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.submit button {
+    width: 9.9rem;
+    height: 1.35rem;
+    background: #f14d41;
+    border: .01rem solid #d2564c;
+    border-radius: .1rem;
+    color: #fff;
+    font-size: .46rem;
+}
+
+/*登录页面注册链接样式*/
+.containe_login .submit a {
+    color: #e74f42;
+    line-height: 1.4rem;
+    font-size: .38rem;
+}
+
+/*登录页面底部*/
+.containe_login footer {
+    padding: .5rem .75rem 0;
+}
+
+.containe_login footer p {
+    font-size: .44rem;
+    color: #959595;
+}
+
+.containe_login footer p:before,
+.containe_login footer p:after{
+    content: "";
+    display: inline-block;
+    width: 2.85rem;
+    border-bottom:.08rem dotted #959595;
+}
+
+.containe_login footer p:before {
+    margin: 0 .16rem .12rem 0;
+}
+
+.containe_login footer p:after {
+    margin: 0 0 .12rem .16rem;
+}
+
+.containe_login footer ul {
+    display: flex;
+    text-align: center;
+    height: 3.8rem;
+    align-items: center;
+    font-size: .38rem;
+}
+
+.containe_login footer ul li {
+    flex-grow: 1;
+}
+
+.containe_login footer ul img {
+    width: 1.22rem;
+    height: 1.22rem;
+}
+
+.containe_login footer ul span {
+    display: block;
+    color: #000;
+}

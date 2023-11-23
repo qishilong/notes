@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			div{
+				width: 100px;
+				height: 100px;
+				background: green;
+			}
+		</style>
+		<script src="js/tween.js"></script>
+	</head>
+	<body>
+		<div></div>
+		<button>走你</button>
+		<script>
+			const div=document.querySelector('div'),
+				btn=document.querySelector('button');
+
+			let t=0,	//当前的时间，这里为0，表示从0开始
+				b=0,	//初始值，元素一开始的位置
+				c=200,	//运动200px
+				d=100;	//整个运动所需要的时间 
+			
+			btn.onclick=()=>{
+				t++;
+				const result=Tween['linear'](t,b,c,d);
+				div.style.transform=`translateX(${result}px)`;
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+			}
+			div{
+				width: 740px;
+				/* width: 365px; */
+				border: 5px solid #f00;
+				height: 100px;
+				background: green;
+			}
+			p{
+				font-size: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 
+			viewport	视口（可视区窗口），通过meta标签设置
+				未设置
+					1、屏幕的宽度默认为980，但不同的型号也会不同
+					2、用document.documentElement.clientWidth方法获取
+					
+				设置了
+					content			视口里的相关设置
+						width			视口的宽度，值为一个正整数，或字符串device-width（设备的实际宽度--css像素）。不建议设置数字（安卓设备有些不支持）
+						height			视口的高度（与width一至）
+						user-scalable	是否允许用户进行页面缩放，值为no或yes，代表不允许与允许
+						initial-scale	页面初始缩放值，值为一个数字（可以带小数）。
+						minimum-scale	页面最小能够缩放的比例，值为一个数字（可以带小数）。
+						maximum-scale	页面最大能够缩放的比例，值为一个数字（可以带小数）。
+						
+					注意：
+						1、有的时候大家会见到同时写了不允许缩放，又写了最小与最大能够缩放的比例，那这样不是冲突了，为什么都已经写了不允许缩放了，还要写那些？
+							原因：
+								1、会有一些第三方的工具能够破坏user-scalable，比方说一些给父母的手机把文字放大的工具，就会有可能。不过一般是没有问题的
+								2、像iphone5下还会有黑边
+								3、所以写全了，可以避免一些bug
+						2、ios10不支持user-scalable=no，后面事件解决（阻止document的touchstart的默认行为）
+				initial-scale有值的情况下算页面的公式
+					缩放比=css像素/viewport宽度
+					viewport宽度=css像素/缩放比
+		 -->
+		 <!-- 
+			 750/980=0.77
+
+			 0.5=375/750=0.5
+			 375/0.5=750
+		  -->
+		 <div></div>
+		 <p>陈学辉</p>
+	</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+   <script src="../three.js"></script>
+   <script>
+       var scene = new THREE.Scene();
+    //    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+       var renderer = new THREE.WebGLRenderer();
+       renderer.setSize(window.innerWidth, window.innerHeight)
+       document.body.appendChild(renderer.domElement);
+   //     var geometry = new THREE.BoxGeometry(1, 1, 1);
+   //     var material = new THREE.MeshBasicMaterial({ color: 0x00ff00});
+   //  //    var cube = new THREE.Mesh(geometry, material);
+   //  //    scene.add(cube);
+    
+   //  //     camera.position.z = 10;
+       
+   //  //     function animate() {
+   //  //         requestAnimationFrame(animate);
+   //  //         cube.rotation.x += 0.01;
+   //  //         cube.rotation.y += 0.01;
+   //  //         //
+   //  //         renderer.render(scene, camera);
+   //  //     }
+   //  //     animate();
+   //  // Create cube camera
+   //      var cubeCamera = new THREE.CubeCamera( 1, 100000, 128 );
+   //      scene.add( cubeCamera );
+
+   //      // Create car
+   //      var chromeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff, envMap: cubeCamera.renderTarget } );
+   //      var car = new THREE.Mesh( geometry, chromeMaterial );
+   //      scene.add( car );
+
+   //      // Update the render target cube
+   //      car.setVisible( false );
+   //      cubeCamera.position.copy( car.position );
+   //      cubeCamera.update( renderer, scene );
+
+        // Render the scene
+      //   car.setVisible( true );
+      //   renderer.render( scene, camera );
+      var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+      var geometry = new THREE.Geometry();
+      console.log(camera)
+      camera.position.z = 100;
+      geometry.vertices.push(
+         new THREE.Vector3( -10,  10, 0 ),
+         new THREE.Vector3( -10, -10, 0 ),
+         new THREE.Vector3(  10, -10, 0 )
+      );
+      var face = new THREE.Face3( 0, 1, 2 );
+      face.vertexColors = [new THREE.Color(0xf00000), new THREE.Color(0x0000ff), new THREE.Color(0x00ff00)];
+      geometry.faces.push(  face );
+      console.log(geometry);
+      var material = new THREE.MeshBasicMaterial({vertexColors: THREE.VertexColors})
+      var cube = new THREE.Mesh(geometry, material);
+      scene.add(cube)
+      renderer.render( scene, camera );
+   </script>
+</body>
+</html>

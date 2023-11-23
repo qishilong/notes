@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+			}
+			div{
+				width: 400px;
+				height: 100px;
+				background: green;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 
+			1、CSS像素（设备独立像素、逻辑像素）
+				1、CSS中使用的一个抽象的概念，单位是px
+				2、值是相对的，并不是绝对的
+
+			2、设备像素（物理像素）
+				1、屏幕的物理像素，任何设备屏幕的物理像素的数量都是固定不变的，单位是pt（点）
+				2、一般指的是手机的分辨率
+				2、1pt = 1/72英寸（inch）
+			
+			3、屏幕尺寸
+				1、指的是屏幕对角线的长度
+				2、注意英寸是长度单位，不是面积单位
+				3、1英寸（inch）=2.54厘米（cm）
+
+			4、像素密度（ppi）	每英寸上像素（设备像素）的数量
+				1、ppi的值越高，代表在一定尺寸的屏幕上像素数据越多
+				2、它是一个定值，是一个固定的参数
+				3、https://www.sven.de/dpi/
+				4、ppi=屏幕边的物理像素/物理尺寸
+				5、同一尺寸下，PPI提高了一倍，那像素会提高4倍
+			
+			5、像素比（DPR）
+				DPR=物理像素/css像素
+				本质：一个css像素占用几个设备像素
+				获取：window.devicePixelRatio
+
+				iphone6
+				750 × 1334		设备像素，屏幕分辨率
+				375 × 667		css像素
+				2				像素比
+			
+			
+			https://www.paintcodeapp.com/news/ultimate-guide-to-iphone-resolutions
+		 -->
+		<div></div>
+		<script>
+			console.log(window.devicePixelRatio);
+			//DPR=物理像素/css像素	=> 2=750/css像素	=> css像素=750/2=375
+		</script>
+	</body>
+</html>

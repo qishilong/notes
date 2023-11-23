@@ -1,0 +1,177 @@
+html,
+body {
+    position: relative;
+    height: 100%;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    height: auto;
+}
+
+/* 作为滑动容器，需要单独设置 margin-top 和 margin-bottom
+以便不被 header 和 footer 挡住 */
+.slideContainer {
+    margin-top: 4.3rem;
+    margin-bottom: 1.3rem;
+}
+
+/* 热门电影以及热门影人公共样式 */
+.horizontal {
+    height: 4.7rem;
+    background-color: #fff;
+    margin-bottom: .3rem;
+    padding: .45rem .4rem;
+}
+
+.horizontal>h2 {
+    font-size: .4rem;
+    color: #000;
+    font-weight: 400;
+    margin-bottom: .4rem;
+}
+
+.horizontal .mySwiper2 li {
+    width: 2.35rem;
+    margin-right: .28rem;
+}
+
+.horizontal .mySwiper2 li:last-child{
+    margin-right: 0;
+}
+
+.horizontal a {
+    display: block;
+}
+
+.horizontal img {
+    width: 2.35rem;
+    height: 3.15rem;
+    margin-bottom: .25rem;
+}
+
+.horizontal span {
+    display: block;
+    font-size: .36rem;
+    font-weight: 600;
+}
+
+/* 热门电影单独的样式 */
+.hotMovie .mySwiper2 ul li a{
+    position: relative;
+}
+
+.hotMovie .mySwiper2 ul li a>span:nth-child(2){
+    position: absolute;
+    left: 0;
+    bottom:.65rem;
+    color: #faaf00; 
+    font-size: .3rem;
+    width: 100%;
+    height: 0.5rem;
+    background-image: linear-gradient(-180deg,rgba(77,77,77,0),#000);
+    line-height: .5rem;
+    text-indent: .1rem;
+    font-weight: 400;
+}
+
+
+/* 电影列表 */
+.movieList {
+    background-color: #fff;
+    margin-bottom: .3rem;
+}
+
+.movieContainer{
+    width: 100%;
+    height: 3.1rem;
+    display: flex;
+}
+
+.movieContainer .moviePoster{
+    width: 2.45rem;
+    height: 100%;
+}
+
+.movieContainer .moviePoster img{
+    width: 1.76rem;
+    height: 2.48rem;
+}
+
+.movieContainer .movieDetails{
+    width: 8.35rem;
+    height: 100%;
+    border-bottom: .02rem solid #eee;
+    position: relative;
+}
+
+.movieContainer .movieDetails>h3{
+    font-size: .5rem;
+    line-height:1.2rem;
+    color: #000;
+    font-weight: 400;
+}
+
+.movieContainer .movieDetails>h3>span.imax{
+    display: inline-block;
+    width: 1.2rem;
+    height: 0.4rem;
+    margin-left: .15rem;
+    background: url('../../img/movies/v2dimax.png') center/contain no-repeat;
+}
+
+.movieContainer .movieDetails>p{
+    font-size: .32rem;
+    margin-bottom: .2rem;
+    font-weight: 400;
+}
+
+.movieDetails>p:nth-child(2) span{
+    font-weight: 700;
+    color: #faaf00;
+    font-size: .36rem;
+    margin-left: .1rem;
+}
+
+.movieContainer .movieDetails .buyTicket{
+    position: absolute;
+    right: .37rem;
+    top: calc(50% - .39rem);
+    width: 1.5rem;
+    height: 0.78rem;
+    background-color: #ee3f37;
+    border-radius: .4rem;
+    font-size: .36rem;
+    color: #fff;
+    text-align: center;
+    line-height: .77rem;
+}
+
+/* 演员列表部分的样式和第一个热门电影相同 */
+
+
+/* 娱乐新闻 */
+.movieNews {
+    height: auto;
+    background-color: #fff;
+    margin-bottom: .15rem;
+    padding: .45rem .4rem;
+}
+
+.movieNews>h2 {
+    font-size: .4rem;
+    color: #000;
+    font-weight: 400;
+    margin-bottom: .5rem;
+}
+
+.movieNews li>a {
+    font-size: .38rem;
+    color: #000;
+    font-weight: 300;
+    margin-bottom: .5rem;
+}

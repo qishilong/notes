@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=0.7">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 375px;
+            display: flex;
+        }
+
+        .container>div {
+            width: 50%;
+            height: 50px;
+        }
+
+        .container>div:nth-child(1) {
+            background-color: red;
+        }
+
+        .container>div:nth-child(2) {
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div></div>
+        <div></div>
+    </div>
+    <script>
+        console.log("document.documentElement.clientWidth:", document.documentElement.clientWidth);
+        console.log("window.innerWidth:", window.innerWidth);
+    </script>
+</body>
+
+</html>

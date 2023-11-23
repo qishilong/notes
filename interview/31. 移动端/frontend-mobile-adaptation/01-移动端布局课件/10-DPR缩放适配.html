@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimum-scale=1,maximum-scale=1">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+			}
+			.box div{
+				width: 25%;
+				height: 100px;
+				float: left;
+			}
+			.box div:nth-child(1){
+				background: red;
+			}
+			.box div:nth-child(2){
+				background: green;
+			}
+			.box div:nth-child(3){
+				background: blue;
+			}
+			.box div:nth-child(4){
+				background: yellow;
+			}
+		</style>
+		<script>
+			(function(){
+				/*
+					375*2	750 
+					320*2	640
+
+					375/?=750	=> 375/750=2
+					1/dpr
+
+					320/scale=640	=> 	scale=320/640	1/2
+				 */
+
+				var meta=document.querySelector('meta[name="viewport"]');
+				var scale=1/window.devicePixelRatio;
+
+				if(!meta){
+					//这个条件成立说明用户没有写meta标签，我需要创建一个
+					meta=document.createElement('meta');
+					meta.name='viewport';
+					meta.content='width=device-width,initial-scale='+scale+',user-scalable=no,minimum-scale='+scale+',maximum-scale='+scale+'';
+					document.head.appendChild(meta);
+				}else{
+					meta.setAttribute('content','width=device-width,initial-scale='+scale+',user-scalable=no,minimum-scale='+scale+',maximum-scale='+scale+'');
+				}
+			})();
+		</script>
+	</head>
+	<body>
+		<!--
+			DPR缩放适配		根据dpr的值，把视口进行缩放，缩放到物理像素，也就是把css像素的值设置成物理像素，让所有的设备都变成一个css像素对应一个设备像素
+		-->
+		<div class="box">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	</body>
+</html>

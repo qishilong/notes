@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+
+        /* 没有书写媒体类型，默认就是所有设备 */
+        /* 宽度要大于 700px 并且必须是横屏 */
+        /* @media (min-width:700px) and (orientation:landscape) {
+            div {
+                background: green;
+            }
+        } */
+
+        /* 宽度大于 700px 或者是竖屏，两个条件满足其中一个即可 */
+        /* @media (min-width:700px) , (orientation:portrait) {
+            div {
+                background: green;
+            }
+        } */
+        
+        /* 屏幕的尺寸大于800，这个条件才能成立 */
+        @media not all and (max-width:800px) {
+            div {
+                background: blue;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+</body>
+
+</html>

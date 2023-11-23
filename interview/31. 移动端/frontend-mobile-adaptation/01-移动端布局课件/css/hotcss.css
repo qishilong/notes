@@ -1,0 +1,10 @@
+body {
+  margin: 0;
+}
+
+div {
+  width: 4rem;
+  height: 4.26667rem;
+  background: green;
+  float: left;
+}

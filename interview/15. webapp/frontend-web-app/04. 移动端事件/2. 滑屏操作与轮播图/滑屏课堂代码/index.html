@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            line-height: 50px;
+        }
+
+        li a {
+            font-size: 30px;
+        }
+
+        input {
+            border: 1px solid #000;
+        }
+        .text{
+            width: 150px;
+            height: 20px;
+            border: 1px solid #000;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <img src="./ok.png" alt="" width="100%">
+        <input type="text" class="input">
+        <ul>
+            <li><a href="http://www.baidu.com" class="baidu">度娘</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+        </ul>
+    </div>
+    <script>
+        const page = document.querySelector('.page');
+        var baidu = document.querySelector('.baidu');
+        var input = document.querySelector('.input');
+        page.addEventListener('touchstart', ev => {
+            console.log(ev.changedTouches);
+            ev.preventDefault();
+        });
+        // 解决 a 标签无法跳转
+        baidu.addEventListener('touchstart',ev=>{
+            location.href = ev.target.href;
+        })
+        // 解决输入框无法聚焦
+        input.addEventListener('touchstart', ev=>{
+            ev.target.focus();
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>input-file示例</title>
+    <style>
+      html {
+        font-size: 36px;
+      }
+      input {
+        display: none;
+      }
+      label {
+        display: block;
+      }
+      span {
+        display: block;
+        text-align: center;
+        height: 50px;
+        font-size: 18px;
+        margin: 50px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        line-height: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <label>
+      <span>打开相册，可以选择一张图片</span>
+      <input type="file" accept="image/*" />
+    </label>
+    <label>
+      <span>打开相册，可以选择多张图片</span>
+      <input type="file" multiple accept="image/*" />
+    </label>
+    <label>
+      <span>打开照相机</span>
+      <input type="file" accept="image/*" capture="camera" />
+    </label>
+    <label>
+      <span>打开录像机</span>
+      <input type="file" accept="video/*" capture="camcorder" />
+    </label>
+    <label>
+      <span>打开录音机</span>
+      <input type="file" accept="audio/*" capture="microphone" />
+    </label>
+  </body>
+</html>

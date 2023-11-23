@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+    var str = 'select student.*,result.* from student inner join result on student.id = result.studentid,';
+    var reg = /(xxx(?=[^\w]))/g;
+    var item = 'student';
+    reg.compile('(' + item + '(?=[^\\w]))|(student)$', 'g');
+    console.log(reg.source)
+    console.log(str.match(reg))
+    </script>
+</body>
+</html>

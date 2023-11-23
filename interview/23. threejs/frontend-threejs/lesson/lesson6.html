@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>材质</title>
+</head>
+<body>
+    <script src="./three.js"></script>
+    <script>
+        // 场景
+        var scene = new THREE.Scene();
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.localClippingEnabled = true;
+        document.body.appendChild(renderer.domElement);
+        var camera = new THREE.OrthographicCamera(- window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2, 10, 1000);
+        camera.position.z = 100;
+
+        var face1Geometry = new THREE.Geometry();
+        var p0 = new THREE.Vector3(-100, 0, 50);
+        var p1 = new THREE.Vector3(100, 0, 50);
+        var p2 = new THREE.Vector3(0, 100, 50);
+        face1Geometry.vertices.push(p0, p1, p2);
+        var face1 = new THREE.Face3(0, 1, 2);
+        face1Geometry.faces.push(face1);
+        var material1 = new THREE.MeshBasicMaterial({
+            color: 0x0000ff,
+        });
+        var trangle1 = new THREE.Mesh(face1Geometry, material1);
+        scene.add(trangle1);
+
+
+        
+        var face2Geometry = new THREE.Geometry();
+        var p3 = new THREE.Vector3(0, 0, 0);
+        var p4 = new THREE.Vector3(50, 0, 0);
+        var p5 = new THREE.Vector3(0, 200, 0);
+        face2Geometry.vertices.push(p3, p4, p5);
+        var face2 = new THREE.Face3(0, 1, 2);
+        face2Geometry.faces.push(face2);
+        var material2 = new THREE.MeshBasicMaterial({
+            color: 0x00ff00,
+            transparent: true,
+            opacity: 0.5,
+            alphaTest: 0,
+            clipIntersection: true,
+            clippingPlanes: [
+                new THREE.Plane(new THREE.Vector3(0, 1, 0), -50)  
+            ],
+            depthTest: false,
+        });
+
+        var trangle2 = new THREE.Mesh(face2Geometry, material2);
+        scene.add(trangle2);
+        renderer.render(scene, camera);
+    </script>
+</body>
+</html>

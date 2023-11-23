@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			html{
+				font-size: 13.333333333333334vw;
+				/* 
+					50/3.75
+				 */
+			}
+			body{
+				margin: 0;
+				font-size: 12px;
+			}
+			h1{
+				margin: 0;
+			}
+			section{
+				width: 10vw;
+				height: 10vw;
+				background: green;
+			}
+			div{
+				/* 
+					375/4=93.75px;
+					1vw=3.75px;
+					93.75/3.75=25vw
+				 */
+				width: 25vw;
+				height: 25vw;
+
+				width: 33.33333vw;
+				height: 33.33333vw;
+				  
+				width: 1.875rem;
+				height: 1.875rem;
+
+				background: pink;
+				float: left;
+			}
+			img{
+				/* 
+					750/2/3.75=100vw
+				 */
+				width: 100vw;
+			}
+
+			section img{
+				width: 0.5rem;
+				height: 0.5rem;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 
+			vw		Viewport's width的简写，1vw等于视口宽度的1%
+			vh		Viewport's height的简写，1vh等于视口高度的1%
+			vmin	取vw和vh中最小的值
+			vmax	取vw和vh中最大的值
+
+			支持情况
+				>=ios 8 
+				>=Android 4.4
+
+			方案一：通篇使用vw
+			方案二：通过vw设置根节点字体大小，页面里的尺寸依然使用rem
+
+			iphone6
+			1vw=375/100=3.75px;
+
+			iphone6 p
+			1vw=414/100=4.14px;
+
+
+			750/2/3.75=100
+				=> 750/(2*3.75)
+				=> 750/(7.5)
+				=> 750/(750/100)
+				=> 750/750*100
+
+				100 * (clientWidth / designWidth)
+		 -->
+		<section>
+			<img src="images/logo.png" alt="">
+		</section>
+
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+
+		<img src="images/750.jpg" alt="">
+	</body>
+</html>

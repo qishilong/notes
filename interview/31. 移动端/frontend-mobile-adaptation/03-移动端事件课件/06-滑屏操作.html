@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+
+			#wrap{
+				height: 100vh;
+				overflow: hidden;
+				border: 5px solid #f00;
+				box-sizing: border-box;
+			}
+
+			#list{
+				transition: 0.3s;
+			}
+			#list li{
+				font-size: 24px;
+				line-height: 50px;
+			}
+		</style>
+		<script src="js/transform.js"></script>
+	</head>
+	<body>
+		<div id="wrap">
+			<ul id="list">
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表10</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表1</a></li>
+				<li><a href="#">这是一个很长很长的列表20</a></li>
+			</ul>
+		</div>
+		<script>
+			/* 
+				https://github.com/AlloyTeam/AlloyTouch/tree/master/transformjs
+				Transform(domElement);//or Transform(domElement, true);
+
+				//set "translateX", "translateY", "translateZ", "scaleX", "scaleY", "scaleZ", "rotateX", "rotateY", "rotateZ", "skewX", "skewY", "originX", "originY", "originZ"
+				domElement.translateX = 100;
+				domElement.scaleX = 0.5;
+				domElement.originX = 50;
+
+				//get "translateX", "translateY", "translateZ", "scaleX", "scaleY", "scaleZ", "rotateX", "rotateY", "rotateZ", "skewX", "skewY", "originX", "originY", "originZ"
+				console.log(domElement.translateX ) 
+			*/
+
+			/* 
+				滑屏的原理：首先要知道按下时的坐标，再需要获取移动时的坐标，两个坐标之间的差就是元素移动的距离，拿元素按下时的距离+手指移动的距离
+			 */
+			var wrap=document.querySelector('#wrap'),
+				list=document.querySelector('#list');
+			let startPointY=0,		//按下时手指的坐标
+				startTop=0,			//按下时元素的距离
+				movePointY=0;		//手指移动时的坐标
+
+			Transform(list);	//使用第三方的库，在一上来的时候设置一下初始的距离
+
+			wrap.addEventListener('touchstart',ev=>{
+				startPointY=ev.changedTouches[0].pageY;	//按下的时候获取手指的坐标
+				startTop=list.translateY;
+			});
+
+			wrap.addEventListener('touchmove',ev=>{
+				//坐标移动的距离 = 当前的距离-按下时的距离
+				movePointY=ev.changedTouches[0].pageY-startPointY;
+
+				//元素走的距离=按下时元素的距离+坐标移动的距离
+				list.translateY=startTop+movePointY;
+
+				ev.preventDefault();
+			});
+		</script>
+	</body>
+</html>

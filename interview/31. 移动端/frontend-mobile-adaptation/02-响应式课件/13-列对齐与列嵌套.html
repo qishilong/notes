@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<title></title>
+		<style>
+			.row div{
+				background: green;
+				color: #fff;
+				border: 1px solid #000;
+			}
+
+			.container .row div{
+				height: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+			垂直对齐（列与列的上下对齐方式）
+				align-items-start
+				align-items-center
+				align-items-end
+
+			水平对齐（列与行的左右对齐方式）
+				justify-content-start
+				justify-content-center
+				justify-content-end
+				justify-content-around	平分间距
+				justify-content-between	两端对齐
+		-->
+		<div class="container-fluid">
+			<div class="row align-items-center">
+				<div class="col-xl-4">
+					kaivon</br>
+					kaivon</br>
+					kaivon</br>
+					kaivon</br>
+					kaivon</br>
+					kaivon</br>
+					kaivon</br>
+				</div>
+				<div class="col-xl-4">kaivon</div>
+			</div>
+			<div class="row align-items-center justify-content-between">
+				<div class="col-xl-2">
+					kaivon</br>
+					kaivon</br>
+					kaivon</br>
+					kaivon</br>
+					kaivon</br>
+					kaivon</br>
+					kaivon</br>
+				</div>
+				<div class="col-xl-2">kaivon</div>
+				<div class="col-xl-2">kaivon</div>
+			</div>
+		</div>
+
+		<hr>
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-6">
+					<div class="row">
+						<div class="col-xl-6 bg-danger"></div>
+						<div class="col-xl-6 bg-secondary"></div>
+					</div>
+				</div>
+				<div class="col-xl-4">2</div>
+			</div>
+		</div>
+	</body>
+</html>

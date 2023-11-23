@@ -1,0 +1,259 @@
+/* 初始化内外边距 */
+*{
+    margin: 0;
+    padding: 0;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none
+}
+button{
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* header 部分的样式 */
+#header{
+    width: 100vw;
+    height: 80px;
+    padding: 0 10vw;
+    box-sizing: border-box;
+    background-color: rgb(249,249,249);
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    position:fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.logo{
+    width: 70px;
+    height: 100%;
+    background: url('../img/logo.png') center/contain no-repeat;
+}
+
+nav{
+    display: flex;
+    align-items:center;
+}
+nav ul{
+    display: flex;
+}
+
+nav ul li{
+    line-height: 80px;
+    padding: 0 1.2vw;
+    position: relative;
+}
+nav li a {
+    color: #777;
+}
+
+nav li::after{
+    content: "";
+    width: 0%;
+    height: 2px;
+    position:absolute;
+    left: 0;
+    bottom: 4px;
+    background-color: #222;
+    transition: .8s;
+}
+
+nav li:hover::after{
+    width: 100%;
+}
+
+/* 汉堡按钮 */
+nav button{
+    width: 50px;
+    height: 50px;
+    background: url("../img/btn.png") center no-repeat;
+    /* 全屏状态下不显示*/
+    display: none;
+}
+
+/* 轮播图部分样式 */
+#pic{
+    width: 100vw;
+    height: 70vh;
+    position: relative;
+    margin-top: 80px;
+    /* border: 1px solid; */
+    overflow: hidden;
+}
+
+#pic ul{
+    width: 300vw;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    left: 0;
+    transition: 1s;
+    /* border: 1px solid red; */
+}
+
+#pic li{
+    width: 100vw;
+    height: 100%;
+}
+#pic li:nth-child(1){
+    background: url("../img/1.jpg") center/cover no-repeat;
+}
+#pic li:nth-child(2){
+    background: url("../img/2.jpg") center/cover no-repeat;
+}
+#pic li:nth-child(3){
+    background: url("../img/3.jpg") center/cover no-repeat;
+}
+
+/* 热销项目部分样式 */
+#project{
+    margin: 50px 0;
+    /* border: 1px solid; */
+}
+
+.title{
+    text-align: center;
+    margin-bottom: 20px;
+    color: #bbb;
+}
+.title h2{
+    font-size: 36px;
+    font-weight: 100;
+}
+
+
+.list{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-around;
+}
+
+/* 项目列表中的具体项目 */
+.list>div{
+    /* 这里我们不给 div 宽度，因为后面我们
+    会通过媒体查询来查询到当前媒体宽度后
+    再来设置宽度 */
+    /* width: 20%; */
+    margin: 15px 0;
+    padding: 20px 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.list img{
+    width: 90%;
+    opacity: .9;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: .3s;
+}
+
+.list p{
+    font-weight: 100;
+    margin-top: 10px;
+}
+
+.list img:hover{
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+/* 页尾部分 */
+#footer{
+    width: 100%;
+    height: 500px;
+    background: url("../img/bottom.jpg") center/cover no-repeat;
+}
+
+/* 最后就是书写响应式部分 */
+
+/* 下面是项目列表部分的媒体查询 */
+@media all and (min-width:768px){
+    /* 当屏幕大于 768px 的时候会应用此样式 */
+    #project .list{
+        width: 720px;
+    }
+    #project .list div{
+        width: 46%;
+    }
+}
+
+@media all and (min-width:992px){
+    /* 当屏幕大于 992px 的时候会应用此样式 */
+    #project .list{
+        width: 960px;
+    }
+    #project .list div{
+        width: 30%;
+    }
+}
+
+@media all and (min-width:1200px){
+    /* 当屏幕大于 1200px 的时候会应用此样式 */
+    #project .list{
+        width: 1140px;
+    }
+    #project .list div{
+        width: 22%;
+    }
+}
+
+/* 下面是 header 和 footer 部分的媒体查询 */
+@media all and (max-width:768px){
+    /* 当宽度小于 768px 的时候会应用此样式 */
+    #header{
+        height: 50px;
+    }
+    nav ul li{
+        line-height: 50px;
+    }
+    #pic{
+        height: 50vh;
+        margin-top: 50px;
+    }
+    #footer{
+        height: 400px;
+    }
+}
+
+@media all and (max-width:576px){
+    /* 当宽度小于 576px 的时候会应用此样式 */
+    nav button{
+        /* 显示出汉堡按钮 */
+        display: block;
+    }
+    nav ul{
+        height: 0;
+        overflow: hidden;
+        transition: .5s;
+        flex-wrap: wrap;
+        position: relative;
+        top: 25px;
+    }
+    nav li{
+        width: 100%;
+        background: #eee;
+        text-align: center;
+        border-bottom: 1px solid #fff;
+    }
+    nav li::after{
+        bottom: 0
+    }
+    #pic{
+        height: 40vh;
+    }
+    #footer{
+        height: 300px;
+    }
+}
+

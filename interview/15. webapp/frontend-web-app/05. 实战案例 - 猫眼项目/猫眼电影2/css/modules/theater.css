@@ -1,0 +1,80 @@
+/* 影院信息样式 */
+.theaterArea {
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    margin-top: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.theaterContainer {
+    width: 9.74rem;
+    margin: 0 auto;
+    border-bottom: .02rem solid #eaeaea;
+    padding: .55rem 0 .5rem 0;
+}
+
+.theaterContainer>h3 {
+    font-size: .45rem;
+    color: #000;
+    font-weight: 400;
+}
+
+.theaterContainer>h3>span {
+    color: #f23e3c;
+}
+
+.theaterContainer>h3>span:nth-child(2) {
+    font-size: .3rem;
+    margin-left: .1rem;
+}
+
+.theaterContainer>p:nth-child(2) {
+    font-size: .36rem;
+    margin-top: .3rem;
+}
+
+.theaterContainer>.label-block {
+    display: flex;
+    font-size: .24rem;
+    margin-top: .2rem;
+}
+
+.theaterContainer>.label-block>div {
+    padding: 0 0.06rem;
+    height: 0.4rem;
+    line-height: .4rem;
+    border-radius: 0.04rem;
+    font-size: .24rem;
+    margin-right: .13rem;
+}
+
+.theaterContainer>.label-block>div.allowRefund,
+.theaterContainer>.label-block>div.endorse {
+    color: #589daf;
+    border: 0.02rem solid #589daf;
+}
+
+.theaterContainer>.label-block>div.snack,
+.theaterContainer>.label-block>div.vipTag {
+    color: #f90;
+    border: 0.02rem solid #f90;
+}
+
+.theaterContainer .discount{
+    font-size: .3rem;
+    margin-top: .3rem;
+    height:.4rem;
+    line-height: .4rem;
+    display: flex;
+    align-items: center;
+}
+
+.theaterContainer .discount::before{
+    content:"";
+    display: inline-block;
+    width: 0.42rem;
+    height: 0.4rem;
+    background: url("../../img/card.png") center/cover no-repeat;
+    margin-right: .05rem;
+}

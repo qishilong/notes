@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<title></title>
+	</head>
+	<body>
+		<!-- 
+			轮播图父级
+				.carousel		轮播图父级
+				.slide			图片过渡效果
+				data-ride="carousel"	页面一加载后就开始播放
+
+			指示符
+				.carousel-indicators		指示符父级
+				data-target="#demo"			对应轮播图父级的id
+				data-slide-to="0"			点击后切换到哪张图片
+				.active						当前激活的指示符样式
+
+			轮播图片
+				.carousel-inner				所有轮播图的父级
+				.carousel-item				单张图片的父级
+				.active						当前激活的图片
+				.carousel-caption			图片对应文字的父级
+			
+			左右箭头
+				.carousel-control-prev		左箭头父级
+				data-slide="prev"			左切换功能
+				.carousel-control-next		右箭头父级
+				data-slide="next"			右切换功能
+				.carousel-control-prev-icon	左箭头图标
+				.carousel-control-next-icon	右箭头图标 		
+		 -->
+		<div id="demo" class="carousel slide" data-ride="carousel">
+			<!-- 指示符 -->
+			<ul class="carousel-indicators">
+				<li data-target="#demo" data-slide-to="0" class="active"></li>
+				<li data-target="#demo" data-slide-to="1"></li>
+				<li data-target="#demo" data-slide-to="2"></li>
+			</ul>
+			
+			<!-- 轮播图片 -->
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img src="images/img_01.jpg">
+					<div class="carousel-caption">
+						<h5>第一张图片</h5>
+						<p>这是第一张图片</p>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img src="images/img_02.jpg">
+				</div>
+				<div class="carousel-item">
+					<img src="images/img_03.jpg">
+				</div>
+			</div>
+			
+			<!-- 左右切换按钮 -->
+			<a class="carousel-control-prev" href="#demo" data-slide="prev">
+				<span class="carousel-control-prev-icon"></span>
+			</a>
+			<a class="carousel-control-next" href="#demo" data-slide="next">
+				<span class="carousel-control-next-icon"></span>
+			</a>
+		</div>
+
+
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	</body>
+</html>

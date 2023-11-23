@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimum-scale=1,maximum-scale=1">
+		<title></title>
+		<style>
+			.em{
+				font-size: 30px;
+				/* font-size: 10px; */
+
+				border: 1px solid #000;
+				width: 10em;	/* 1em=30px */
+				height: 10em;
+			}
+			.em p{
+				font-size: 2em;	/* 1em=30px */
+			}
+
+			html{
+				font-size: 20px;
+			}
+			.rem{
+				width: 10rem;	/* 1rem=20px; */
+				height: 10rem;
+
+				border: 1px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+			em		作为font-size的单位时，其代表父元素的字体大小，作为其他属性单位时，代表自身字体大小			
+					font-size:20px		1em=20px
+					问题：
+						1、chrom下有最小字体限制，必需为12px，所以这个值不能小于12
+						2、如果两个一样的元素，但是里面字体不一样，那就不能统一设置了。或者元素字体变化了，就又要统一设置一遍
+					
+			rem		CSS3新增的一个相对单位，是相对于根元素字体大小；
+
+					r	root
+					html{font-size:20px}		2rem=40px
+		-->
+		<div class="em">
+			<p>em-陈学辉</p>
+		</div>
+		<div class="rem">
+			rem-陈学辉
+		</div>
+	</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimum-scale=1,maximum-scale=1" id="view">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+			}
+			.box div{
+				/* width: 25%; */
+				width: 93.75px;
+				height: 100px;
+				float: left;
+			}
+			.box div:nth-child(1){
+				background: red;
+			}
+			.box div:nth-child(2){
+				background: green;
+			}
+			.box div:nth-child(3){
+				background: blue;
+			}
+			.box div:nth-child(4){
+				background: yellow;
+			}
+		</style>
+		<script>
+			(function(){
+				//获取css像素（viewport没有缩放）
+				var curWidth=document.documentElement.clientWidth;
+				var curWidth=window.innerWidth;
+				var curWidth=window.screen.width;
+				
+				console.log(curWidth);
+
+				var targetWidth=375;
+				var scale=curWidth/targetWidth;
+				console.log(scale);
+
+				var view=document.getElementById('view');
+				console.log(view.content);
+
+				view.content='initial-scale='+scale+',user-scalable=no,minimum-scale='+scale+',maximum-scale='+scale+'';
+			})();
+		</script>
+	</head>
+	<body>
+		<!--
+			viewport缩放适配	把所有机型的设备独立像素设置成一致的
+				1、viewport需要通过js动态的设置（不能直接把device的值设置成数值）
+				2、通过设置比例（初始比例以及缩放比例），把宽度缩放成一致的
+				
+				公式
+					缩放比=css像素/375;
+			
+			375	375	1
+			414	375	
+		-->
+		<img src="images/375.jpg" alt="">
+		<div class="box">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	</body>
+</html>

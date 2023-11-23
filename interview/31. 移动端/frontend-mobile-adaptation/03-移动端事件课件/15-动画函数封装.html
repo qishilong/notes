@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			div{
+				width: 100px;
+				height: 100px;
+				background: green;
+			}
+		</style>
+		<script src="js/tween.js"></script>
+	</head>
+	<body>
+		<div></div>
+		<button>走你</button>
+		<script>
+			const div=document.querySelector('div');
+			const btn=document.querySelector('button');
+
+
+			css(div,{translateX:100,translateY:200});
+			btn.onclick=()=>{
+				tweenMove({
+					el:div,
+					type:'easeOut',
+					to:{	//运动的目的地
+						translateX:100,
+						translateY:200,
+					},
+					time:1000,
+					callBack(){
+						console.log('动画结束了');
+						//动画结束后的回调函数
+					},
+					callIn(){
+						console.log('动画执行中');
+						//动画执行中的回调函数
+					}
+				});
+			};
+		</script>
+	</body>
+</html>

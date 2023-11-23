@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+			}
+			.box{
+				margin-top: 100px;
+				background: green;
+				text-align: center;
+			}
+			.box img{
+				width: 100vw;
+				vertical-align: middle;
+			}
+		</style>
+		<script src="js/swiper.js"></script>
+	</head>
+	<body>
+		<div class="box">
+			<img src="images/img_05.jpg" alt="">
+		</div>
+		<script>
+			var box=document.querySelector('.box');
+			document.addEventListener('touchmove',ev=>ev.preventDefault(),{ passive: false });
+
+			gesTure({
+				el:box,
+				change(ev){
+					css(box,{scale:this.scale});
+				},
+			});
+		</script>
+	</body>
+</html>

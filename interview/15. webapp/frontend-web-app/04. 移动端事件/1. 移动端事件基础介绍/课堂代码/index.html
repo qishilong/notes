@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+        } */
+        /* 事件穿透 */
+        /* * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 200px;
+            height: 200px;
+            background: green;
+            color: #fff;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0.5;
+        }
+
+        input {
+            border: 1px solid #000;
+        } */
+
+        /* 阻止默认行为所带来的问题 */
+        body {
+            margin: 0;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            line-height: 50px;
+        }
+
+        li a {
+            font-size: 30px;
+        }
+
+        input {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="container"></div> -->
+    <!-- 事件穿透 -->
+    <!-- <a href="http://www.baidu.com/">度娘</a><br>
+    <input type="text">
+    <p>这是一个段落</p>
+    <div class="container"></div> -->
+
+    <!-- 阻止默认行为所带来的新的问题 -->
+    <div class="page">
+        <img src="./ok.png" alt="" width="100%">
+        <input type="text">
+        <ul>
+            <li><a href="http://www.baidu.com">度娘</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+            <li><a href="#">这是一个很长很长的链接</a></li>
+        </ul>
+    </div>
+
+    <div class="page2">
+        <!-- ... -->
+    </div>
+
+    <script>
+        // var box = document.querySelector('.container');
+        // box.addEventListener("click", function (e) {
+        //     console.log("click 事件");
+        // });
+        // box.addEventListener("touchstart", function () {
+        //     console.log("touchstart 事件");
+        // });
+        // box.addEventListener("touchmove", function () {
+        //     console.log("手指移动事件");
+        // });
+        // box.addEventListener("touchend", function () {
+        //     console.log("手抬起事件");
+        // });
+        // box.addEventListener("mousemove",function () {
+        //     console.log("mousemove");
+        // })
+        // box.addEventListener("mouseup",function () {
+        //     console.log("mouseup");
+        // })
+
+        // 事件穿透
+        // var box = document.querySelector('.container');
+        // box.addEventListener('touchstart', (e) => {
+        //     box.style.display = 'none';
+        //     e.preventDefault();
+        // });
+
+        // const p = document.querySelector('p');
+        // p.addEventListener('click', () => {
+        //     alert('该段落被点击了');
+        // });
+
+        // 阻止默认行为所带来的问题
+        const page = document.querySelector('.page');
+        document.addEventListener('touchstart', ev => {
+            ev.preventDefault();
+        }, {
+            passive : false
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="oCanvas" width="1000" height="1000"></canvas>
+    <script type="notjs" id="vertex">
+        /*
+            顶点着色器 
+        */
+        attribute vec4 a_position;
+        attribute vec2 a_TexCoord;
+        varying vec2 v_TexCoord;
+        void main() {
+            gl_Position = a_position;
+            v_TexCoord = a_TexCoord;
+
+        }
+    </script>
+    <script type="notjs" id="fragment">
+        /*
+            片元着色器 ： 绘制颜色或者纹理的 —— 水彩的作用
+        */
+        precision mediump float;
+        varying vec2 v_TexCoord;
+        uniform sampler2D u_Sampler;
+        void main() {
+            gl_FragColor = texture2D(u_Sampler, v_TexCoord);
+        }
+
+    </script>
+    <script>
+        var canvas = document.getElementById('oCanvas');
+        var gl = canvas.getContext('webgl');
+        if (!gl) {
+            console.log('浏览器不兼容webgl');
+        }
+
+        var vertex = document.getElementById('vertex').innerText;
+        var fragment = document.getElementById('fragment').innerText;
+
+        // 顶点着色器 gl.VERTEX_SHADER   片元着色器 gl.FRAGMENT_SHADER;
+        function createShader(gl, type, source) {
+            var shader = gl.createShader(type);
+            //  添加数据源
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+
+            var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+            if (success) {
+                return shader;
+            }
+            console.log(gl.getShaderInfoLog(shader));
+        }
+
+        var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertex);
+        var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragment);
+
+        function createProgram(gl, vertexShader, fragmentShader) {
+            var program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+            var success = gl.getProgramParameter(program, gl.LINK_STATUS);
+            if (success) {
+                return program;
+            }
+            console.log(gl.getProgramInfoLog(program));
+        }
+        var program = createProgram(gl, vertexShader, fragmentShader);
+        gl.useProgram(program);
+
+        var a_TexCoord = gl.getAttribLocation(program, 'a_TexCoord');
+        var a_position = gl.getAttribLocation(program, 'a_position');
+        // 设置纹理坐标
+
+        var verticesTexCoords = new Float32Array([
+            -0.5, 0.5, 0, 1,
+            0.5, 0.5, 1, 1,
+            0.5, 0,  1, 0,
+            0.5, 0,  1, 0,
+            -0.5, 0,  0, 0,
+            -0.5, 0.5, 0, 1
+        ]);
+        var vertexBuffer = gl.createBuffer();
+        var FSIZE = verticesTexCoords.BYTES_PER_ELEMENT;
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, verticesTexCoords, gl.STATIC_DRAW);
+        gl.vertexAttribPointer(a_position, 2, gl.FLOAT, true, FSIZE * 4, 0);
+        gl.enableVertexAttribArray(a_position);
+        gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, true,  FSIZE * 4, FSIZE * 2);
+        gl.enableVertexAttribArray(a_TexCoord);
+
+        // 创建纹理
+        var texture = gl.createTexture();
+        // 获取到纹理图像存储位置
+        var u_Sampler = gl.getUniformLocation(program, "u_Sampler");
+        // 新建图像对象
+        var img = new Image();
+        img.onload = function () {
+           loadTexture(gl, 6, texture, u_Sampler, img);
+        }
+        function loadTexture(gl, n, texture, u_Sampler, img) {
+             // 对纹理图像进行y轴反转
+             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+            // 激活纹理单元
+            gl.activeTexture(gl.TEXTURE0);
+            // 绑定纹理对象
+            gl.bindTexture(gl.TEXTURE_2D, texture);
+            // gl.generateMipmap(gl.TEXTURE_2D);
+            // 配置纹理参数
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.CLAMP_TO_EDGE);
+            // 配置纹理图像
+            // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+            // gl.generateMipmap(gl.TEXTURE_2D);
+            // 将0号纹理传递给着色器中的取样器变量
+            gl.uniform1i(u_Sampler, 0);
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+        }
+        img.src="./4.jpg";
+        
+
+        
+        
+
+
+    </script>
+</body>
+
+</html>

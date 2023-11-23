@@ -1,0 +1,8 @@
+@function vw($px){
+    @return $px / 750 * 100vw;
+}
+
+div{
+    width: vw(250);
+    height: vw(250);
+}

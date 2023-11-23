@@ -1,0 +1,127 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>聚光灯</title>
+</head>
+<body>
+    <script src="./three.js"></script>
+    <script>
+        var clipPlane = [
+            // 延yoz平面切割
+            new THREE.Plane(new THREE.Vector3(1, 0, 0), 0),
+            new THREE.Plane(new THREE.Vector3(0, -1, 0), 0),
+            new THREE.Plane(new THREE.Vector3(0, 0, -1), 0),
+        ];
+        var scene = null;
+        var camera = null;
+        var renderer = null;
+        var sphere = null;
+        var light = null;
+        var rectLight = null;
+        // 初始化函数
+        function init () {
+            // 场景
+            scene = new THREE.Scene();
+            // 相机
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 10, 1000);
+            camera.position.z = 100;
+            // camera.position.y = -50;
+            // camera.position.y = -10;
+            // 渲染器
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.localClippingEnabled = true;
+            // renderer.setClearColor(0xffffff);
+            // 渲染器允许渲染阴影
+            renderer.shadowMap.enabled = true;
+            document.body.appendChild(renderer.domElement);
+            // 创建几何体
+            sphere = createSphereGeometry(10, 0x00ffff);
+            // 物体和灯光允许生成阴影
+            sphere.castShadow = true; 
+            sphere.position.set(-10, 0, -10)
+            scene.add(sphere);
+            // 添加环境光
+            // var ambientLight = new THREE.AmbientLight( 0xffffff, 1 ); // soft white light
+            // scene.add(ambientLight);
+            // // 添加点光源
+            // light = new THREE.PointLight(0xffffff, 1, 100 );
+            // light.position.set( 50, 0, 0 );
+            // // 给点光源的位置添加几何体
+            // var lightSphere = createSphereGeometry(1, 0xffffff);
+            // light.add(lightSphere);
+
+            // scene.add( light );
+            // rectLight = new THREE.RectAreaLight( 0xffffff, 1,  20, 20 );
+            // rectLight.position.set( 20, 0, 0 );
+            // rectLight.lookAt( 0, 0, 0 );
+            // scene.add( rectLight );
+            // 添加聚光灯
+            var spotLight = new THREE.SpotLight( 0xffffff);
+            // 设置聚光灯的位置
+            spotLight.position.set( -40, 40, 0 );
+            spotLight.castShadow = true;
+            spotLight.shadow.mapSize.width = 1024;  // default
+            spotLight.shadow.mapSize.height = 1024; // default
+            // 
+            spotLight.distance = 10000;
+            spotLight.angle = Math.PI/3;
+            spotLight.penumbra = 0.5;
+            spotLight.shadow.camera.near = 10;       // default
+            spotLight.shadow.camera.far = 1000;      // default
+            spotLight.target = sphere;
+            scene.add(spotLight)
+            // 接受阴影的物体 需要允许接受阴影 
+            var plane = createPlaneGeometry(1000, 1000);
+            plane.position.y = -10;
+            plane.rotation.x = 90;
+            plane.receiveShadow = true;
+            scene.add(plane);
+            // rectLight.add(plane);
+            
+            animate();
+        }
+        //    创建球体
+        function createSphereGeometry(radius, color) {
+            var sphere = new THREE.SphereBufferGeometry(radius, 30, 30);
+            var material = new THREE.MeshStandardMaterial({
+                color: new THREE.Color(color),
+                side: THREE.DoubleSide,
+            });
+            var sphere = new THREE.Mesh(sphere, material);
+            return sphere;
+        }
+        function createPlaneGeometry(width, height) {
+            var geometry = new THREE.PlaneBufferGeometry( width, height);
+            var material = new THREE.MeshPhysicalMaterial( {side: THREE.BackSide, color: 0xdddddd} );
+            // var materialBack = new THREE.MeshBasicMaterial({color: 0xff0000});
+            var plane = new THREE.Mesh( geometry, material );
+            // var planeBack = new THREE.Mesh(geometry, materialBack);
+            // plane.add(planeBack);
+            return plane;
+        }
+        // var sphereGeometry = new THREE.SphereBufferGeometry(10, 30, 30);
+        var deg = 0;
+        // 动画效果
+        function animate() {
+            requestAnimationFrame(animate);
+            deg += 1;
+            // camera.position.z = camera.position.z % 100 + 50;
+            // camera.position.x = camera.position.x % 
+            // camera.rotation.y += 0.1;
+            sphere.rotation.y += 0.1;
+            // rectLight.position.set(20 * Math.cos(deg * Math.PI / 180), 0, 20 * Math.sin(deg * Math.PI / 180));
+            // rectLight.lookAt(0, 0, 0);
+            camera.lookAt(new THREE.Vector3(0, 0, 0));
+            renderer.render(scene, camera);
+        }
+        
+        init();
+    </script>
+</body>
+</html>

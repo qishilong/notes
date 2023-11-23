@@ -1,0 +1,42 @@
+[
+    {
+        "imgURL" : "/img/actors/jiabing.jpeg", 
+        "title" : "贾冰"
+    },
+    {
+        "imgURL" : "/img/actors/qiude.jpeg", 
+        "title" : "裘德·洛"
+    },
+    {
+        "imgURL" : "/img/actors/renmin.jpeg", 
+        "title" : "任敏"
+    },
+    {
+        "imgURL" : "/img/actors/yuwenwen.jpeg", 
+        "title" : "于文文"
+    },
+    {
+        "imgURL" : "/img/actors/zhangchenguang.jpeg", 
+        "title" : "张晨光"
+    },
+    {
+        "imgURL" : "/img/actors/jiantian.jpeg", 
+        "title" : "菅田将晖"
+    },
+    {
+        "imgURL" : "/img/actors/youcunjiachun.jpeg", 
+        "title" : "有村架纯"
+    },
+    {
+        "imgURL" : "/img/actors/xinyunlai.jpeg", 
+        "title" : "辛云来"
+    },
+    {
+        "imgURL" : "/img/actors/wensong.jpeg", 
+        "title" : "文松"
+    },
+    {
+        "imgURL" : "/img/actors/yuehan.jpeg", 
+        "title" : "约翰·布莱德利"
+    }
+]

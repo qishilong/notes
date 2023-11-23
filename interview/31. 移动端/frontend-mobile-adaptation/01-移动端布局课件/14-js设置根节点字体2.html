@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+			}
+
+			div{
+				background: green;
+				float: left;
+				/* 
+					93.75/16=5.859375rem
+				 */
+				
+				/* width: 5.859375rem;
+				height: 5.859375rem; */
+
+				/* 
+					187.5px
+				 */
+				 width: 1.875rem;
+				 height: 1.875rem;
+			}
+			img{
+				width: 7.5rem;
+			}
+		</style>
+		<script>
+			(function(doc, win, designWidth) {
+				const html = doc.documentElement;
+				//const dpr = win.devicePixelRatio;	//dpr
+				
+				const refreshRem = () => {
+					const clientWidth = html.clientWidth;
+					if (clientWidth >= designWidth) { //给宽度一个最大值，如果设备的宽度已经超过设计稿的尺寸了，统一按一个值去算（传的第三个参数）
+						html.style.fontSize = '100px';
+					} else {
+						//html.style.fontSize= 16 * clientWidth / 375 + 'px';
+						html.style.fontSize = 100 * (clientWidth / designWidth) + 'px';
+					}
+				};
+				
+				//dom加载完的一个事件
+				doc.addEventListener('DOMContentLoaded', refreshRem);
+			})(document, window, 750);
+
+			/*
+				16 * clientWidth / 375 
+					=> clientWidth / 375 * 16 
+					=> clientWidth / (375 / 16)
+
+				//这么写的目的是为了找一个基准点，就是iphone6
+
+				320 / (375 / 16) = 13.653;	iphone5	
+				375 / (375 / 16) = 16;		iphone6
+				414 / (375 / 16) = 17.664;	iphone6 p
+
+				320 / 16 = 20;
+				375 / 16 = 23.4375;
+				424 / 16 = 26.5
+			 */
+		</script>
+	</head>
+	<body>
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+		<img src="images/img_12.jpg" alt="">
+	</body>
+</html>

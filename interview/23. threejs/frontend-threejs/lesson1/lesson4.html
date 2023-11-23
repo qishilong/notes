@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>几何体-自定义几何体</title>
+</head>
+<body>
+    <script src="./three.js"></script>
+    <script>
+        // 创建场景
+        var scene = new THREE.Scene();
+        // 创建相机   远景相机  和 正交相机
+        var camera = new THREE.OrthographicCamera(- window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2, 10, 1000);
+        // 渲染器 
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0xffffff);
+        document.body.appendChild(renderer.domElement);
+        // 创建几何体
+        var geometry = new THREE.Geometry();
+        var p0 = new THREE.Vector3(-100, 100, 0);
+        var p1 = new THREE.Vector3(100, 100, 0);
+        var p2 = new THREE.Vector3(100, -100, 0);
+        var p3 = new THREE.Vector3(-100, -100, 0);
+        var p4 = new THREE.Vector3(-100, -100, -100);
+        var p5 = new THREE.Vector3(-100, 100, -100);
+        // p0.color = new THREE.Color(0xff0000);
+        // p1.color = new THREE.Color(0x00ff00);
+        // p2.color = new THREE.Color(0x0000ff);
+        // p3.color = new THREE.Color(0xffff00);
+        geometry.vertices.push(p0, p1, p2, p3, p4, p5);
+        var face1 = new THREE.Face3(0, 3, 2, null, [new THREE.Color(0xff0000),new THREE.Color(0xff00), new THREE.Color(0x00ff00)]);
+        var face2 = new THREE.Face3(0, 2, 1, null, [new THREE.Color(0xff0000), new THREE.Color(0x0000ff), new THREE.Color(0x00ff00)] );
+        var face3 = new THREE.Face3(3, 5, 4, null, new THREE.Color(0x00ff00));
+        var face4 = new THREE.Face3(3, 0, 5, null, new THREE.Color(0xff0000));
+        // face1.vertexColors = [new THREE.Color(0xff0000),new THREE.Color(0xff00), new THREE.Color(0x00ff00)];
+        // face2.vertexColors = [new THREE.Color(0xff0000), new THREE.Color(0x0000ff), new THREE.Color(0x00ff00)];
+        geometry.faces.push(face1, face2, face3, face4);
+        console.log(geometry)
+        // 材质
+        // color: 0xffffff
+        var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.VertexColors, side: THREE.DoubleSide} );
+        var cube = new THREE.Mesh( geometry, material );
+        scene.add(cube);
+        camera.position.z = 500;
+     
+        function animate() {
+            // console.log(cube);
+            requestAnimationFrame(animate);
+            // cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate()
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <p>类型: <span id="type"></span></p>
+      <p>角度: <span id="angle"></span></p>
+    </div>
+    <div>
+      <select id="mode">
+        <option value="portrait-primary">portrait-primary</option>
+        <option value="portrait-secondary">portrait-secondary</option>
+        <option value="landscape-primary">landscape-primary</option>
+        <option value="landscape-secondary">landscape-secondary</option>
+      </select>
+      <button id="lock">lock</button>
+      <button id="unlock">unlock</button>
+    </div>
+    <script>
+      const btn_lock = document.getElementById("lock");
+      const btn_unlock = document.getElementById("unlock");
+      const sel_mode = document.getElementById("mode");
+      const txt_type = document.getElementById("type");
+      const txt_angle = document.getElementById("angle");
+
+      // 锁定屏幕
+      btn_lock.addEventListener("click", function () {
+        document.documentElement.requestFullscreen().then(() => {
+          screen.orientation.lock(sel_mode.value).catch(() => {
+            alert("锁定失败");
+          });
+        });
+      });
+
+      // 解锁屏幕
+      btn_unlock.addEventListener("click", function () {
+        screen.orientation.unlock();
+      })
+
+      function updateTxt() {
+        txt_type.innerHTML = screen.orientation.type;
+        txt_angle.innerHTML = screen.orientation.angle;
+      }
+
+      screen.orientation.addEventListener("change", updateTxt);
+
+      window.addEventListener("load", updateTxt);
+    </script>
+  </body>
+</html>

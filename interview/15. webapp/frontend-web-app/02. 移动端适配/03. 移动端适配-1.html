@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta id="view" name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Document</title>
+    <script>
+        (function () {
+
+            // viewport 缩放成固定的 CSS 宽度
+
+            // // 获取设备宽度
+            // var curWidth = document.documentElement.clientWidth;
+            // // 计算缩放的尺寸
+            // var targetWidth = 375;
+            // var scale = curWidth / targetWidth;
+            // view.content = 'initial-scale=' + scale + ',user-scalable=no,minimum-scale=' + scale + ',maximum-scale=' + scale + '';
+
+            // viewport 缩放成物理像素
+            // 以 iPhone 6/7/8
+            // 750px * 缩放值 = 375px => 缩放值 = 375px / 750px => 缩放值 = 1/2 => 缩放值 = 1/DPR
+            var scale = 1 / window.devicePixelRatio;
+            view.content = 'initial-scale=' + scale + ',user-scalable=no,minimum-scale=' + scale + ',maximum-scale=' + scale + '';
+        })()
+
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 375px;
+            height: 50px;
+            background-color: #333;
+            margin-bottom: 15px;
+        }
+
+        .list div {
+            width: 93.75px;
+            height: 100px;
+            float: left;
+        }
+
+        .list div:nth-child(1) {
+            background: red;
+        }
+
+        .list div:nth-child(2) {
+            background: green;
+        }
+
+        .list div:nth-child(3) {
+            background: blue;
+        }
+
+        .list div:nth-child(4) {
+            background: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container"></div>
+    <div class="list">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
+
+</html>

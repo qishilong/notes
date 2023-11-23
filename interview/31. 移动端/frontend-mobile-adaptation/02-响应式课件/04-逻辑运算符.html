@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 200px;
+				height: 200px;
+				background: red;
+			}
+
+			/* 所有设备、宽度必需大于700px、横屏，这三个条件同时满足才为true */
+			@media (min-width:700px) and (orientation:landscape){
+				div{
+					background: green;
+				}
+			}
+
+			/* 屏幕尺寸要小于800px, 横屏，这两个只要有一个满足，整个条件就会满足*/
+			@media (max-width:800px),(orientation:landscape){
+				div{
+					background: pink;
+				}
+			}
+
+			/* 屏幕的尺寸大于800，这个条件才能成立 */
+			@media not all and (max-width:800px){
+				div{
+					background: blue;
+				}
+			}
+
+			/* 彩色的屏幕，宽度大于1000px，这两个条件同时满足，整体条件才满足 */
+			@media only screen and (min-width:1000px){
+				div{
+					background: grey;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+			逻辑运算符		用来做条件判断的
+				and		合并多个媒体类型（并且的意思）
+				,		匹配某个媒体查询（或者的意思）
+				not		对媒体查询结果取反（不能单独使用，后面必需是复合语句）
+				only	仅在媒体查询匹配成功后应用指定样式（防范老旧浏览器）
+		-->
+		<div></div>
+	</body>
+</html>

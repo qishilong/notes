@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			.box{
+				width: 200px;
+				height: 200px;
+				background: green;
+				color: #fff;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">kaivon</div>
+		<script>
+			/* 
+				https://www.cnblogs.com/LuckyWinty/p/8052540.html
+
+				Mac下iphone的调试方法
+					1、用数据线连接mac与iphone
+					2、iphone里打开Web检查器：设置 → Safari → 高级 → Web检查器
+					3、iphone里用Safari打开一个页面
+					4、Mac里打开Safari：开发 → 点击自己的用户名 → 点击页面地址
+			 */
+			
+			const box=document.querySelector('.box');
+			box.addEventListener('touchstart',()=>{
+				console.log(box.innerHTML);
+			})
+		</script>
+	</body>
+</html>

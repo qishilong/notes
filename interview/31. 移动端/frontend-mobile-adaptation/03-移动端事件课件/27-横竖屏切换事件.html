@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			/* 
+				window.orientation	检测横竖屏
+					0		竖屏（头朝上）
+					180		竖屏（头朝下）
+					90		横屏（头朝左）
+					-90		横屏（头朝右）
+
+				orientationchange	模竖屏幕切换事件(window身上的，ios中也可以加给document，但是不建议这么使用)	
+			 */
+			//alert(window.orientation);
+
+			window.addEventListener('orientationchange',()=>{
+				if(window.orientation==90 || window.orientation==-90){
+					alert('横屏');
+				}else if(window.orientation==0 || window.orientation==180){
+					alert('竖屏');
+				}
+			});
+		</script>
+	</body>
+</html>

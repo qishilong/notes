@@ -1,0 +1,250 @@
+#app {
+    height: 100%;
+}
+
+html,
+body {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* 上方选项区域样式 */
+.optionArea {
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    position: fixed;
+    top: 4.25rem;
+    z-index: 120;
+}
+
+.optionContainer {
+    width: 9.74rem;
+    height: 1.08rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: .02rem solid #eaeaea;
+    box-sizing: border-box;
+}
+
+.option {
+    width: 100%;
+    height: 0.54rem;
+    display: flex;
+}
+
+.option>div {
+    width: 33.33%;
+    font-size: .36rem;
+    color: #b2b2b2;
+    text-align: center;
+    line-height: 0.54rem;
+    border-right: .01rem solid #b0b0b0;
+    position: relative;
+}
+
+.option>div:last-child {
+    border: none;
+}
+
+.option>div::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border: 0.1rem solid transparent;
+    border-top-color: #b0b0b0;
+    margin: .1rem .1rem 0 .1rem;
+    position: absolute;
+    top: 25%;
+}
+
+.option>div.chosenTitle {
+    color: #e74438;
+}
+
+.option>div.chosenTitle::after {
+    transform: rotate(180deg);
+    border-top-color: #e74438;
+    top: 0;
+}
+
+
+/* 选项区域下方样式 */
+.optionContainer .closeTab {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+
+/* 全城隐藏区域 */
+
+.closeTab .cityTabContent {
+    width: 100%;
+    height: 11.7rem;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    top: 1.08rem;
+    font-size: .4rem;
+}
+
+.cityTabContent .cityTabContentTop {
+    width: 100%;
+    height: 1.2rem;
+    display: flex;
+}
+
+.cityTabContentTop>div {
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    line-height: 1.2rem;
+    font-size: .4rem;
+    box-sizing: border-box;
+}
+
+.cityTabContentTop>div:nth-child(1) {
+    color: #f43b32;
+    border-bottom: .03rem solid #f43b32;
+}
+
+.cityTabContentBottom {
+    height: 10.5rem;
+    width: 100%;
+    display: flex;
+}
+
+.cityTabContentBottom ul li {
+    height: 1.2rem;
+    line-height: 1.2rem;
+}
+
+.cityTabContentBottom .city_left {
+    width: 35%;
+    height: 100%;
+}
+
+.city_left ul li {
+    background-color: #fff;
+    text-indent: .3rem;
+}
+
+.city_left ul li:nth-child(2) {
+    background-color: #f6f6f6;
+}
+
+.cityTabContentBottom .city_right {
+    width: 65%;
+    height: 100%;
+}
+
+.city_right ul li {
+    width: 100%;
+    background-color: #f6f6f6;
+    box-sizing: border-box;
+    padding: 0 .28rem 0 .65rem;
+}
+
+
+/* 品牌隐藏区域 */
+.closeTab .brandTabContent {
+    width: 100%;
+    height: 9.65rem;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    top: 1.08rem;
+    font-size: .4rem;
+}
+
+.brandTabContent ul li {
+    width: 100%;
+    height: 1.2rem;
+    border-bottom: .03rem solid #e6e6e6;
+    padding: 0 .6rem 0 .7rem;
+    box-sizing: border-box;
+}
+
+
+/* 特色隐藏区域 */
+.closeTab .specialTabContent {
+    width: 100%;
+    height: 7.75rem;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    top: 1.08rem;
+    font-size: .4rem;
+}
+
+.specialTabContent h3 {
+    font-size: .4rem;
+    margin: .46rem 0 .35rem .4rem;
+    color: #717171;
+}
+
+.specialTabContent .specialItemContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.specialTabContent .specialItem {
+    width: 2.22rem;
+    height: 1.04rem;
+    border: .03rem solid #cdcdcd;
+    line-height: 1.04rem;
+    text-align: center;
+    border-radius: .1rem;
+    margin-left: .3rem;
+    margin-bottom: .3rem;
+    font-size: .28rem;
+}
+
+.specialTabBtn {
+    width: 100%;
+    height: 1.7rem;
+    background-color: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 .3rem;
+    box-sizing: border-box;
+}
+
+.specialTabBtn>button {
+    font-size: .36rem;
+    width: 2.3rem;
+    height: 0.94rem;
+    border: .03rem solid #cdcdcd;
+    border-radius: .2rem;
+    background-color: transparent;
+}
+
+.specialTabBtn>button:nth-child(2) {
+    background-color: #f03e37;
+    color: #fff;
+    border: .03rem solid #f03e37;
+}
+
+
+/* 遮罩层 */
+.blacker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, .3);
+    z-index: 110;
+}

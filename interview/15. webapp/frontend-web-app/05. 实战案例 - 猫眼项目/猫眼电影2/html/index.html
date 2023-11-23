@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猫眼电影 - 娱乐看猫眼</title>
+    <link rel="shortcut icon" href="//s0.meituan.net/bs/?f=myfe/canary:/img/faviconmy.ico">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/modules/hotMovies.css">
+    <link rel="stylesheet" href="../css/modules/theater.css">
+    <script>
+        (function (doc, win, designWidth) {
+            var html = doc.documentElement;
+            function refreshRem() {
+                var clientWidth = html.clientWidth;
+                if (clientWidth >= designWidth) {
+                    html.style.fontSize = '100px';
+                } else {
+                    html.style.fontSize = 100 * (clientWidth / designWidth) + 'px';
+                }
+            };
+            doc.addEventListener('DOMContentLoaded', refreshRem);
+        })(document, window, 1080);
+    </script>
+</head>
+
+<body>
+    <!-- 整体的头部 -->
+    <div class="header">
+        <!-- 里面分为两个部分 -->
+        <!-- 头部 -->
+        <header>
+            猫眼电影
+            <!-- 汉堡按钮 -->
+            <button></button>
+        </header>
+        <!-- logo 部分 -->
+        <div class="logo between">
+            <!-- 左边部分 -->
+            <div class="logo_left"></div>
+            <!-- 右边部分 -->
+            <div class="logo_right between">
+                <a href="#">发现最新最热电影</a>
+                <span class="split"></span>
+                <a href="#">
+                    打开App
+                    <img src="../img/rightarrow.png" alt="">
+                </a>
+            </div>
+        </div>
+        <!-- 头部导航 -->
+        <section class="topbar between">
+            <!-- 地区 -->
+            <div class="area center">
+                <a href="#">成都</a>
+                <i class="city-entey-arrow"></i>
+            </div>
+            <!-- 二级导航 -->
+            <ul class="between" id="topNav">
+                <li>
+                    <a href="#" class="active" id="hotmovie">热映</a>
+                </li>
+                <li>
+                    <a href="#" id="theater">影院</a>
+                </li>
+                <li>
+                    <a href="#" id="willComing">待映</a>
+                </li>
+                <li>
+                    <a href="#" id="classicMovie">经典电影</a>
+                </li>
+            </ul>
+            <!-- 搜索 -->
+            <a href="./search.html" class="search"></a>
+        </section>
+    </div>
+
+    <!-- 选项区域 -->
+    <div class="optionArea hidden">
+        <!-- 整个选项区域分为两个部分 -->
+        <!-- 上方的选项部分 -->
+        <div class="optionContainer">
+            <div class="option">
+                <div class="optionTab city" data-id="0" id="city">全城</div>
+                <div class="optionTab brand" data-id="1" id="brand">品牌</div>
+                <div class="optionTab special" data-id="2" id="special">特色</div>
+            </div>
+        </div>
+        <!-- 下方的隐藏选项卡内容部分 -->
+        <div class="closeTab hidden">
+            <!-- 全城 -->
+            <div class="cityTabContent optionTabContent" id="cityTabContent">
+                <div class="cityTabContentTop">
+                    <div>商区</div>
+                    <div>地铁站</div>
+                </div>
+                <div class="cityTabContentBottom">
+                    <div class="city_left swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            <ul class="swiper-slide">
+                                <li>全部(299)</li>
+                                <li>武侯区(42)</li>
+                                <li>双流区(42)</li>
+                                <li>成华区(42)</li>
+                                <li>郫都区(42)</li>
+                                <li>新都区(42)</li>
+                                <li>锦江区(42)</li>
+                                <li>金牛区(42)</li>
+                                <li>青羊区(42)</li>
+                                <li>龙泉驿区(42)</li>
+                                <li>温江区(42)</li>
+                                <li>都江堰区(42)</li>
+                                <li>金堂县(42)</li>
+                                <li>崇州市(42)</li>
+                                <li>青白江区(42)</li>
+                                <li>彭州市(42)</li>
+                                <li>邛崃市(42)</li>
+                                <li>大邑县(42)</li>
+                                <li>蒲江区(42)</li>
+                                <li>简阳市(42)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="city_right swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            <ul class="swiper-slide">
+                                <li class="between"><span>全部</span><span>42</span></li>
+                                <li class="between"><span>高新区</span><span>42</span></li>
+                                <li class="between"><span>科华北路</span><span>42</span></li>
+                                <li class="between"><span>玉林/芳草街</span><span>42</span></li>
+                                <li class="between"><span>双楠</span><span>42</span></li>
+                                <li class="between"><span>武侯祠</span><span>42</span></li>
+                                <li class="between"><span>中粮大悦城</span><span>42</span></li>
+                                <li class="between"><span>保利花园</span><span>42</span></li>
+                                <li class="between"><span>红牌楼</span><span>42</span></li>
+                                <li class="between"><span>簇桥</span><span>42</span></li>
+                                <li class="between"><span>金花</span><span>42</span></li>
+                                <li class="between"><span>高升桥</span><span>42</span></li>
+                                <li class="between"><span>龙湖金楠天街</span><span>42</span></li>
+                                <li class="between"><span>机投</span><span>42</span></li>
+                                <li class="between"><span>伊藤/世豪广场</span><span>42</span></li>
+                                <li class="between"><span>武侯万达</span><span>42</span></li>
+                                <li class="between"><span>磨子桥</span><span>42</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 品牌 -->
+            <div class="brandTabContent optionTabContent hidden" id="brandTabContent">
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <ul class="swiper-slide">
+                            <li class="between"><span>全部</span><span>299</span></li>
+                            <li class="between"><span>太平洋电影城</span><span>49</span></li>
+                            <li class="between"><span>万达影城</span><span>49</span></li>
+                            <li class="between"><span>星美国际影城</span><span>49</span></li>
+                            <li class="between"><span>太平洋电影城</span><span>49</span></li>
+                            <li class="between"><span>CGV影城</span><span>49</span></li>
+                            <li class="between"><span>横店影城</span><span>49</span></li>
+                            <li class="between"><span>EVO艺威影城</span><span>49</span></li>
+                            <li class="between"><span>橙天嘉禾影城</span><span>49</span></li>
+                            <li class="between"><span>UME影城</span><span>49</span></li>
+                            <li class="between"><span>保利万和国际影城</span><span>49</span></li>
+                            <li class="between"><span>卢米埃影城</span><span>49</span></li>
+                            <li class="between"><span>星光影城</span><span>49</span></li>
+                            <li class="between"><span>金逸影城</span><span>49</span></li>
+                            <li class="between"><span>幸福蓝海国际影城</span><span>49</span></li>
+                            <li class="between"><span>大地影城</span><span>49</span></li>
+                            <li class="between"><span>中影南方国际影城</span><span>49</span></li>
+                            <li class="between"><span>苏宁影城</span><span>49</span></li>
+                            <li class="between"><span>橙天国际影城</span><span>49</span></li>
+                            <li class="between"><span>保利国际影城</span><span>49</span></li>
+                            <li class="between"><span>太平洋电影城</span><span>49</span></li>
+                            <li class="between"><span>万达影城</span><span>49</span></li>
+                            <li class="between"><span>星美国际影城</span><span>49</span></li>
+                            <li class="between"><span>太平洋电影城</span><span>49</span></li>
+                            <li class="between"><span>CGV影城</span><span>49</span></li>
+                            <li class="between"><span>横店影城</span><span>49</span></li>
+                            <li class="between"><span>EVO艺威影城</span><span>49</span></li>
+                            <li class="between"><span>橙天嘉禾影城</span><span>49</span></li>
+                            <li class="between"><span>UME影城</span><span>49</span></li>
+                            <li class="between"><span>保利万和国际影城</span><span>49</span></li>
+                            <li class="between"><span>卢米埃影城</span><span>49</span></li>
+                            <li class="between"><span>星光影城</span><span>49</span></li>
+                            <li class="between"><span>金逸影城</span><span>49</span></li>
+                            <li class="between"><span>幸福蓝海国际影城</span><span>49</span></li>
+                            <li class="between"><span>大地影城</span><span>49</span></li>
+                            <li class="between"><span>中影南方国际影城</span><span>49</span></li>
+                            <li class="between"><span>苏宁影城</span><span>49</span></li>
+                            <li class="between"><span>橙天国际影城</span><span>49</span></li>
+                            <li class="between"><span>保利国际影城</span><span>49</span></li>
+                            <li class="between"><span>其他</span><span>115</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- 特色 -->
+            <div class="specialTabContent optionTabContent hidden" id="soecialTabContent">
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <h3>特色功能</h3>
+                            <div class="specialItemContainer">
+                                <div class="specialItem">全部</div>
+                                <div class="specialItem">可改签</div>
+                                <div class="specialItem">可退票</div>
+                            </div>
+                            <h3>特殊厅</h3>
+                            <div class="specialItemContainer">
+                                <div class="specialItem">全部</div>
+                                <div class="specialItem">IMAX厅</div>
+                                <div class="specialItem">CGS中国巨...</div>
+                                <div class="specialItem">杜比全景声厅</div>
+                                <div class="specialItem">4DX厅</div>
+                                <div class="specialItem">儿童厅</div>
+                                <div class="specialItem">4K厅</div>
+                                <div class="specialItem">40帧厅</div>
+                                <div class="specialItem">60帧厅</div>
+                                <div class="specialItem">巨幕厅</div>
+                                <div class="specialItem">IMAX厅</div>
+                                <div class="specialItem">CGS中国巨...</div>
+                                <div class="specialItem">杜比全景声厅</div>
+                                <div class="specialItem">4DX厅</div>
+                                <div class="specialItem">儿童厅</div>
+                                <div class="specialItem">4K厅</div>
+                                <div class="specialItem">40帧厅</div>
+                                <div class="specialItem">60帧厅</div>
+                                <div class="specialItem">巨幕厅</div>
+                                <div class="specialItem">LUXE巨幕厅</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="specialTabBtn">
+                    <button>重置</button>
+                    <button>确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 中间部分：单页应用 -->
+    <section id="tabContainer" class="swiper mySwiper"></section>
+
+    <!-- 底部导航 -->
+    <footer>
+        <ul class="between">
+            <li>
+                <a href="./index.html" class="center navbar-active">
+                    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                        <title>电影1</title>
+                        <g fill="#f03d37" fill-rule="evenodd">
+                            <path
+                                d="M24.994 47c-.71 0-1.422-.034-2.136-.102C12.445 45.913 4.14 37.645 3.11 27.24c-.657-6.63 1.65-13.115 6.332-17.796 4.68-4.68 11.162-6.992 17.796-6.333 10.36 1.027 18.624 9.29 19.65 19.65.592 5.984-1.192 11.796-5.022 16.365-.162.193-.158.463.007.63l3.425 3.424c.586.584.586 1.534 0 2.12-.586.586-1.535.586-2.12 0l-3.426-3.425c-1.274-1.273-1.353-3.284-.185-4.677 3.307-3.946 4.847-8.97 4.335-14.142-.886-8.942-8.018-16.074-16.96-16.96-5.732-.562-11.336 1.426-15.38 5.47-4.042 4.042-6.034 9.647-5.467 15.378.89 8.98 8.058 16.117 17.045 16.968 3.867.37 7.68-.417 11.03-2.267.725-.4 1.637-.138 2.037.588.4.725.137 1.638-.588 2.038-3.26 1.8-6.896 2.73-10.626 2.73">
+                            </path>
+                            <path
+                                d="M28 16c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3M28 34c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3M34 28c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3M16 28c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3">
+                            </path>
+                        </g>
+                    </svg>
+                    <span>电影/影院</span>
+                </a>
+            </li>
+            <li>
+                <a href="./video.html" class="center">
+                    <img src="../img/shipin.png" alt="">
+                    <span>视频</span>
+                </a>
+            </li>
+            <li>
+                <a href="./shortvideo.html" class="center">
+                    <img src="../img/xiaoshipin.png" alt="">
+                    <span>小视频</span>
+                </a>
+            </li>
+            <li>
+                <a href="./performance.html" class="center">
+                    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                        <title>演出1</title>
+                        <g fill="#696969" fill-rule="evenodd">
+                            <path
+                                d="M7 30.423v8.965C7 40.828 8.27 42 9.833 42h30.334C41.73 42 43 40.828 43 39.388v-8.965c-2.492-.64-4.333-2.828-4.333-5.423 0-2.596 1.84-4.785 4.333-5.424V10.61C43 9.17 41.73 8 40.167 8H9.833C8.27 8 7 9.17 7 10.61v8.966c2.492.64 4.333 2.828 4.333 5.424 0 2.595-1.84 4.785-4.333 5.423M40.167 45H9.833C6.617 45 4 42.483 4 39.388V29.11c0-.828.67-1.5 1.5-1.5 1.562 0 2.833-1.17 2.833-2.61s-1.27-2.612-2.833-2.612c-.83 0-1.5-.67-1.5-1.5V10.61C4 7.518 6.617 5 9.833 5h30.334C43.384 5 46 7.517 46 10.61V20.89c0 .83-.672 1.5-1.5 1.5-1.562 0-2.833 1.172-2.833 2.612 0 1.44 1.27 2.61 2.833 2.61.828 0 1.5.672 1.5 1.5V39.39C46 42.483 43.384 45 40.167 45">
+                            </path>
+                            <path
+                                d="M28.177 30.642c.203.07.34.14.475.14.134 0 .256-.018.337-.09.135-.14.203-.397.135-.813l-.473-2.845c0-.347.134-.763.337-.97l1.964-2.013c.203-.277.27-.555.203-.763 0-.14-.135-.417-.61-.486l-2.776-.416c-.27 0-.61-.278-.744-.555l-1.22-2.567c-.135-.277-.27-.485-.54-.485-.273 0-.476.14-.68.486l-1.218 2.567c-.067.208-.474.485-.745.555l-2.777.416c-.406.07-.54.347-.61.485-.135.277 0 .554.204.762l1.964 2.012c.204.208.407.694.34.97l-.475 2.845c-.07.346.067.623.27.762.27.14.542.14.812 0l2.438-1.318c.272-.14.678-.14.95 0l2.437 1.318z">
+                            </path>
+                        </g>
+                    </svg>
+                    <span>演出</span>
+                </a>
+            </li>
+            <li>
+                <a href="./mine.html" class="center">
+                    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                        <title>我的1</title>
+                        <g fill="#696969" fill-rule="evenodd">
+                            <path
+                                d="M19.916 35.913c-.014-.016-.02-.036-.033-.05-.314-.32-.737-.455-1.153-.432C13.586 33.066 10 27.9 10 21.908 10 13.687 16.728 7 25 7c8.27 0 15 6.687 15 14.907 0 8.22-6.73 14.906-15 14.906-1.787 0-3.493-.328-5.084-.9zm14.502 1.225C39.558 33.98 43 28.343 43 21.908 43 12.032 34.925 4 25 4S7 12.033 7 21.907c0 6.657 3.68 12.466 9.113 15.552l-6.086 5.97c-.59.58-.6 1.53-.02 2.12.294.3.682.45 1.07.45.38 0 .76-.143 1.052-.43l6.916-6.785c1.867.654 3.865 1.028 5.954 1.028 2.324 0 4.54-.455 6.58-1.256l7.15 7.014c.292.287.672.43 1.05.43.39 0 .78-.15 1.072-.45.58-.59.57-1.54-.02-2.12l-6.414-6.292z">
+                            </path>
+                            <path
+                                d="M30.358 25.068c-.77-.31-1.642.064-1.95.832-.554 1.375-1.89 2.263-3.408 2.263-1.503 0-2.835-.877-3.395-2.234-.316-.766-1.19-1.13-1.96-.815-.765.316-1.13 1.193-.813 1.96 1.024 2.483 3.446 4.088 6.168 4.088 2.75 0 5.178-1.627 6.19-4.144.31-.77-.063-1.643-.832-1.952">
+                            </path>
+                        </g>
+                    </svg>
+                    <span>我的</span>
+                </a>
+            </li>
+        </ul>
+    </footer>
+
+    <!-- 遮罩层 -->
+    <div class="blacker hidden"></div>
+
+    <script src="../js/swiper-bundle.min.js"></script>
+    <script src="../js/index.js" type="module"></script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			#box{
+				width: 200px;
+				height: 200px;
+				background: green;
+				color: #fff;
+
+				position: absolute;
+				left: 0;
+				top: 0;
+				opacity: 0.5;
+			}
+
+			input{
+				border: 1px solid #000;
+			}
+		</style>
+	</head>
+	<body>
+		<a href="http://www.baidu.com/">度娘</a><br>
+		<input type="text">
+		<p>陈学辉</p>
+		<div id="box"></div>
+		<script>
+			/*
+				移动端事件的问题：
+					事件点透
+						出现场景：有两层重叠的元素，上面的元素有touch事件（点击后要消失），下面是一个默认会触发click事件的元素（a、表单元素、带click事件的元素）
+					解决方案：
+						1、下层的元素不要用能点击的标签，并且不要给它们添加事件
+			 			2、把上面的元素的事件换成click事件
+						3、取消事件的默认动作
+			 */
+
+			const box=document.querySelector('div');
+			box.addEventListener('touchstart',ev=>{
+				box.style.display='none';
+
+				ev.preventDefault();	//取消事件的默认动作
+			});
+
+			const p=document.querySelector('p');
+			p.addEventListener('click',()=>{
+				alert('陈学辉被点击了');
+			});
+
+			
+		</script>
+	</body>
+</html>

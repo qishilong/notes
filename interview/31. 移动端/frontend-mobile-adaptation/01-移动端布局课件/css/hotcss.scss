@@ -1,0 +1,13 @@
+@import 'px2rem.scss';
+$designWidth:750;
+
+body{
+    margin: 0;
+}
+div{
+    width: px2rem(187.5);
+    height: px2rem(200);
+
+    background: green;
+    float: left;
+}

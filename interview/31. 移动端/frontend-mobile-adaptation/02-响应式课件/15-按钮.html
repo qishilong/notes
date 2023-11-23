@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<title></title>
+	</head>
+	<body>
+		<!-- 
+			按钮：.btn .btn-*
+				1、.btn必需给，需要颜色的话再加上颜色的class
+				2、按钮类可用于 <a>, <button>, 或 <input> 元素上
+		 -->
+		<button type="button" class="btn">基本按钮</button>
+		<button type="button" class="btn btn-primary">主要按钮</button>
+		<button type="button" class="btn btn-secondary">次要按钮</button>
+		<button type="button" class="btn btn-success">成功</button>
+		<button type="button" class="btn btn-info">信息</button>
+		<button type="button" class="btn btn-warning">警告</button>
+		<button type="button" class="btn btn-danger">危险</button>
+		<button type="button" class="btn btn-dark">黑色</button>
+		<button type="button" class="btn btn-light">浅色</button>
+		<button type="button" class="btn btn-link">链接</button>
+
+		<a href="#" class="btn btn-primary">a标签的按钮</a>
+		<input type="button" class="btn btn-secondary" value="input标签的按钮">
+		<input type="submit" class="btn btn-success" value="提交按钮">
+
+		<hr>
+		<!-- 边框按钮：.btn-outline-* -->
+		<button type="button" class="btn btn-outline-primary">主要按钮</button>
+		<button type="button" class="btn btn-outline-secondary">次要按钮</button>
+		<button type="button" class="btn btn-outline-success">成功</button>
+		<button type="button" class="btn btn-outline-info">信息</button>
+		<button type="button" class="btn btn-outline-warning">警告</button>
+		<button type="button" class="btn btn-outline-danger">危险</button>
+		<button type="button" class="btn btn-outline-dark">黑色</button>
+		<button type="button" class="btn btn-outline-light text-dark">浅色</button>
+
+		<hr>
+		<!-- 大小尺寸按钮：.btn-lg/.btn-sm -->
+		<button type="button" class="btn btn-primary btn-lg">大号按钮</button>
+		<button type="button" class="btn btn-primary">默认按钮</button>
+		<button type="button" class="btn btn-primary btn-sm">小号按钮</button>
+
+		<hr>
+		<!-- 块级按钮：.btn-block -->
+		<button type="button" class="btn btn-danger btn-block">块级按钮</button>
+
+		<hr>
+		<!-- 按钮组：.btn-group，需要加上按钮的父级身上 -->
+		<div class="btn-group">	
+			<button type="button" class="btn btn-primary">百度</button>
+			<button type="button" class="btn btn-primary">阿里</button>
+			<button type="button" class="btn btn-primary">京东</button>
+		</div>
+		<!-- 大按钮组：.btn-group .btn-group-lg -->
+		<div class="btn-group btn-group-lg">
+			<button type="button" class="btn btn-primary">百度</button>
+			<button type="button" class="btn btn-primary">阿里</button>
+			<button type="button" class="btn btn-primary">京东</button>
+		</div>
+		<!-- 小按钮组：.btn-group .btn-group-sm -->
+		<div class="btn-group btn-group-sm">
+			<button type="button" class="btn btn-primary">百度</button>
+			<button type="button" class="btn btn-primary">阿里</button>
+			<button type="button" class="btn btn-primary">京东</button>
+		</div>
+		<!-- 垂直按钮组：.btn-group .btn-group-vertical -->
+		<div class="btn-group btn-group-vertical">
+			<button type="button" class="btn btn-primary">百度</button>
+			<button type="button" class="btn btn-primary">阿里</button>
+			<button type="button" class="btn btn-primary">京东</button>
+		</div>
+		<!-- 内嵌按钮组及下拉菜单，需经引入三个js文件 -->
+		<div class="btn-group">
+			<button type="button" class="btn btn-primary">百度</button>
+			<button type="button" class="btn btn-primary">阿里</button>
+			<div class="btn-group">	<!-- 点击的元素父级：需要添加一个class为btn-group的父级 -->
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">京东</button><!-- 点击的元素：class里需要一个dropdown-toggle，标签上需要一个data-toggle="dropdown" -->
+				<div class="dropdown-menu">	<!-- 弹出内容的父级 -->
+					<a class="dropdown-item" href="#">京东金融</a>	<!-- 弹出的内容需添加一个class：dropdown-item -->
+					<a class="dropdown-item" href="#">京东超市</a>
+				</div>
+			</div>
+		</div>
+		<!-- 拆分按钮组及下拉菜单 -->
+		<div class="btn-group">
+			<button type="button" class="btn btn-primary">百度</button>
+			<button type="button" class="btn btn-primary">阿里</button>
+			<button type="button" class="btn btn-primary">京东</button>
+			<span class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"></span><!-- 分离出来的小三角，标签类型任意 -->
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="#">京东金融</a>
+				<a class="dropdown-item" href="#">京东超市</a>
+			</div>
+		</div>
+
+		<!-- 垂直按钮组及下拉菜单（不支持拆分） -->
+		<div class="btn-group-vertical">
+			<button type="button" class="btn btn-primary">百度</button>
+			<button type="button" class="btn btn-primary">阿里</button>	<!-- 可以把它放下面演示一下 -->
+			<div class="btn-group">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">京东</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="#">京东金融</a>
+					<a class="dropdown-item" href="#">京东超市</a>
+				</div>
+			</div>
+		</div>
+
+
+
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	</body>
+</html>

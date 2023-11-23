@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+		<title></title>
+		<style>
+			body {
+			  margin: 0;
+			}
+
+			#wrap{
+				height: 100vh;
+				overflow: hidden;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			.banner{
+				height: 20vh;
+				box-sizing: border-box;
+				border: 1px solid #00f;
+				overflow: hidden;
+			}
+			.banner ul{
+				width: 400vw;
+				height: 100%;
+			}
+			.banner li{
+				height: 100%;
+				float: left;
+				box-sizing: border-box;
+				border-right: 1px solid #fff;
+			}
+			.banner ul li a{
+				display: block;
+				width: 100vw;
+				height: 100%;
+				
+				text-align: center;
+				font-size: 50px;
+				color: #fff;
+				background: #232323;
+			}
+
+			.list{
+				height: 80vh;
+				overflow: hidden;
+				background: #ccc;
+				border: 1px solid #f00;
+				box-sizing: border-box;
+			}
+			.list li{
+				font-size: 30px;
+				line-height: 50px;
+			}
+		</style>
+		<script src="js/swiper.js"></script>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="banner">
+				<ul>
+					<li><a href="#">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+				</ul>
+			</div>
+			<div class="list">
+				<ul>
+				</ul>
+			</div>
+		</div>
+		<script>
+			//生成内容
+			const ul=document.querySelector('.list ul');
+			let html='';
+			for(let i=0;i<100;i++){
+				html+=`<li><a href="#">这是一个很长的列表${i}</a></li>`
+			}
+			ul.innerHTML=html;
+			
+			//列表
+			const list=document.querySelector('.list');
+			swiper({
+				wrap:list,
+				dir:'y',
+				backOut:'back',
+				scrollBar:true,
+			});
+
+			//banner
+			/* const banner=document.querySelector('.banner');
+			swiper({
+				wrap:banner,
+				dir:'x',
+			}); */
+		</script>
+	</body>
+</html>

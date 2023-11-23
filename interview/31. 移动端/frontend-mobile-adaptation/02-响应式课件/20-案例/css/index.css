@@ -1,0 +1,141 @@
+/* 直接复制星巴克的样式，font-size的值为百分比 */
+html {
+    font-size: 62.5% !important;
+}
+@media (min-width: 1025px){
+    html {
+        font-size: 62.5%;
+    }
+}
+@media (min-width: 641px){
+    html {
+        font-size: 59%;
+    }
+}
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+/* 也可以通过给ul添加list-unstyled的class来清除默认样式，不过还是有个margin-bottom */
+
+
+/* 左边 */
+.navContent a{
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+.login{
+    height: calc(100vh - 84px);
+}
+.login a{
+    color: #00A862;
+    font-size: 1.6rem;
+}
+.login a.register{
+    border-radius: 13px;
+}
+@media (max-width:992px){
+    .login{
+        height: auto;
+    }
+    .login > div{
+        padding: 0!important;
+    }
+}
+
+/* 右边 */
+.star h2{
+    font-size: 2.2rem;
+}
+.star p{
+    font-size: 1.6rem;
+    line-height: 34px;
+}
+.star a{
+    color: #c2a661;
+}
+.star button{
+    border-radius: 13px;
+}
+@media (max-width:575px){
+    .star div{
+        text-align: center;
+    }
+}
+
+.betters .text h3,.teach .text h3{
+    font-size: 2.2rem;
+}
+.betters .text p,.teach .text p{
+    font-size: 1.6rem;
+}
+.betters li{
+    margin-top: 60px;
+}
+.betters li a{
+    box-shadow: 0 1px 1px 1px rgba(0,0,0,0.12);
+    box-sizing: border-box;
+}
+.betters li img{
+    width: 40%;
+    margin-top: -30px;
+}
+.betters li h4{
+    font-size: 1.6rem;
+}
+.betters li p{
+    font-size: 1.4rem;
+}
+.betters li p.caption{
+    color: #c2a661;
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+.teach{
+    overflow: hidden;
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+}
+.teach ul{
+    width: 1216px;
+}
+.teach li{
+    width: 288px;
+    height: 225px;
+    position: relative;
+    float: left;
+    margin-right: 16px;
+
+    border-radius: 2px;
+    border: 1px solid rgba(0,0,0,0.12);
+    box-shadow: 0 1px 1px 1px rgba(0,0,0,0.12);
+}
+.teach li img{
+    width: 288px;
+    height: 168px;
+}
+.teach li span{
+    position: absolute;
+    left: 0px;
+    top: 6px;
+    font-size: 1.4rem;
+    background: #c2a661;
+    color: #fff;
+    padding: 4px 12px;
+}
+.teach li p{
+    font-size: 1.6rem;
+    color: #000;
+    line-height: 50px;
+    padding-left: 15px;
+}
+.scroll{
+    margin-top: 15px;
+}
+
+
+.fotter ul{
+    box-shadow: 0 0 4px rgba(0,0,0,0.12);
+}
