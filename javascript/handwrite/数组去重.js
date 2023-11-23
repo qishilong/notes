@@ -1,47 +1,47 @@
 const arr = [
-	1,
-	1,
-	1,
-	1,
-	2,
-	2,
-	3,
-	3,
-	true,
-	true,
-	'true',
-	'true',
-	false,
-	false,
-	'false',
-	'false',
-	NaN,
-	NaN,
-	'NaN',
-	'NaN',
-	null,
-	null,
-	'null',
-	'null',
-	undefined,
-	undefined,
-	'undefined',
-	'undefined',
-	'{}',
-	'{}',
-	'[]',
-	'[]',
-	{},
-	undefined,
-	{},
-	{ a: 1, b: 2 },
-	{ a: 1, b: 2 },
-	{ a: 1, b: 2, c: 3 },
-	[1, 2],
-	[1, 2],
-	[1, 2, 3],
-	[],
-	[],
+  1,
+  1,
+  1,
+  1,
+  2,
+  2,
+  3,
+  3,
+  true,
+  true,
+  "true",
+  "true",
+  false,
+  false,
+  "false",
+  "false",
+  NaN,
+  NaN,
+  "NaN",
+  "NaN",
+  null,
+  null,
+  "null",
+  "null",
+  undefined,
+  undefined,
+  "undefined",
+  "undefined",
+  "{}",
+  "{}",
+  "[]",
+  "[]",
+  {},
+  undefined,
+  {},
+  { a: 1, b: 2 },
+  { a: 1, b: 2 },
+  { a: 1, b: 2, c: 3 },
+  [1, 2],
+  [1, 2],
+  [1, 2, 3],
+  [],
+  []
 ];
 
 /**
@@ -49,7 +49,7 @@ const arr = [
  * @param {*} arr
  */
 function fn1(arr) {
-	return Array.from(new Set(arr));
+  return Array.from(new Set(arr));
 }
 // console.log(fn1(arr));
 // [1, "true", true, 15, false, undefined, null, NaN, "NaN", 0, "a", {}, {}]
@@ -61,15 +61,15 @@ function fn1(arr) {
  * @param {*} arr
  */
 function fn2(arr) {
-	for (let i = 0; i < arr.length; i++) {
-		for (let j = i + 1; j < arr.length; j++) {
-			if (arr[i] === arr[j]) {
-				arr.splice(j, 1);
-				j--;
-			}
-		}
-	}
-	return arr;
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[i] === arr[j]) {
+        arr.splice(j, 1);
+        j--;
+      }
+    }
+  }
+  return arr;
 }
 // console.log(fn2(arr));
 
@@ -79,14 +79,14 @@ function fn2(arr) {
  * @param {*} arr
  */
 function fn3(arr) {
-	const result = [];
-	const length = arr.length;
-	for (let i = 0; i < length; i++) {
-		if (result.indexOf(arr[i]) === -1) {
-			result.push(arr[i]);
-		}
-	}
-	return result;
+  const result = [];
+  const length = arr.length;
+  for (let i = 0; i < length; i++) {
+    if (result.indexOf(arr[i]) === -1) {
+      result.push(arr[i]);
+    }
+  }
+  return result;
 }
 // console.log(fn3(arr));
 
@@ -96,15 +96,15 @@ function fn3(arr) {
  * @param {*} arr
  */
 function fn4(arr) {
-	const result = [];
-	arr.sort((a, b) => a - b);
-	const length = arr.length;
-	for (let i = 1; i <= length; i++) {
-		if (arr[i] !== arr[i - 1]) {
-			result.push(arr[i - 1]);
-		}
-	}
-	return result;
+  const result = [];
+  arr.sort((a, b) => a - b);
+  const length = arr.length;
+  for (let i = 1; i <= length; i++) {
+    if (arr[i] !== arr[i - 1]) {
+      result.push(arr[i - 1]);
+    }
+  }
+  return result;
 }
 // console.log(fn3(arr));
 
@@ -113,16 +113,16 @@ function fn4(arr) {
  * @param {*} arr
  */
 function fn5(arr) {
-	const result = [];
-	const obj = {};
-	const length = arr.length;
-	for (let i = 0; i < length; i++) {
-		if (!(arr[i] in obj)) {
-			result.push(arr[i]);
-			obj[arr[i]] = 1;
-		}
-	}
-	return result;
+  const result = [];
+  const obj = {};
+  const length = arr.length;
+  for (let i = 0; i < length; i++) {
+    if (!(arr[i] in obj)) {
+      result.push(arr[i]);
+      obj[arr[i]] = 1;
+    }
+  }
+  return result;
 }
 // console.log(fn5(arr));
 
@@ -131,14 +131,14 @@ function fn5(arr) {
  * @param {*} arr
  */
 function fn6(arr) {
-	const result = [];
-	const length = arr.length;
-	for (let i = 0; i < length; i++) {
-		if (!result.includes(arr[i])) {
-			result.push(arr[i]);
-		}
-	}
-	return result;
+  const result = [];
+  const length = arr.length;
+  for (let i = 0; i < length; i++) {
+    if (!result.includes(arr[i])) {
+      result.push(arr[i]);
+    }
+  }
+  return result;
 }
 // console.log(fn6(arr));
 
@@ -148,10 +148,10 @@ function fn6(arr) {
  * @param {*} arr
  */
 function fn7(arr) {
-	const obj = {};
-	return arr.filter((item, index, array) => {
-		return obj.hasOwnProperty(typeof item + item) ? false : (obj[typeof item + item] = true);
-	});
+  const obj = {};
+  return arr.filter((item, index, array) => {
+    return obj.hasOwnProperty(typeof item + item) ? false : (obj[typeof item + item] = true);
+  });
 }
 // console.log(fn7(arr)); // 都去重了
 
@@ -160,9 +160,9 @@ function fn7(arr) {
  * @param {*} arr
  */
 function fn8(arr) {
-	return arr.filter(function (item, index, array) {
-		return arr.indexOf(item, 0) === index;
-	});
+  return arr.filter(function (item, index, array) {
+    return arr.indexOf(item, 0) === index;
+  });
 }
 // console.log(fn8(arr));
 
@@ -171,19 +171,19 @@ function fn8(arr) {
  * @param {*} arr
  */
 function fn9(arr) {
-	const length = arr.length;
-	arr.sort((a, b) => a - b);
+  const length = arr.length;
+  arr.sort((a, b) => a - b);
 
-	function loop(index) {
-		if (index >= 1) {
-			if (arr[index] === arr[index - 1]) {
-				arr.splice(index, 1);
-			}
-			loop(index - 1); // 递归 loop，然后数组去重
-		}
-	}
-	loop(length - 1);
-	return arr;
+  function loop(index) {
+    if (index >= 1) {
+      if (arr[index] === arr[index - 1]) {
+        arr.splice(index, 1);
+      }
+      loop(index - 1); // 递归 loop，然后数组去重
+    }
+  }
+  loop(length - 1);
+  return arr;
 }
 // console.log(fn9(arr));
 
@@ -192,15 +192,15 @@ function fn9(arr) {
  * @param {*} arr
  */
 function fn10(arr) {
-	const map = new Map();
-	const result = [];
-	for (let item of arr) {
-		if (!map.has(item)) {
-			result.push(item);
-			map.set(item, true);
-		}
-	}
-	return result;
+  const map = new Map();
+  const result = [];
+  for (let item of arr) {
+    if (!map.has(item)) {
+      result.push(item);
+      map.set(item, true);
+    }
+  }
+  return result;
 }
 // console.log(fn10(arr));
 
@@ -209,7 +209,7 @@ function fn10(arr) {
  * @param {*} arr
  */
 function fn11(arr) {
-	return arr.reduce((pre, cur) => (pre.includes(cur) ? pre : [...pre, cur]), []);
+  return arr.reduce((pre, cur) => (pre.includes(cur) ? pre : [...pre, cur]), []);
 }
 // console.log(fn11(arr));
 
@@ -218,7 +218,7 @@ function fn11(arr) {
  * @param {*} arr
  */
 function fn12(arr) {
-	return [...new Set(arr)];
+  return [...new Set(arr)];
 }
 // console.log(fn12(arr));
 
@@ -228,20 +228,20 @@ function fn12(arr) {
  * @param {*} arr
  */
 function fn13(arr) {
-	const result = [];
-	const length = arr.length;
-	for (let i = 0; i < length; i++) {
-		const resLength = result.length;
-		let j = 0;
-		for (; j < resLength; j++) {
-			if (arr[i] === result[j]) {
-				break;
-			}
-		}
-		if (j === result.length) {
-			result.push(arr[i]);
-		}
-	}
-	return result;
+  const result = [];
+  const length = arr.length;
+  for (let i = 0; i < length; i++) {
+    const resLength = result.length;
+    let j = 0;
+    for (; j < resLength; j++) {
+      if (arr[i] === result[j]) {
+        break;
+      }
+    }
+    if (j === result.length) {
+      result.push(arr[i]);
+    }
+  }
+  return result;
 }
 // console.log(fn13(arr));
