@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src='./myjQuery.js'></script>
+    <script>
+        function createScore () {
+            var df = $.myDeferred();
+
+            setInterval(function () {
+                var score = Math.random() * 100;
+                if (score > 90) {
+                    df.resolve('congradulation!!!');
+                }else if (score < 10) {
+                    df.reject('get out');
+                }else {
+                    df.notify('go on');
+                }
+            }, 1500);
+
+            // done fail progress
+            return df;
+        }
+
+        var df = createScore();
+    
+        // 注册成功的回调函数
+        df.done(function (ms) {
+            console.log('oh yeah I do it' + ' ' + ms);
+        });
+
+        // 注册失败的回调函数
+        df.fail(function (ms) {
+            console.log('sorry I am loser' + ' ' + ms);
+        });
+
+        // 注册进行时的函数
+        df.progress(function (ms) {
+            console.log('waiting...' + ' ' + ms);
+        }); 
+
+
+    </script>
+</body>
+</html>

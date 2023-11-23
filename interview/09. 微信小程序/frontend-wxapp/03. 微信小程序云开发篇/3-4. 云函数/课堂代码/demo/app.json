@@ -1,0 +1,41 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/cloudFile/cloudFile",
+    "pages/cloudFunc/cloudFunc"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "list": [{
+      "text": "云数据库",
+      "pagePath": "pages/index/index",
+      "selectedIconPath": "imgs/selDatabase.png",
+      "iconPath": "imgs/Database.png"
+    },{
+      "text": "云存储",
+      "pagePath": "pages/cloudFile/cloudFile",
+      "selectedIconPath": "imgs/selFile.png",
+      "iconPath": "imgs/File.png"
+    },{
+      "text": "云函数",
+      "pagePath": "pages/cloudFunc/cloudFunc",
+      "selectedIconPath": "/imgs/selFunc.png",
+      "iconPath": "/imgs/Func.png"
+    }]
+  },
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "van-field": "@vant/weapp/field/index",
+    "van-radio": "@vant/weapp/radio/index",
+    "van-radio-group": "@vant/weapp/radio-group/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-notify": "@vant/weapp/notify/index"
+  }
+}

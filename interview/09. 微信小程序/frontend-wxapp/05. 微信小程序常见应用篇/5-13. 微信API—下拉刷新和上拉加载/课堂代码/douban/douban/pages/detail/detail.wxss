@@ -1,0 +1,98 @@
+/* pages/detail/detail.wxss */
+
+.container {
+  background-color: #f5f4f9;
+  padding: 40rpx 30rpx;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  height: 280rpx;
+}
+
+.detail > image {
+  width: 220rpx;
+  height: 300rpx;
+  border-radius: 10rpx;
+}
+
+.detailContent {
+  width: 460rpx;
+}
+
+.cName {
+  font-size: 46rpx;
+  font-weight: bold;
+  display: block;
+}
+
+.otherInfo,.casts {
+  display: block;
+  color: #818181;
+  font-size: 22rpx;
+  margin: 10rpx 0;
+}
+
+.btns > text {
+  display: inline-block;
+  width: 209rpx;
+  height: 72rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  border-bottom: 2rpx solid #dddce1;
+  color: #000;
+  margin-top: 20rpx;
+  font-size: 36rpx;
+  text-align: center;
+  line-height: 72rpx;
+  font-weight: bold;
+}
+
+
+.btns > text:first-child {
+  margin-right: 20rpx;
+}
+
+.movieIntro {
+  margin-top: 30rpx;
+  width: 100%;
+  padding-top: 50rpx;
+}
+
+.title {
+  display: block;
+  font-size: 34rpx;
+  font-weight: bold;
+}
+
+.summary {
+  margin-top: 15rpx;
+  font-size: 26rpx;
+  overflow: hidden;
+}
+
+.moreIntro{
+  float: right;
+  font-size: 26rpx;
+  color: rgb(65, 65, 202);
+  margin-right: 30rpx;
+  margin-top: 20rpx;
+}
+
+.videoBox{
+  margin: 80rpx 0;
+}
+
+.video{
+  width: 100%;
+  height: 400rpx;
+  margin-top: 15rpx;
+}
+
+.comment{
+  margin-top: 15rpx;
+  height:300rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+}

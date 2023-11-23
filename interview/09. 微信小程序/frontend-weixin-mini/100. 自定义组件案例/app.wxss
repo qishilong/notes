@@ -1,0 +1,27 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
+
+button{
+  margin-left: 0;
+  padding-left:0;
+  margin-right: 0;
+  padding-right: 0;
+  text-align: left;
+  border-radius: 0rpx;
+  background-color: rgba(0,0,0,0);
+  line-height: auto;
+}
+
+input{
+  outline:none;
+  border:none;
+  list-style: none;
+}

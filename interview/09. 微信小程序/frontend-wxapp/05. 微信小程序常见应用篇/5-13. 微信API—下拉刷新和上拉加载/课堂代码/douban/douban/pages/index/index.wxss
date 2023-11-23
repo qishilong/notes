@@ -1,0 +1,17 @@
+/* pages/index/index.wxss */
+
+.searchBox {
+  padding: 16rpx;
+  background-color: #41bd55;
+}
+
+.searchBox > navigator {
+  display: flex;
+  background-color: #fff;
+  height: 56rpx;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  color: #b9b9b9;
+  justify-content: center;
+  align-items: center;
+}

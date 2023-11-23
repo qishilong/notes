@@ -1,0 +1,13 @@
+{
+  "usingComponents": {
+    "item" : "/components/item/item",
+    "log" : "/pages/logs/logs",
+    "ul" : "/components/ul/ul",
+    "li" : "/components/li/li",
+    "item2" : "/components/item2/item2",
+    "item3" : "/components/item3/item3",
+    "item4" : "/components/item4/item4",
+    "sel1" : "/components/sel1/sel1",
+    "sel2" : "/components/sel2/sel2"
+  }
+}

@@ -1,0 +1,3 @@
+<button bindtap="handletap">阻塞</button>
+<view class="one"></view>
+<view class="two"></view>

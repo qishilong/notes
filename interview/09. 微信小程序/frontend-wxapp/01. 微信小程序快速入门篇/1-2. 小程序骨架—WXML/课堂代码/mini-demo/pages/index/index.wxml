@@ -1,0 +1,29 @@
+<import src="../../templates/msgItem"/>
+<include src="../../templates/header"/>
+<block wx:if="{{age>18}}">
+  <view>
+    <text>{{ a > b ? "Hello" : "world"}}</text>
+    <text>{{ a + b }}</text>
+  </view>
+  <view>
+    <text>当前时间：{{time}}</text>
+  </view>
+</block>
+
+<template is="msgItem" data="{{index : 1, msg: '你好', time:'2023.1.10'}}"></template>
+
+<view wx:if="{{age > 18}}">
+  <text>可以进入网吧</text>
+</view>
+<view wx:elif="{{ age===18 }}">
+  <text>刚好到能够进入网吧的年龄</text>
+</view>
+<view wx:else>
+  <text>不能进入网吧</text>
+</view>
+
+<view wx:for="{{fruits}}" wx:key="index">
+  <text>{{index}}</text> - <text>{{item}}</text>
+</view>
+
+<include src="../../templates/footer"/>

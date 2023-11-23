@@ -1,0 +1,41 @@
+<!--pages/mine/mine.wxml-->
+<view class="loginTop">
+  <button>登录</button>
+</view>
+<view class='loginContent'>
+  <view class="titleBox">
+    <text>我的书影音</text>
+    <navigator>登录查看
+      <image class='arrowRight' src="../../assets/images/icons/ic_seti_arrow_right_gray.png" />
+    </navigator>
+  </view>
+  <view class='contentItem'>
+    <view class='imageBox'>
+      <image src="../../assets/images/icons/ic_my_movies_tvs.png" />
+    </view>
+    <view class='contentBox'>
+      <view>
+        <text class='contentTitle'>观影分析</text>
+      </view>
+      <view>
+        
+      </view>
+    </view>
+  </view>
+  <view class='contentItem'>
+    <view class='imageBox'>
+      <image src="../../assets/images/icons/ic_my_books.png" />
+    </view>
+    <view class='contentBox'>
+
+    </view>
+  </view>
+  <view class='contentItem'>
+    <view class='imageBox'>
+      <image src="../../assets/images/icons/ic_my_music.png" />
+    </view>
+    <view class='contentBox'>
+
+    </view>
+  </view>
+</view>

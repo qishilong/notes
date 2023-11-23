@@ -1,0 +1,50 @@
+/* pages/search/search.wxss */
+
+.searchBox {
+  padding: 16rpx;
+  background-color: #41bd55;
+  position: relative;
+}
+
+.searchBox > input {
+  background-color: #fff;
+  height: 56rpx;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  color: #b9b9b9;
+  padding-left: 55rpx;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 30rpx;
+  top: 30rpx;
+}
+
+.searchList {
+  padding: 0 30rpx;
+}
+
+.searchItem {
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #d8d8d8;
+  display: flex;
+  justify-content: space-between;
+  height: 170rpx;
+}
+
+.searchItem > image {
+  width: 120rpx;
+  height: 168rpx;
+  border: 1rpx solid #f3f3f3;
+}
+
+.title {
+  font-size: 32rpx;
+}
+
+.otherInfo {
+  color: #818181;
+  font-size: 26rpx;
+  
+}

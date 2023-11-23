@@ -1,0 +1,4 @@
+.container{
+  border: 1rpx solid #ccc;
+  margin-top: 20rpx;
+}

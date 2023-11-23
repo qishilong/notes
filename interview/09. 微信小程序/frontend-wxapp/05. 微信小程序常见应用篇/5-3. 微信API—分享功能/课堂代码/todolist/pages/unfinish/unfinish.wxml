@@ -1,0 +1,5 @@
+<view class="title">共 {{list.length}} 项未完成任务</view>
+<view class="listContainer">
+  <!-- 根据任务的长度来显示对应的任务条目 -->
+  <item wx:for="{{list}}" wx:key="this" item="{{item}}" bindfresh="fresh"></item>
+</view>

@@ -1,0 +1,19 @@
+<!-- 最外层容器 -->
+<view class="container">
+  <!-- 目标语言的选择 -->
+  <view class="lanSelectContainer">
+    <text bindtap="goToChange">翻译成英语</text>
+    <text class="iconfont icon-down"></text>
+  </view>
+  <!-- 文本输入框 -->
+  <view class="tranlateTxt">
+    <textarea 
+      placeholder="请输入您要翻译的文本"
+    ></textarea>
+  </view>
+  <!-- 翻译结果 -->
+  <view class="resultTxt">
+    <view>译文</view>
+    <view class="content">Hello</view>
+  </view>
+</view>

@@ -1,0 +1,20 @@
+<view class="container">
+  <view bindtap="tapHandle">index</view>
+  <view>{{text}}</view>
+  <!-- <item content="传入的内容" count="{{count}}" class="my-class"></item> -->
+  <item count="{{count}}" bindmyEvent="myEventHandle" class="item" behaviorProps="aaa">
+    <view slot="before">这部分内容会被放入到before</view>
+    <view slot="after">这部分内容会被放入到after</view>
+    <view>这部分内容会被放入到默认插槽</view>
+  </item>
+</view>
+<log></log>
+<ul>
+  <li bindtest="test">苹果</li>
+  <li>香蕉</li>
+  <li>西瓜</li>
+</ul>
+<item2/>
+<item3/>
+<item4 generic:selectable="sel1"/>
+<item4 generic:selectable="sel2"/>

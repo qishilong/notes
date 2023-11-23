@@ -1,0 +1,6 @@
+<!--pages/hotMovies/hotMovies.wxml-->
+<view class='container'>
+  <view class='movieItem' wx:for="{{movies.rows}}" wx:key="this">
+    <movieItem item="{{item}}"></movieItem>
+  </view>
+</view>

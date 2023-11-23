@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src='./myjQuery.js'></script>
+    <script>
+        // var cb = $.myCallbacks();
+        // var cbOnce = $.myCallbacks('once');
+        // var cbMemory = $.myCallbacks('memory');
+        var cbOnceMemory = $.myCallbacks('once memory');
+
+        function a (ms) {
+            console.log('a', ms);
+        }
+
+        function b (ms) {
+            console.log('b', ms);
+        }
+
+        // cb.add(a);
+        // cb.add(b);
+        // cb.fire('null');
+        // cb.fire('null');
+
+
+        // cbOnce.add(a);
+        // cbOnce.add(b);
+        // cbOnce.fire('once');
+        // cbOnce.fire('once');
+
+
+        // cbMemory.add(a);
+        // cbMemory.add(b);
+        // cbMemory.fire('memory');
+        // cbMemory.add(c);
+        // cbMemory.fire('memory');
+
+
+        // cbOnceMemory.add(a);
+        // cbOnceMemory.add(b);
+        // cbOnceMemory.fire('OnceMemory');
+        // cbOnceMemory.add(c);
+        // cbOnceMemory.fire('OnceMemory');
+        
+        // function c () {
+        //     console.log('c');
+        // }
+    </script>
+</body>
+</html>

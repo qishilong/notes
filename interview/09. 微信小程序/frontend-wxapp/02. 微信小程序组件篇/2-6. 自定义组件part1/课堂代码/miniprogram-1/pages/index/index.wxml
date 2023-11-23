@@ -1,0 +1,9 @@
+<view class="container">
+  <view bindtap="tapHandle">index</view>
+  <item content="传入的内容" count="{{count}}" class="my-class"></item>
+  <item count="{{count}}">
+    <view slot="before">这部分内容会被放入到before</view>
+    <view slot="after">这部分内容会被放入到after</view>
+    <view>这部分内容会被放入到默认插槽</view>
+  </item>
+</view>

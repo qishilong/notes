@@ -1,0 +1,10 @@
+<!--pages/components/stars/stars.wxml-->
+
+<!-- 电影星级组件 -->
+
+<view class="starsWrap">
+  <view class="stars" wx:for="{{srcArr}}" wx:key="this">
+    <image class="image" src="{{item}}" />
+  </view>
+  <text class='average'>{{average}}</text>
+</view>

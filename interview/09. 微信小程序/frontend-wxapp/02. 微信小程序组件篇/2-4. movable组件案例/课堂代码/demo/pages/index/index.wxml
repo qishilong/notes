@@ -1,0 +1,49 @@
+<view class="title">基础示例</view>
+<!-- 可移动区域 -->
+<movable-area class="area">
+  <movable-view 
+    class="view" 
+    direction="all" 
+    inertia
+    out-of-bounds
+  ></movable-view>
+</movable-area>
+
+<view class="title">案例演示</view>
+<movable-area class="container" wx:for="{{messages}}" wx:key="this">
+  <!-- 消息 -->
+  <movable-view
+    class="movable-view"
+    direction="horizontal"
+    out-of-bounds
+    friction="150"
+    x="{{item.x}}"
+    bindtouchstart="touchstartHandle"
+    bindtouchend="touchendHandle"
+    data-index="{{index}}"
+  >
+    <!-- 头像 -->
+    <image src="{{item.avatar}}" mode=""/>
+    <!-- 消息 -->
+    <view class="content">
+      <view class="top">
+        {{item.nickname}}
+      </view>
+      <view class="bottom">
+        {{item.msg}}
+      </view>
+    </view>
+    <!-- 时间 -->
+    <view class="timeBox">
+      <view class="top">
+        {{item.time}}
+      </view>
+      <view class="bottom">
+        ...
+      </view>
+    </view>
+  </movable-view>
+  <view class="delete">
+    删除
+  </view>
+</movable-area>

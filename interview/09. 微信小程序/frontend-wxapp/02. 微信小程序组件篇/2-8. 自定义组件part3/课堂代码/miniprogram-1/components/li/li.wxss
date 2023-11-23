@@ -1,0 +1,11 @@
+.li::before{
+  content : "";
+  display: inline-block;
+  width: 15rpx;
+  height: 15rpx;
+  background-color: black;
+  margin: 0 20rpx;
+  position: relative;
+  top: -5rpx;
+  border-radius: 50%;
+}

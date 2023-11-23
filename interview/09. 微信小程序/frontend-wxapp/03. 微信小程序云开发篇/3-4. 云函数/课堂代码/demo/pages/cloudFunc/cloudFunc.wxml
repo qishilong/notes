@@ -1,0 +1,11 @@
+<van-cell-group title="两个数做计算">
+  <van-field model:value="{{ num1 }}" type="number" placeholder="请输入第一个数" />
+  <van-field model:value="{{ num2 }}" type="number" placeholder="请输入第二个数" />
+</van-cell-group>
+<view class="btnContainer">
+  <van-button type="primary" bind:click="calc" data-id="+">加</van-button>
+  <van-button type="primary" bind:click="calc" data-id="-">减</van-button>
+  <van-button type="primary" bind:click="calc" data-id="*">乘</van-button>
+  <van-button type="primary" bind:click="calc" data-id="/">除</van-button>
+</view>
+<view class="result">{{result}}</view>

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "movieList": "../../components/movieList/movieList"
+  },
+  "navigationBarTitleText": "首页"
+}

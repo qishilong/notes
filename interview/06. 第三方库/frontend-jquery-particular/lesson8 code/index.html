@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="demo" style="width:100px;height:100px;background-color:red;position:absolute;left:0;top:0;"></div>
+    <script src="./jquery.js"></script>
+    <script>    
+        
+        // $.extend
+        // $.fn.extend
+
+        //1.扩展方法 ***  api 没有
+        //2.浅层克隆 $.extend
+        //3.深层克隆
+        
+        var obj1 = {
+            lastName : "deng",
+            age : 6,
+            son : {
+                name : 'xiaofan',
+                age : 2
+            }
+        }
+
+        var obj2 = {
+            lastName : "laodeng",
+            age : 50,
+            smoke : true,
+            son : {
+                name : 'xiaozhang',
+                age : 1,
+                sex : "male"
+            }
+        }
+
+        var obj3 = {
+            lastName : "liu",
+            fortune : 100000000
+        }
+        
+        $.extend(true, obj1, obj2, obj3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // $.extend({
+
+        //     definedMandom : function (start, final) {
+        //         // [0, 1) * len + start
+        //         var len = final - start;
+        //         return Math.random() * len + start;
+        //     },
+        //     abc : function () {
+
+        //     }
+
+        // }); // 加到工具方法里面
+        
+
+
+        // $.fn.extend(); //加到实例方法里面
+        // $().drag();
+        // $.fn.extend({
+
+        //     drag : function () {
+        //         var disX,
+        //             disY,
+        //             self = this;
+                
+        //         $(this).on('mousedown', function (e){
+        //             disX = e.pageX - $(this).offset().left;
+        //             disY = e.pageY - $(this).offset().top;
+                    
+        //             $(document).on('mousemove', function (e) {
+        //                 $(self).css({left : e.pageX - disX, top : e.pageY - disY});
+        //             });
+
+        //             $(document).on('mouseup', function (e) {
+        //                 $(document).off('mousemove').off('mouseup');
+        //             })
+        //         });
+
+        //         return this;
+
+        //     },
+
+        //     abc : function () {
+
+        //     }
+
+        // });
+
+
+        // $('#demo').drag();
+
+
+
+
+        
+    </script>
+</body>
+</html>

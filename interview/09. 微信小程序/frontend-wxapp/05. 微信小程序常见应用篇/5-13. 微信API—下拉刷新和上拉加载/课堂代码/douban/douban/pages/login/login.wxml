@@ -1,0 +1,18 @@
+<!--pages/login/login.wxml-->
+<view class='container'>
+  <view>
+    <view class="title">
+      <text>豆瓣账号密码登录</text>
+    </view>
+    <view class='inputWrap'>
+      <input type='text' placeholder='手机号/邮箱' />
+      <input type='text' placeholder='密码' />
+    </view>
+    <button>登录</button>
+    <view class='otherLogin'>
+      <text>短信验证登录/注册</text>
+      <text>海外手机密码登录</text>
+    </view>
+  </view>
+  <text class='forget'>忘记密码？找回密码</text>
+</view>

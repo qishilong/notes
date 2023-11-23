@@ -1,0 +1,22 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #000;
+}
+
+.inputContainer{
+  margin: 30rpx 0;
+  border-top: 1rpx solid #ccc;
+  border-bottom: 1rpx solid #ccc;
+}
+
+input{
+  margin: 30rpx;
+}
+
+button{
+  margin-bottom: 20rpx;
+}

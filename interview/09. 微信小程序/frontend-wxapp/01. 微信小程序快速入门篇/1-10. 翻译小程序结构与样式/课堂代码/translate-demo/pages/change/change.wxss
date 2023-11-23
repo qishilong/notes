@@ -1,0 +1,14 @@
+.container{
+  width: 100%;
+  height: 80rpx;
+  border-bottom: 1px solid #eee;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  color: #8995a1;
+  text-indent: 30rpx;
+}
+
+.select{
+  float: right;
+  margin-right: 40rpx;
+}

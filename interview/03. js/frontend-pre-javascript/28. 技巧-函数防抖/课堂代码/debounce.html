@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" />
+    <script>
+      function debounce(fn, duration) {
+        var timerId;
+        return function () {
+          clearTimeout(timerId);
+          // 将该函数的this传递到fn
+          var curThis = this;
+          // 将该函数的参数全部传递给fn
+          function slice() {
+            this;
+          }
+          var args = Array.prototype.slice.call(arguments, 0);
+
+          timerId = setTimeout(function () {
+            fn.apply(curThis, args);
+          }, duration);
+        };
+      }
+
+      var newHandler = debounce(function (e) {
+        console.log('用户有按键', e, this.value, '耗时操作');
+      }, 2000);
+
+      var inp = document.querySelector('input');
+      inp.addEventListener('input', newHandler);
+
+      var mouseMoveHandler = debounce(function () {
+        console.log('move');
+      }, 1000);
+
+      window.addEventListener('mousemove', mouseMoveHandler);
+    </script>
+  </body>
+</html>

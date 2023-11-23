@@ -1,0 +1,13 @@
+<!-- 首页主要就是做一个提示以及跳转 -->
+<view class="container">
+  <!-- 文本提示 -->
+  <view class="text">
+    <text>请您远离磁场干扰</text>
+    <text>并且按照下图所示校准指南针</text>
+  </view>
+  <!-- 图片 -->
+  <view class="img">
+    <image src="/imgs/tip.jpg" class="tip-pic"/>
+    <button class="tip-btn" bindtap="jump">我知道了</button>
+  </view>
+</view>

@@ -1,0 +1,25 @@
+<wxs src="./item.wxs" module="foo" />
+<view class="container">
+  <!-- 头像 -->
+  <image src="{{item.avatar}}" mode="aspectFill" class="avatar"/>
+  <!-- 中间的消息 -->
+  <view class="content">
+    <!-- 昵称 -->
+    <view class="top">
+      {{item.nickname}}
+    </view>
+    <!-- 具体消息 -->
+    <view class="bottom">
+      {{foo.msgHandle(item.msg)}}
+    </view>
+  </view>
+  <!-- 右侧的时间 -->
+  <view class="timeBox">
+    <view class="time">
+      {{item.time}}
+    </view>
+    <view>
+      ...
+    </view>
+  </view>
+</view>

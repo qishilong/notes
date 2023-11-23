@@ -1,0 +1,6 @@
+.btnContainer{
+  margin: 0 auto;
+  margin-top: 50rpx;
+  width: 80%;
+  /* border: 1rpx solid #ccc; */
+}

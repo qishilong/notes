@@ -1,0 +1,17 @@
+<!-- 一项一项的语言 -->
+<view 
+  class="container"
+  wx:for="{{lanList}}"
+  wx:key="this"
+  data-id="{{index}}"
+>
+  <view
+    wx:if="{{curLanIndex === index}}"
+  >
+    {{item.chs}}
+    <text class="select iconfont icon-duihao"></text>
+  </view>
+  <view wx:else>
+    {{item.chs}}
+  </view>
+</view>

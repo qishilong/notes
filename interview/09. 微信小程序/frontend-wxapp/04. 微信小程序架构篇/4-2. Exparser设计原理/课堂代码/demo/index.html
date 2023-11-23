@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p class="custom-style">这是一个测试</p>
+
+    <video
+      src="http://maoyan.meituan.net/movie/videos/854x4804c109134879943f4b24387adc040504b.mp4"
+      controls
+      width="500"
+    ></video>
+
+    <custom-component>
+      <p slot="my-slot">这是插入的内容</p>
+    </custom-component>
+    <custom-component text="这是传递的text"></custom-component>
+
+    <template id="customComId">
+      <style>
+        .custom-style {
+          display: inline-block;
+          padding: 15px;
+          border: 1px solid red;
+          border-radius: 4px;
+          color: red;
+        }
+      </style>
+      <div class="custom-style">
+        <p>这是一个自定义组件</p>
+        <slot name="my-slot">插槽默认内容</slot>
+        <p>这是一个自定义组件</p>
+      </div>
+    </template>
+
+    <script>
+      class CustomComponent extends HTMLElement {
+        constructor() {
+          super();
+
+          const shadow = this.attachShadow({ mode: "closed" });
+
+          const template = document.getElementById("customComId");
+          const content = template.content.cloneNode(true);
+
+          // 获取内部的 p
+          const pDOM = content.querySelector(".custom-style>p");
+          // 获取 props
+          const textVal = this.getAttribute("text");
+          if (textVal) {
+            // 进入此 if，说明用户在使用该组件时，传递了 text 属性
+            pDOM.innerHTML = textVal;
+          }
+          // 绑定事件
+          pDOM.addEventListener("click", (e) => {
+            e.stopPropagation();
+            alert("Hello～");
+          });
+
+          shadow.appendChild(content);
+        }
+      }
+      window.customElements.define("custom-component", CustomComponent);
+
+      console.log(customElements.get("custom-component"));
+
+      const div = document.createElement("div");
+      const p = document.createElement("p");
+      div.appendChild(p);
+    </script>
+  </body>
+</html>

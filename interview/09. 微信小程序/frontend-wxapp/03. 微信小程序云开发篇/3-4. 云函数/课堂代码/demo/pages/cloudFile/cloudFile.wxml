@@ -1,0 +1,19 @@
+<view class="title">上传图片</view>
+<view class="container">
+  <van-uploader 
+    file-list="{{ fileList }}"
+    bind:after-read="afterRead"
+    max-count="2"
+    catch:delete="deleteHandle"
+  />
+</view>
+<view class="btnContainer">
+  <van-button 
+    type="primary" 
+    custom-style="width:100%"
+    bindtap="uploadHandle"
+  >上传图片</van-button>
+</view>
+
+<!-- 信息通知组件 -->
+<van-notify id="van-notify"/>

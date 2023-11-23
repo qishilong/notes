@@ -1,0 +1,10 @@
+<!--pages/register/register.wxml-->
+
+<view>
+  <text>账号</text>
+  <input type="text" name="" id="" class="input" model:value="{{loginId}}" bindinput="loginHandler"/>
+  <text>密码</text>
+  <input type="password" name="" id="" class="input" model:value="{{password}}" bindinput="passHandler"/>
+  <button bindtap="sendGet">发送GET请求</button>
+  <button bindtap="sendPost">发送POST请求</button>
+</view>

@@ -1,0 +1,34 @@
+.lanSelectContainer{
+  width: 100%;
+  height: 80rpx;
+  background-color: #f7f7fa;
+  text-indent: 20rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  color: #8995a1;
+}
+
+.lanSelectContainer .icon-down{
+  font-size: 30rpx;
+}
+
+.tranlateTxt{
+  width: 100%;
+  height: 400rpx;
+  border-bottom: 1rpx solid #8995a1;
+  font-size: 32rpx;
+}
+
+.tranlateTxt textarea{
+  margin: 30rpx 20rpx;
+}
+
+.resultTxt{
+  font-size: 30rpx;
+  color: #8995a1;
+  padding: 30rpx;
+}
+.content{
+  margin-top: 10rpx;
+  color: black;
+}

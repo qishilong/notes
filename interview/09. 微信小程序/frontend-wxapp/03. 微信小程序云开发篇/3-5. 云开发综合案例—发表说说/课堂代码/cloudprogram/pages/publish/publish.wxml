@@ -1,0 +1,31 @@
+<!-- 上方文字 -->
+<van-cell-group>
+  <van-field
+    model:value="{{content}}"
+    type="textarea"
+    placeholder="这一刻的想法..."
+    autosize
+    custom-style="height:250rpx"
+  ></van-field>
+</van-cell-group>
+<!-- 下方上传图片 -->
+<view class="container">
+  <van-uploader 
+    file-list="{{ fileList }}" 
+    bind:after-read="afterRead" 
+    multiple
+    max-count="9"
+    image-fit="aspectFill"
+    catch:delete="deleteHandle"
+  />
+</view>
+<!-- 发表新的说说按钮 -->
+<view class="btnContainer">
+  <van-button
+    type="primary"
+    custom-style="width:80%"
+    bindtap="publishHandle"
+  >
+    发表
+  </van-button>
+</view>

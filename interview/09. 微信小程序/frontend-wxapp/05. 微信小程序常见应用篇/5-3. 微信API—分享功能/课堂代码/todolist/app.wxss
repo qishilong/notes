@@ -1,0 +1,34 @@
+.inputContainer{
+  width: 100%;
+  /* border: 1rpx solid; */
+  border-bottom: 1px solid #ccc;
+}
+input{
+  width: 90%;
+  /* border: 1rpx solid #ccc; */
+  margin: 30rpx auto;
+}
+
+.btn{
+  background-color: #3d96eb;
+  color: white;
+  margin-top: 30rpx;
+}
+
+.title{
+  /* border: 1rpx solid #ccc; */
+  margin-top: 40rpx;
+  color: #3d96eb;
+  text-indent: 30rpx;
+  font-size: 30rpx;
+}
+
+.listContainer{
+  /* border: 1rpx solid #ccc; */
+  width: 90%;
+  margin: 0rpx auto;
+  padding: 50rpx 0;
+}
+
+
+

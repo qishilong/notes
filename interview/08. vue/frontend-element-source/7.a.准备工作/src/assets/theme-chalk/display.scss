@@ -1,0 +1,11 @@
+@import "./mixins/mixins.scss";
+
+.hidden {
+  @each $break-points-name, $value in $--breakpoints-spec {
+    &-#{$break-points-name} {
+      @include res($break-points-name, $--breakpoints-spec) {
+        display: none !important;
+      }
+    }
+  }
+}

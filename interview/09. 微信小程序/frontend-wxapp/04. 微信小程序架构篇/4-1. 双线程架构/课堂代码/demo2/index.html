@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        border-radius: 50%;
+      }
+      .one {
+        animation: move1 5s infinite alternate;
+      }
+      .two {
+        background-color: blue;
+        position: absolute;
+        left: 10px;
+        top: 150px;
+        animation: move2 5s infinite alternate;
+      }
+      @keyframes move1 {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(500px);
+        }
+      }
+      @keyframes move2 {
+        0% {
+          left: 10px;
+        }
+        100% {
+          left: 500px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn">阻塞5秒</button>
+    <div class="one"></div>
+    <div class="two"></div>
+    <script>
+      function delay(duration) {
+        var start = Date.now();
+        while (Date.now() - start < duration) {}
+      }
+      btn.onclick = function () {
+        delay(5000);
+      };
+    </script>
+  </body>
+</html>

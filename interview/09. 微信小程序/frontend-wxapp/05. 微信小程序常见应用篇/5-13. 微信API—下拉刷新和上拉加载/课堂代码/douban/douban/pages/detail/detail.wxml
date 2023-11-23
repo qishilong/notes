@@ -1,0 +1,33 @@
+<!--pages/detail/detail.wxml-->
+<view class='container'>
+  <!-- 电影海报、电影名、电影类型 -->
+  <view class='detail'>
+    <image src="{{movie.movieImg}}" />
+    <view class='detailContent'>
+      <!-- 电影名 -->
+      <text class="cName">{{movie.title}}</text>
+      <text class='otherInfo'>{{movie.genres}} / 美国 / 片长 {{movie.durations}} 分钟</text>
+      <text class="casts">{{movie.casts}}</text>
+      <view class="btns">
+        <text>想看</text>
+        <text>看过</text>
+      </view>
+    </view>
+  </view>
+  <!-- 电影简介 -->
+  <view class="movieIntro">
+    <view class="title">简介</view>
+    <view class="summary" style="height:{{height}}">{{summary}}</view>
+    <view class="moreIntro" bindtap="moreIntro">{{isComplete}}</view>
+  </view>
+  <!-- 电影宣传片 -->
+  <view class="videoBox">
+    <view class="title">预告片</view>
+    <video class="video" src="{{movie.vd}}"></video>
+  </view>
+  <!-- 短评 -->
+  <view>
+    <view class="title">短评</view>
+    <view class="comment"></view>
+  </view>
+</view>

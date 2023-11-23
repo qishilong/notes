@@ -1,0 +1,36 @@
+/* components/movieList/movieList.wxss */
+
+.titleBox {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30rpx;
+  height: 104rpx;
+  align-items: center;
+  font-size: 30rpx;
+}
+
+.title {
+  font-weight: bold;
+  color: #464646;
+}
+
+.nav {
+  color: #41bd55;
+  display: flex;
+  align-items: center;
+}
+
+.rightArrow {
+  width: 10rpx;
+  height: 30rpx;
+  margin-left: 10rpx;
+}
+
+.scrollList {
+  white-space: nowrap;
+}
+
+.movieItem {
+  display: inline-block;
+  margin-left: 30rpx;
+}

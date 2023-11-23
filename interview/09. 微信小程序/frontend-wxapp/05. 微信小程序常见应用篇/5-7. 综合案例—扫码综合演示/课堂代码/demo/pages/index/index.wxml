@@ -1,0 +1,37 @@
+<view class="page">
+  <view class="page__bd">
+    <!-- 根据 isShow 决定是否显示，默认不显示 -->
+    <!-- 显示的是扫描后的结果 -->
+    <view wx:if="{{ scanResult.isShow }}" class="weui-form-preview">
+      <!-- 扫描结果 -->
+      <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">扫描结果</view>
+          <view class="weui-form-preview__value_in-hd"></view>
+        </view>
+      </view>
+      <!-- 扫描类型 -->
+      <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">类型</view>
+          <view class="weui-form-preview__value">{{ scanResult.type }}</view>
+        </view>
+        <view wx:if="{{ !scanResult.msg }}" class="weui-form-preview__item">
+          <view class="weui-form-preview__label">内容</view>
+          <view class="weui-form-preview__value weui-form-preview__value_in-bd">
+            <text selectable="true">{{ scanResult.text }}</text>
+          </view>
+        </view>
+      </view>
+      <!-- 复制 -->
+      <view class="weui-form-preview__ft">
+        <view class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active" bindtap="onCopy">复制</view>
+      </view>
+    </view>
+    <!-- 扫一扫按钮 -->
+    <view class="page__bd_spacing" style="margin-top: 40rpx;">
+      <button bindtap="onScan" class="weui-btn" type="primary">扫一扫</button>
+    </view>
+  </view>
+</view>
+

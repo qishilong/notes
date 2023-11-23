@@ -1,0 +1,8 @@
+<view class="container">
+  <view bindtap="tapHandle" class="my-class">{{name}}</view>
+  <slot name="before"></slot>
+  <view>{{content}}</view>
+  <slot></slot>
+  <view>计数器：{{count}}</view>
+  <slot name="after"></slot>
+</view>

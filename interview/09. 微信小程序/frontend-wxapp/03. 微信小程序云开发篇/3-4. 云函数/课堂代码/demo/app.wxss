@@ -1,0 +1,17 @@
+.btnContainer{
+  margin: 0 auto;
+  margin-top: 50rpx;
+  width: 80%;
+  /* border: 1rpx solid #ccc; */
+}
+
+.title{
+  margin: 30rpx 0 0 30rpx;
+  font-size: 28rpx;
+  color : #aaa;
+}
+
+.container{
+  padding: 30rpx;
+}
+

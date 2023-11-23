@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="./jquery.js"></script>
+    <!-- 华语最帅男讲师 -->
+    <script>    
+        var obj1 = {
+            name : 'obj1'
+        }
+
+        var obj2 = {
+            name : 'obj2',
+            sex : 'female',
+            son : {
+                name : 'obj2son',
+            },
+            arr : [1]
+            // arr: []
+        }
+    
+
+        var obj3 = {
+            name : 'obj3',
+            sex : 'male',
+            son : {
+                name : 'obj3son',
+                age : 1,
+                grandSon : {}
+            },
+            arr : [1,2,3]
+        }
+        clone = 
+        // 1.扩展插件  $.extend = $.fn.extend({a : function () {}}); 只能有1个参数 
+        //                                                                target = this;
+        // 2.浅层克隆  $.extend(obj1, obj2, obj3...);           至少2个参数 target= arguments[0]
+        // 3.深度克隆  $.extend(true, obj1, obj2, obj3...);     至少3个参数 target= arguments[1]
+                    
+        // var a = {
+        //     // son : a
+        // }
+
+        // var b = {
+        //     son : a
+        // }
+        // a.son = b.son;
+        // $.extend(a, b);
+        // never-ending loop  循环引用
+        
+
+        // jQuery.fn.extend ---> $(). ----- > jQuery.prototype
+        //
+        // $.extend = function () {
+        // //target 被操作目标  
+
+        //     if() {
+        //         //判断是否是深度克隆
+
+        //         //i = 2
+        //     };
+
+        //     if() {
+        //         //保证目标参数的合法性
+        //     };
+
+        //     if() {
+        //         //如果是插件扩展 target = this;
+        //         // i = 0;
+        //     };
+
+        //     for() {};
+
+
+        // }
+
+
+
+
+
+    </script>
+</body>
+</html>

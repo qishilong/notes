@@ -1,0 +1,1 @@
+<button type="primary" bindtap="tapHandle">小程序登录</button>

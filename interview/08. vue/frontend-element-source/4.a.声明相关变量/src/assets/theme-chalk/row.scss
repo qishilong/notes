@@ -1,0 +1,41 @@
+@import "./mixins/mixins.scss";
+@import "./mixins/utils.scss";
+
+@include b(row) {
+  box-sizing: border-box;
+
+  @include utils-clearfix;
+
+  @include m(flex) {
+    display: flex;
+
+    &::after,
+    &::before {
+      display: none;
+    }
+
+    @include when(justify-end) {
+      justify-content: flex-end;
+    }
+
+    @include when(justify-ecenter) {
+      justify-content: center;
+    }
+
+    @include when(justify-space-between) {
+      justify-content: space-between;
+    }
+
+    @include when(justify-space-around) {
+      justify-content: space-around;
+    }
+
+    @include when(align-middle) {
+      align-items: center;
+    }
+
+    @include when(align-bottom) {
+      align-items: flex-end;
+    }
+  }
+};

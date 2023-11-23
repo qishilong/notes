@@ -1,0 +1,67 @@
+<form action="">
+  <view class="title">input示例</view>
+  <view class="inputContainer">
+    <input type="text" name="" id="" placeholder="请输入..." placeholder-class="placeholder" />
+  </view>
+  <view class="inputContainer">
+    <input type="number" name="" id="" placeholder="数字键盘..." />
+  </view>
+  <view class="inputContainer">
+    <input type="number" password name="" id="" placeholder="输入密码..." />
+  </view>
+  <view class="inputContainer">
+    <input type="text" name="" id="" placeholder="禁用..." disabled />
+  </view>
+  <view class="title">复选框</view>
+  <checkbox-group name="checkbox">
+    <label>
+      <checkbox value="checkbox1">checkbox1</checkbox>
+    </label>
+    <label>
+      <checkbox value="checkbox2" checked>checkbox2</checkbox>
+    </label>
+    <label>
+      <checkbox value="checkbox3" disabled>checkbox3</checkbox>
+    </label>
+  </checkbox-group>
+  <view class="title">单选框</view>
+  <radio-group name="radio-group">
+    <label>
+      <radio value="male">男</radio>
+    </label>
+    <label>
+      <radio value="female">女</radio>
+    </label>
+  </radio-group>
+  <view class="title">滑块</view>
+  <slider bindchange="sliderchange" max="200" activeColor="lightblue"></slider>
+  <view class="title">switch开关</view>
+  <switch bindchange="switchchange"></switch>
+  <!-- 如何修改 switch 的大小 -->
+  <switch class="switch"></switch>
+  <view class="title">文本域</view>
+  <textarea name="" id="" placeholder="请输入自我介绍..."></textarea>
+  <view class="title">picker滚动选择器</view>
+  <picker-view style="width: 100%;height: 200rpx;border: 1rpx solid #ccc;" value="{{value}}" bindchange="pickerchange">
+    <!-- 年 -->
+    <picker-view-column>
+      <view wx:for="{{years}}" wx:key="this" style="line-height: 40rpx;">{{item}}年</view>
+    </picker-view-column>
+    <!-- 月 -->
+    <picker-view-column>
+      <view wx:for="{{months}}" wx:key="this" style="line-height: 40rpx;">{{item}}月</view>
+    </picker-view-column>
+    <!-- 日 -->
+    <picker-view-column>
+      <view wx:for="{{days}}" wx:key="this" style="line-height: 40rpx;">{{item}}日</view>
+    </picker-view-column>
+  </picker-view>
+  <view class="title">keyboard-accessory</view>
+  <view>设置弹起来的键盘上面的样式</view>
+  <textarea hold-keyboard="{{true}}">
+    <keyboard-accessory style="height: 50px;display: flex;">
+      <cover-view bindtap="tap" style="flex: 1; background: green;">1</cover-view>
+      <cover-view bindtap="tap" style="flex: 1; background: red;">2</cover-view>
+    </keyboard-accessory>
+  </textarea>
+</form>

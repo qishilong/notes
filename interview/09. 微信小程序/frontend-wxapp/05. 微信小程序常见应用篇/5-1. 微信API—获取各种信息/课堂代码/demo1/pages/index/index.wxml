@@ -1,0 +1,31 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 渲染用户信息 -->
+  <view class="userinfo">
+    <block wx:if="{{canIUseOpenData}}">
+      <view class="userinfo-avatar" bindtap="bindViewTap">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <open-data type="userNickName"></open-data>
+    </block>
+    <block wx:elif="{{!hasUserInfo}}">
+      <button type="primary" wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
+      <button type="primary" wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+      <view wx:else> 请使用1.4.4及以上版本基础库 </view>
+      <button type="primary" bindtap="address">收获地址</button>
+      <button type="primary" bindtap="userAuth">查看用户授权</button>
+      <button type="primary" bindtap="sysOptSetting">系统设置</button>
+    </block>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <!-- 权限设置 -->
+  <view hidden='{{showSysOpt}}' class='show-system'>
+    <view>当前权限设置如下：</view>
+    <block wx:for='{{sysOptList}}' wx:key='index'>
+      <view>{{item.key}}: {{item.val}}</view>
+    </block>
+  </view>
+</view>

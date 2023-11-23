@@ -1,0 +1,7 @@
+.test{
+  color : red;
+  border: 1rpx solid red;
+  padding: 15rpx;
+  border-radius: 15rpx;
+  display: inline-block;
+}

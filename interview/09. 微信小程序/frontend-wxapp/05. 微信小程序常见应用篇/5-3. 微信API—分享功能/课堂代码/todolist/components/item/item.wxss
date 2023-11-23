@@ -1,0 +1,29 @@
+.item{
+  padding: 30rpx 50rpx;
+  border-bottom: 1rpx solid #ccc;
+  font-size: 30rpx;
+  color:gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content{
+  display: flex;
+  align-items: center;
+}
+
+.checkbox{
+  transform: scale(.6)
+}
+
+.delete{
+  width: 30rpx;
+  height: 30rpx;
+  /* border: 1rpx solid #ccc; */
+}
+
+.finished{
+  text-decoration: line-through;
+  color: #ccc;
+}

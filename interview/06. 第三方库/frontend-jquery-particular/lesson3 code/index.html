@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style> 
+        /* .demo {
+            width: 100px;
+            height: 100px;
+            background: orange;
+            margin-bottom: 10px;
+        }
+        .demo.active {
+            background: red;
+        } */
+
+        /**/
+        .wrapper .style1 {
+            background: orange;
+        }
+        .wrapper .style1 li {
+            color: red;
+        }
+        .wrapper .style2 {
+            background: blue;
+        }
+        .wrapper .style2 li {
+            color: green;
+        }
+
+
+        .wrapper.active .style1 {
+            background: yellow;
+        }
+        .wrapper.active .style1 li {
+            color: deeppink;
+        }
+        .wrapper.active .style2 {
+            background: saddlebrown;
+        }
+        .wrapper.active .style2 li {
+            color: darkcyan;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul> -->
+
+    <!-- <div class="demo"></div>
+    <div class="demo"></div>
+    <div class="demo"></div> -->
+
+    <!-- <div class="wrapper">
+        <ul class='style1'>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>    
+        <ul class='style2'>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>      
+    </div> -->
+
+
+    <div class="demo" cst='aa'></div>
+    <input type="checkbox">
+    
+    <script src='./jquery.js'></script>
+    <script>
+        // attr 基于  setAttribue getAttribute
+        // 取值
+        // console.log( $('.demo').attr('class') );
+        // console.log( $('.demo').attr('cst') );
+        // selected checked disabled
+        // console.log( $('input').attr('checked') )
+
+        // 赋值
+        // $('.demo').attr('id', 'test1');  
+
+
+        // prop  js dom {}
+
+        // 特性映射 非特性不能映射
+
+        // 取值
+        // console.log( $('.demo').prop('cst') );
+        // console.log( $('input').prop('checked') );
+
+
+        // 赋值
+        // dom.timer
+
+        // $('.demo').prop('log', 'duyi');
+        // $('.demo').prop('id', 'test');
+
+        // 'width', '100px'
+
+        // animate   options
+        // $('.demo')
+        //     .css({width: '100px', height: '100px', backgroundColor: 'red'})
+        //     .css({width: '+=100px'});
+
+        // console.log( $('.demo').css('backgroundColor') );
+
+        // addClass removeClass hasClass
+
+
+        // $('.demo').click(function (e) {
+        //     // $('.demo').removeClass('active');
+        //     // $(this).addClass('active');
+        //     $('.demo').css({backgroundColor: 'orange'});
+        //     $(this).css({backgroundColor: 'red'});
+        // });
+
+
+
+        // 
+        // $('.wrapper').click(function (ele, index) {
+        //     if ( $(this).hasClass('active') ) {
+        //         $(this).removeClass('active');
+        //     }else {
+        //         $(this).addClass('active');
+        //     }
+        // });
+
+
+
+
+
+
+
+        // console.log( $('.demo').hasClass('active') );
+
+        // $('div').removeClass(function (index, ele) {
+        //     if (index % 2 == 0) {
+        //         return 'demo';
+        //     }
+        //     return undefined;
+        // });
+
+
+        // ''
+        // $('.demo').addClass(function (index, ele) {
+        //     if (index % 2 == 0) {
+        //         return 'duyi'
+        //     }
+        //     return 'active'
+        // });
+
+
+
+
+
+
+
+
+
+        // .html
+
+        // 1
+        // console.log( $('ul li').html() );
+
+
+        // innerHTML 
+        // $('ul').html('abc');
+
+        // var arrName = ['陈思彤', '成哥' , '邓哥' , '吴彦祖'];
+        // $('ul li').html(function (index, ele) {
+        //     return '<p style="color: orange">' + arrName[index] + '</p>';
+        // });
+
+
+        // $('ul li').html('9');
+
+
+        // text  innerText
+
+        // 
+        // console.log( $('ul li').text() );
+
+
+        // $('ul li').text(function (index, ele) {
+        //     return arrName[index];
+        // });
+
+        // console.log( $('ul li').size() );
+
+       
+
+
+
+
+    </script>
+</body>
+</html>

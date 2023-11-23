@@ -1,0 +1,8 @@
+.ulContainer{
+  border: 1rpx solid #ccc;
+}
+
+.ulTitle{
+  font-size: 34rpx;
+  color: #aaa;
+}

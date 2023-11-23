@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .tpl {
+            display: none;
+        }
+
+        .wrapper {
+            overflow: hidden;
+            border: 2px solid black;
+            width: 600px;
+            margin: 100px auto 0px;
+        }
+        .movieSection {
+            float: left;
+            width: 180px;
+            height: 180px;
+            padding: 10px;
+        }
+        
+        .movieSection img {
+            width: 100%;
+            height: 150px;
+            cursor: pointer;
+        }
+
+        .movieSection h3 {
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <!-- 基本结构 -->
+    <div class="wrapper">
+        <div class='tpl'>
+            <img src=""></img>
+            <h3 class='movieName'></h3>            
+        </div>
+    </div>     
+
+    <script src='./jquery.js'></script>
+    <script>
+        // 回调地狱
+
+        $.ajax({
+            url: 'https://open.duyiedu.com/jq/movie/power',
+            type: 'POST',
+            data: {
+                username: 'cst',
+                password: '123123'
+            },
+            success: function (res) {
+              console.log(res);
+                if (res.data.power == 'root') {
+                    // vip 网络地址发送请求
+                    $.ajax({
+                        url: 'https://open.duyiedu.com/jq/movie/movieList',
+                        type: 'GET',
+                        success: function (res) {
+                            console.log(res)
+                            var data = res.data;
+                            var $Wrapper = $('.wrapper');
+                            $.each(data, function(index, ele) {
+                                // ele.name  ele.poster
+                                var $MovieSection = $('.tpl').clone().removeClass('tpl').addClass('movieSection');
+                                $MovieSection.data({id: ele.id}).on('click', function (){
+                                    
+                                    $.ajax({
+                                        url: 'https://open.duyiedu.com/jq/movie/movieInfo',
+                                        type: 'GET',
+                                        data: {
+                                            movieId: $(this).data('id')
+                                        },
+                                        success: function (res) {
+                                            var data = res.data;
+                                            var direct = data.direct;
+                                            var gut = data.gut;
+                                            var mainActor = data.mainActor;
+                                            var screenWriter = data.screenwriter;
+
+                                            var htmlStr = '<div class="mask">\
+                                                <p>导演: ' + direct + '</p>\
+                                                <p>剧情: ' + gut + '</p>\
+                                                <p>主演: ' + mainActor.reduce(function (prev, curv) {
+                                                    prev += curv + ' ';
+                                                    return prev;
+                                                }, '') + '</p>\
+                                                <p>编剧: ' + screenWriter.reduce(function (prev, curv) {
+                                                    prev += curv + ' ';
+                                                    return prev;
+                                                }, '') + '</p>\
+                                            </div>'
+
+                                            $(htmlStr)
+                                                .appendTo('body')
+                                                    .css({position: 'absolute', left: $(window).outerWidth() / 2, bottom: 100, width: 400, marginLeft: -200});
+                                        }
+                                    });
+                                }).children()
+                                    .eq(0).attr('src', ele.poster)
+                                        .next().text(ele.name);
+
+                                $Wrapper.append($MovieSection);
+                            });
+                        }
+                    })
+                }else {
+                    // 非vip 
+                }
+            }
+        });
+
+
+
+        //  $.Deferred();
+
+        // 
+        // $.ajax();
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<view>小程序动画快速入门示例</view>
+<view animation="{{viewAnimate}}" class="container1"></view>
+<button type="primary" bindtap="startMove">开始动画</button>
+
+<view>动画实例</view>
+<view class="animation">
+  <view class="dis-flex">
+    <!-- 起始地 -->
+    <view class='flex3' animation="{{lAnimate}}">{{start}}</view>
+    <!-- 交换按钮 -->
+    <view class='flex1' bindtap="trigger">
+      <em class='iconfont switch-icon'></em>
+    </view> 
+    <!-- 目的地 -->
+    <view class='flex3' animation="{{rAnimate}}">{{end}}</view>
+  </view>
+</view>

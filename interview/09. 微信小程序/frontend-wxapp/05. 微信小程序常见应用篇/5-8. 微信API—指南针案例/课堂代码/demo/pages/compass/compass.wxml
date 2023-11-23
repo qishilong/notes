@@ -1,0 +1,13 @@
+<view class="container">
+  <!-- 上方：信息的展示 -->
+  <view class="text">
+    <!-- 当前的方向 -->
+    <text>{{direction}}</text>
+    <!-- 旋转的角度 -->
+    <text>{{angle}}°</text>
+  </view>
+  <!-- 下方：罗盘的图片 -->
+  <view class="pic">
+    <image src="/imgs/compass.png" style="transform: rotate({{rotate}}deg);"/>
+  </view>
+</view>

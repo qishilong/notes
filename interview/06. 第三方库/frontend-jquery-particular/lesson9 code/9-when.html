@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src='./jquery.js'></script>
+    <script>
+        // 参数可以是一个或多个延迟对象
+        // 返回值是promise对象
+        $.when( createScore1() , createScore2() , createScore3() ).then(function () {
+            console.log('done');
+        }, function () {
+            console.log('fail');
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function createScore1 () {
+            var df = $.Deferred();
+
+            setInterval(function () {
+                var score = Math.random() * 100;
+                if (score > 50) {
+                    df.resolve('congradulation!!!');
+                }else if (score < 40) {
+                    df.reject('get out');
+                }else {
+                    df.notify('go on');
+                }
+            }, 1500);
+
+            // done fail progress
+            return df;
+        }   
+
+        function createScore2 () {
+            var df = $.Deferred();
+
+            setInterval(function () {
+                var score = Math.random() * 100;
+                if (score > 50) {
+                    df.resolve('congradulation!!!');
+                }else if (score < 40) {
+                    df.reject('get out');
+                }else {
+                    df.notify('go on');
+                }
+            }, 1500);
+
+            // done fail progress
+            return df;
+        }  
+
+        function createScore3 () {
+            var df = $.Deferred();
+
+            setInterval(function () {
+                var score = Math.random() * 100;
+                if (score > 50) {
+                    df.resolve('congradulation!!!');
+                }else if (score < 40) {
+                    df.reject('get out');
+                }else {
+                    df.notify('go on');
+                }
+            }, 1500);
+
+            // done fail progress
+            return df;
+        }   
+
+
+
+        // $.when(createScore1(), createScore2(), createScore3()).then(function (ms) {
+        //     console.log(ms);
+        // }, function (ms) {
+        //     console.log(ms);
+        // }, function (ms) {
+        //     console.log(ms);
+        // });
+    </script>
+</body>
+</html>

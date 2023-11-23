@@ -1,0 +1,3 @@
+<view class="li" bindtest="test">
+  <slot></slot>
+</view>

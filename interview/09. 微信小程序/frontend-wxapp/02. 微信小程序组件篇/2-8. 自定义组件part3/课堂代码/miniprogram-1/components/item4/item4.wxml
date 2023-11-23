@@ -1,0 +1,6 @@
+<view class="container">
+  <view>item4</view>
+  <view>该示例演示了抽象节点</view>
+  <selectable/>
+</view>
+

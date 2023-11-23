@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .tpl {
+            display: none;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class='wrapper'>
+        <div class='tpl'>
+            <p></p>
+            <span></span>
+            <button>add</button>
+        </div>
+
+        <p class="show">
+            <span>sum</span>
+            <span class='sum'>0</span>
+        </p>
+    </div>
+
+    <script src='./jquery.js'></script>
+    <script>
+        var shopArr = [
+            {
+                name: 'james solider',
+                shopName: 'nike',
+                price: 110,
+                id: '1001'
+            },{
+                name: 'Rose crazyLight',
+                shopName: 'adidas',
+                price: 90,
+                id: '2002'
+            },{
+                name: 'curry one',
+                shopName: 'Under Armour',
+                price: 120,
+                id: '3003'
+            }
+        ];
+
+
+        shopArr.forEach(function (ele, index) {
+            var oCloneDom = $('.tpl').clone().removeClass('tpl');
+            // div jquery cache
+            oCloneDom.data({
+                id: ele.id,
+                shopName: ele.shopName,
+                price: ele.price
+            }).find('p')
+                    .text(ele.name)
+                        .next()
+                            .text(ele.price);
+
+           oCloneDom.insertBefore($('.show'));              
+        });
+
+        // $('.wrapper button').click(function () {
+        //     // 
+        //     $('.sum').text( +$('.sum').text() +  $(this).parent().data('price') );
+        //     console.log( $(this).parent().data('id') )
+        // });
+
+
+        // html  css js {}
+        // tag tag-dom 存
+        //  attr prop 
+        //  
+        // data -> jquery => dom -< data => view
+
+
+        // vue 
+
+        // vue  虚拟dom diff算法
+
+        // view  model
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // shopArr.forEach(function (ele, index) {
+        //     var oCloneDom = $('.tpl').clone().removeClass('tpl');
+        //     oCloneDom
+        //         .data({
+        //             id: ele.id,
+        //             price: ele.price,
+        //             shopName: ele.shopName
+        //         }).find('p').text(ele.name).next().text(ele.price);
+        //     oCloneDom.insertBefore($('.show'));   
+        // });
+        
+
+
+        // $('.wrapper button').click(function (e) {
+        //     $('.sum').text( parseInt ( $('.sum').text() ) + parseInt( $(this).parent().data('price') ) );
+        // });
+
+
+
+
+
+
+
+
+
+
+        // html  css   js 
+        //  data -> jQuery 操作data  操作dom -> view
+        // tag  dom.dataId 
+        // {} 
+
+        // data jQuery 
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

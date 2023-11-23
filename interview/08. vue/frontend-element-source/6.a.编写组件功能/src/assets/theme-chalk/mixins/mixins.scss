@@ -1,0 +1,47 @@
+@import "./config.scss";
+@import "../common/var.scss";
+
+/** BEM
+----------------*/
+@mixin b($block) {
+  $B: $namespace + '-' + $block;
+
+  .#{$B} {
+    @content;
+  }
+}
+
+@mixin m($modifier) {
+  // &--flex
+  $currentSelector: "";
+
+  @each $unit in $modifier {
+    $currentSelector: $currentSelector + & + $modifier-separator + $unit + ',';
+  }
+
+  @at-root {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+}
+
+@mixin when($state) {
+  @at-root {
+    &.#{$state-prefix + $state} {
+      @content;
+    }
+  }
+}
+
+/* 断点 （break points）
+------------------------*/
+@mixin res($key, $map: $--breakpoints) {
+  @if map-has-key($map, $key) {
+    @media only screen and #{inspect(map-get($map, $key))} {
+      @content;
+    }
+  } @else {
+    @warn "undefined points: `#{$map}`"
+  }
+};

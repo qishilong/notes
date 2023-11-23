@@ -1,0 +1,8 @@
+<!-- 电影条目组件 -->
+
+<view class='item' bindtap='toDetail'>
+  <!-- 分为 3 个部分，海报、标题以及星级 -->
+  <image class='img' src='{{item.movieImg}}'/>
+  <text class="title">{{item.title}}</text>
+  <stars star="{{item.stars}}" average="{{item.average}}"></stars>
+</view>

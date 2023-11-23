@@ -1,0 +1,16 @@
+.btnContainer{
+  margin: 20rpx auto;
+  width: 60%;
+  text-align: center;
+}
+
+.title{
+  margin: 30rpx 0 0 30rpx;
+  font-size: 28rpx;
+  color : #aaa;
+}
+
+.container{
+  padding: 30rpx;
+}
+

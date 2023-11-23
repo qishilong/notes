@@ -1,0 +1,19 @@
+<!--components/movieList/movieList.wxml-->
+
+<!-- movieList 自定义组件 -->
+<view>
+  <!-- 影院列表抬头 -->
+  <view class='titleBox'>
+    <text class="title">{{title}}</text>
+    <navigator class="nav" url="../../pages/more/more">
+      <text>查看更多</text>
+      <image class='rightArrow' src="../../assets/images/icons/ic_arrow_green_right.png" />
+    </navigator>
+  </view>
+  <!-- 具体的电影列表 -->
+  <scroll-view scroll-x class="scrollList">
+    <view class='movieItem' wx:for="{{rows}}" wx:key="this">
+      <movieItem item="{{item}}"></movieItem>
+    </view>
+  </scroll-view>
+</view>

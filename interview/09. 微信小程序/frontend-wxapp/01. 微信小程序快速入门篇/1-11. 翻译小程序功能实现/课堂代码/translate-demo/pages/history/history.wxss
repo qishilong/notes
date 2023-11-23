@@ -1,0 +1,32 @@
+.container{
+  font-size: 30rpx;
+  color: #aaa;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  height: 100rpx;
+  line-height: 100rpx;
+  padding: 20rpx;
+}
+
+.header text{
+  margin: 0 20rpx;
+}
+
+.header .icon-close{
+  font-size: 30rpx;
+}
+
+.item{
+  margin: 30rpx;
+}
+
+.item view{
+  margin: 5rpx 0;
+}
+
+.item view:nth-child(2){
+  color: black;
+}

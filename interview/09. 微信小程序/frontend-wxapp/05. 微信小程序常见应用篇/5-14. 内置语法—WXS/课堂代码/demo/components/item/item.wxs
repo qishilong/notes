@@ -1,0 +1,7 @@
+function msgHandle(s){
+  if(s){
+    return s.length > 10 ? s.slice(0, 11) + "..." : s;
+  }
+}
+
+module.exports.msgHandle = msgHandle;

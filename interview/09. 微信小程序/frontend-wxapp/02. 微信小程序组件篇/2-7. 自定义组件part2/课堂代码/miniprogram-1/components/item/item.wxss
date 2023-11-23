@@ -1,0 +1,11 @@
+.container{
+  border: 1rpx solid #ccc;
+  margin-top: 20rpx;
+  padding: 20rpx;
+}
+
+.text{
+  border-top:1rpx solid #aaa;
+  border-bottom:1rpx solid #aaa;
+  padding: 10rpx;
+}

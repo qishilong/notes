@@ -1,0 +1,6 @@
+.section{
+  text-align: center;
+}
+.section button{
+  margin: 20rpx auto;
+}

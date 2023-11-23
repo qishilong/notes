@@ -1,0 +1,7 @@
+<view class="item">
+  <view class="content">
+    <checkbox checked="{{item.isComplete}}" class="checkbox" bindtap="checkHandle"></checkbox>
+    <text class="{{item.isComplete ?  'finished' : ''}}">{{item.content}}</text>
+  </view>
+  <image class="delete" src="/imgs/delete.png" bindtap="deleteHandle"></image>
+</view>

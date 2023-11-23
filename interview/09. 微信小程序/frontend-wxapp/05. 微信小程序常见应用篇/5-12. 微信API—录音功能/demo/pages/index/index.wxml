@@ -1,0 +1,30 @@
+<!-- 录音记录列表 -->
+<scroll-view>
+  <view wx:if='{{voices}}'>
+    <block wx:for='{{voices}}' wx:key="this">
+      <view class='board'>
+        <view class='cell'>
+          <view class='cell-db' bindtap='gotoPlay' data-key='{{item.filePath}}'>
+            <view class='date'>存储路径：{{item.filePath}}</view>
+            <view class='date'>存储时间：{{item.createTime}}</view>
+            <view class='date'>音频大小：{{item.size}}KB</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!-- 显示录音中的图片 -->
+<view wx:if='{{isSpeaking}}' class='speak-style'>
+  <image wx:if='{{j ==1 }}' class='sound-style' src='../../images/voice_icon_speech_sound_1.png'></image>
+  <image wx:if='{{j ==2 }}' class='sound-style' src='../../images/voice_icon_speech_sound_2.png'></image>
+  <image wx:if='{{j ==3 }}' class='sound-style' src='../../images/voice_icon_speech_sound_3.png'></image>
+  <image wx:if='{{j ==4 }}' class='sound-style' src='../../images/voice_icon_speech_sound_4.png'></image>
+  <image wx:if='{{j ==5 }}' class='sound-style' src='../../images/voice_icon_speech_sound_5.png'></image>
+</view>
+<!-- 录音按钮 -->
+<view class='record-style'>
+  <button style="width: 40%;" type="primary" bindtap="clearList">清除录音</button>
+  <button style="width: 40%;" class='btn-style' bindtouchstart='touchdown' bindtouchend='touchup' type="primary">按住 录音</button>
+</view>

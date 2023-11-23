@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src='./jquery.js'></script>
+    <script>
+        // 核心 then 
+        var df = $.Deferred();
+
+        // df.done(function () {
+        //     console.log('done1');
+        // }).fail(function () {
+        //     console.log('fail');
+        // })
+        // .progress(function () {
+        //     console.log('progress');
+        // })
+        // .done(function () {
+        //     console.log('done2');
+        // });
+        // 简化注册的写法
+        // 
+        // df.then(function () {
+        //     console.log('done1');
+        // }, function () {
+        //     console.log('fail1');
+        // }, function () {
+        //     console.log('progress1');
+        // }).then(function () {
+        //     console.log('done2');
+        // }, function () {
+        //     console.log('fail2');
+        // }, function () {
+        //     console.log('progress2');
+        // });
+
+        function createScore () {
+            var df = $.Deferred();
+            setInterval(function () {
+                var score = Math.random() * 100;
+                if (score > 60) {
+                    df.resolve('congradulation!!!');
+                }else if (score < 50) {
+                    df.reject('get out');
+                }else {
+                    df.notify('go on');
+                }
+            }, 1500);
+            // done fail progress
+            return df.promise();
+        }
+
+        var df = createScore();
+        df.then(function (ms) {
+            console.log('oh Yeah!' + ' ' + ms);
+            var innerDf = $.Deferred();
+            // 
+            setTimeout(function () {
+                innerDf.resolve('duyi resolve');
+            }, 1500);
+
+            return innerDf.promise();
+        }, function (ms) {
+            console.log('oh No!' + ' ' + ms);
+            var innerDf = $.Deferred();
+            // 
+            setTimeout(function () {
+                innerDf.reject('duyi reject');
+            }, 1500);
+
+            return innerDf.promise();
+        }, function () {
+            console.log('what?' + ' ' + ms);
+            setTimeout(function () {
+                innerDf.notify('duyi notify');
+            }, 1500);
+
+            return innerDf.promise();
+
+        }).then(function (ms) {
+            console.log(ms);
+        }, function (ms) {
+            console.log(ms);
+        }, function (ms) {
+            console.log(ms);
+        });     
+
+
+
+        // $.ajax({url, type, data}).then(function () {
+        //     // 发送请求
+        //     return $.ajax();
+        // }).then(function () {
+        //     return $.ajax();
+        // })
+
+
+
+
+
+        // 
+        // df.then(function (ms) {
+        //     console.log('oh Yeah!' + ' ' + ms);
+        //     return 'ok';
+        // }, function (ms) {
+        //     console.log('oh No!' + ' ' + ms);
+        //     return 'no';
+        // }, function () {
+        //     console.log('what?' + ' ' + ms);
+        //     return 'go on';
+        // }).then(function (param) {
+        //     console.log('泡妞' + param);
+        // }, function (param) {
+        //     console.log(param + '脸');
+        // }, function (param) {
+        //     console.log(param + '加油');
+        // });
+    </script>
+</body>
+</html>

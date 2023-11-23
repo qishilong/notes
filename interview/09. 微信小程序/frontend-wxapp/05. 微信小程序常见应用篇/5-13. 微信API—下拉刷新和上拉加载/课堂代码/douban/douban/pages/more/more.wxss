@@ -1,0 +1,12 @@
+/* pages/hotMovies/hotMovies.wxss */
+.container {
+  padding: 10rpx 30rpx;
+  border-radius: 10rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.movieItem {
+  margin: 0 15rpx;
+}

@@ -1,0 +1,37 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/unfinish/unfinish",
+    "pages/finished/finished"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "borderStyle": "black",
+    "position": "bottom",
+    "color": "#bfbfbf",
+    "selectedColor": "#0095f2",
+    "list": [{
+      "pagePath": "pages/index/index",
+      "text": "任务清单",
+      "iconPath": "imgs/todoUnsel.png",
+      "selectedIconPath": "imgs/todoSel.png"
+    },{
+      "pagePath": "pages/unfinish/unfinish",
+      "text": "未完成",
+      "iconPath": "imgs/unfinishUnsel.png",
+      "selectedIconPath": "imgs/unfinishSel.png"
+    },{
+      "pagePath": "pages/finished/finished",
+      "text": "已完成",
+      "iconPath": "imgs/finishUnsel.png",
+      "selectedIconPath": "imgs/finishSel.png"
+    }]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

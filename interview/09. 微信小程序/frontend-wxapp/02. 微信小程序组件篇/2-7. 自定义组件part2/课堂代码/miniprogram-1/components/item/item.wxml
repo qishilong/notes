@@ -1,0 +1,12 @@
+<view class="container">
+  <view bindtap="tapHandle">{{name}}</view>
+  <slot name="before"></slot>
+  <view>{{content}}</view>
+  <view>{{behaviorProps}}</view>
+  <slot></slot>
+  <view>计数器：{{count}}</view>
+  <slot name="after"></slot>
+  <input type="text" name="" id="" class="text" model:value="{{inputContent}}" bindinput="inputHandle"/>
+  <button bindtap="triggerHandle">传递给父组件</button>
+  <view>{{behaviorContent}}</view>
+</view>

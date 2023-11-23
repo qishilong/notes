@@ -1,0 +1,1 @@
+<message wx:for="{{list}}" wx:key="this" item="{{item}}"></message>

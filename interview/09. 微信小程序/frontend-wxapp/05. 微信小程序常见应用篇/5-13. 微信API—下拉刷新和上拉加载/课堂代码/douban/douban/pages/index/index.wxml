@@ -1,0 +1,18 @@
+<!--pages/index/index.wxml-->
+<view>
+  <!-- 搜索框 -->
+  <view class='searchBox'>
+    <!-- 跳转到搜索页面 -->
+    <navigator url="/pages/search/search">
+      <icon class='searchIcon' type='search' size="14"></icon>
+      <text>搜索</text>
+    </navigator>
+  </view>
+  <!-- 电影列表组件 -->
+  <movieList title="影院热映" rows="{{hots}}"></movieList>
+  <movieList title="豆瓣热门" rows="{{comings}}"></movieList>
+  <movieList title="近期热门剧集" rows="{{hots}}"></movieList>
+  <movieList title="近期热门综艺节目" rows="{{comings}}"></movieList>
+  <movieList title="畅销图书" rows="{{hots}}"></movieList>
+  <movieList title="热门单曲榜" rows="{{comings}}"></movieList>
+</view>

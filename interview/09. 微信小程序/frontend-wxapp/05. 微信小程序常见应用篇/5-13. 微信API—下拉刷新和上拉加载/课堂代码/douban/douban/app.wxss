@@ -1,0 +1,9 @@
+/**app.wxss**/
+
+page {
+  font-size: 0;
+}
+
+image {
+  vertical-align: middle;
+}

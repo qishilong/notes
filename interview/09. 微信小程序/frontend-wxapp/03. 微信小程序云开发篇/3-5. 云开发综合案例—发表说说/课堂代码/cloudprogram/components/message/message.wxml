@@ -1,0 +1,22 @@
+<view class="momentContainer">
+  <!-- 时间 -->
+  <view class="left">
+    <view class="day">{{dateInfo.day}}</view>
+    <view class="month">{{dateInfo.month}}月</view>
+  </view>
+  <!-- 说说内容 -->
+  <view class="right">
+    <!-- 文字内容 -->
+    <view class="content">{{item.content}}</view>
+    <view class="picContainer">
+      <image 
+        wx:for="{{imgArr}}"
+        wx:key="this"
+        src="{{item}}"
+        mode="aspectFill"
+        bindtap="previewHandle"
+        data-src="{{item}}"
+      />
+    </view>
+  </view>
+</view>

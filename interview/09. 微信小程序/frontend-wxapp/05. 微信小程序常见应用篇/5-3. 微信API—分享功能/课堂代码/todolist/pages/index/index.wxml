@@ -1,0 +1,20 @@
+<view class="inputContainer">
+  <input 
+    type="text"
+    class="input"
+    placeholder="请输入新的待办事项..."
+    model:value="{{newContent}}"
+    bindinput="inputHandle"
+  />
+</view>
+<view class="btnContainer">
+  <button class="btn" style="width: 60%;" bindtap="add">创建一个任务</button>
+  <button open-type="share" style="width: 30%;" class="btn">分享</button>
+</view>
+<view class="title">共 {{list.length}} 项任务</view>
+<!-- 下面会根据是否有任务有一个判断 -->
+<view wx:if="{{list.length === 0}}" class="tip">- 请添加任务 -</view>
+<view wx:else class="listContainer">
+  <!-- 根据任务的长度来显示对应的任务条目 -->
+  <item wx:for="{{list}}" wx:key="this" item="{{item}}" bindfresh="fresh"></item>
+</view>

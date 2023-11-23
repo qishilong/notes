@@ -1,0 +1,24 @@
+/* pages/components/stars/stars.wxss */
+
+.starsWrap {
+  width: 160rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40rpx;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+}
+
+.image {
+  width: 22rpx;
+  height: 22rpx;
+}
+
+.average {
+  font-size: 20rpx;
+  vertical-align: -2px;
+}

@@ -1,0 +1,28 @@
+<!-- 姓名 -->
+<van-cell-group title="基本信息">
+  <van-field model:value="{{ name }}" placeholder="请输入学生姓名"/>
+  <van-field model:value="{{ age }}" type="number" placeholder="请输入学生年龄"/>
+</van-cell-group>
+<!-- 性别 -->
+<van-radio-group value="{{ gender }}" bind:change="onChange">
+  <van-cell-group title="性别">
+    <van-cell title="男" clickable data-name="1" bind:click="onClick">
+      <van-radio slot="right-icon" name="1" checked-color="#58bd6a" />
+    </van-cell>
+    <van-cell title="女" clickable data-name="2" bind:click="onClick">
+      <van-radio slot="right-icon" name="2" checked-color="#58bd6a"/>
+    </van-cell>
+  </van-cell-group>
+</van-radio-group>
+<!-- 分数 -->
+<van-cell-group title="各科目成绩">
+  <van-field model:value="{{ htmlScore }}" type="digit" placeholder="请输入 HTML 成绩" />
+  <van-field model:value="{{ cssScore }}" type="digit" placeholder="请输入 CSS 成绩" />
+  <van-field model:value="{{ jsScore }}" type="digit" placeholder="请输入 JS 成绩" />
+</van-cell-group>
+<view class="btnContainer">
+  <van-button type="primary" custom-style="width:100%;" bind:click="addStu">新增学生</van-button>
+</view>
+
+<!-- 信息通知组件 -->
+<van-notify id="van-notify"/>

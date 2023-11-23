@@ -1,0 +1,3 @@
+<!--pages/test/test.wxml-->
+<text>pages/test/test.wxml</text>
+<button bindtap="backIndex">返回</button>

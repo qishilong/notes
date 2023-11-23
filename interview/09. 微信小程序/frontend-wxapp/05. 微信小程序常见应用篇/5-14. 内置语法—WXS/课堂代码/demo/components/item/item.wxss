@@ -1,0 +1,46 @@
+.container{
+  /* border: 1rpx solid red; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10rpx 15rpx;
+  margin-bottom: 20rpx;
+}
+
+.avatar{
+  width: 130rpx;
+  height: 130rpx;
+  /* border: 1rpx solid; */
+  border-radius: 15rpx;
+}
+
+.content{
+  width: 60%;
+  height: 150rpx;
+  /* border: 1rpx solid blue; */
+  padding: 10rpx;
+  box-sizing: border-box;
+}
+
+.top{
+  font-size: 36rpx;
+  color: rgb(32, 32, 32);
+  margin-bottom: 10rpx;
+}
+
+.bottom{
+  font-size: 32rpx;
+  color: #888;
+}
+
+.timeBox{
+  width: 15%;
+  height: 100rpx;
+  /* border: 1rpx solid pink; */
+  text-align: center;
+  color: #888;
+}
+
+.time{
+  font-size: 30rpx;
+}

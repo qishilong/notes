@@ -1,0 +1,7 @@
+<view>item2 演示数据监听器</view>
+<view>这个就和 vue 中的 watch 是一样的</view>
+<view>
+  {{a}} + {{b}} = {{sum}}
+</view>
+<button bindtap="tapHandle1">a++</button>
+<button bindtap="tapHandle2">b--</button>

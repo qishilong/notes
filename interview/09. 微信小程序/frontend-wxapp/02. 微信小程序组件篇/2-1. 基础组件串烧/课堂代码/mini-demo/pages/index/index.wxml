@@ -1,0 +1,69 @@
+<view class="title">view示例</view>
+<view class="container1">
+  <view style="background-color: lightblue;" hover-class="hoverclass">A</view>
+  <view style="background-color: lightgreen;">B</view>
+  <view style="background-color: lightsalmon;">C</view>
+</view>
+
+<view class="title">横向滚动示例</view>
+<scroll-view class="container2" scroll-x>
+  <view class="scrollItem" style="background-color: lightsalmon;">1</view>
+  <view class="scrollItem" style="background-color: lightseagreen;">2</view>
+  <view class="scrollItem" style="background-color: lightblue;">3</view>
+  <view class="scrollItem" style="background-color: pink;">4</view>
+</scroll-view>
+
+<view class="title">纵向滚动示例</view>
+<scroll-view class="container3" scroll-y>
+  <view class="scrollItem" style="background-color: lightsalmon;">1</view>
+  <view class="scrollItem" style="background-color: lightseagreen;">2</view>
+  <view class="scrollItem" style="background-color: lightblue;">3</view>
+  <view class="scrollItem" style="background-color: pink;">4</view>
+</scroll-view>
+
+<view class="title">text示例</view>
+<text>微信小程序中的 text 相当于 <text style="color: red;">span</text>，</text><text>所以会显示在一行</text>
+
+<view class="title">图片示例</view>
+<view>scaleToFill</view>
+<view>缩放模式，不保持纵横比缩放图片，使图片的宽高完全拉伸至填满 image 元素</view>
+<image class="image" src="/imgs/cat.jpg"></image>
+<view>aspectFit</view>
+<view>缩放模式，保持纵横比缩放图片，使图片的长边能完全显示出来。也就是说，可以完整地将图片显示出来。</view>
+<image class="image" src="/imgs/cat.jpg" mode="aspectFit"></image>
+<view>aspectFill</view>
+<view>缩放模式，保持纵横比缩放图片，只保证图片的短边能完全显示出来。也就是说，图片通常只在水平或垂直方向是完整的，另一个方向将会发生截取。</view>
+<image class="image" src="/imgs/cat.jpg" mode="aspectFill"></image>
+<view>widthFix</view>
+<view>缩放模式，宽度不变，高度自动变化，保持原图宽高比不变</view>
+<image class="image" src="/imgs/cat.jpg" mode="widthFix"></image>
+
+<view class="title">button示例</view>
+<button>基本按钮</button>
+<button type="warn">警告按钮</button>
+<button type="primary">绿色按钮</button>
+<button type="primary" plain>plain按钮</button>
+<button type="primary" disabled>禁用按钮</button>
+<button type="primary" loading>loading按钮</button>
+<button style="width: 80%;" type="primary">自定义宽度</button>
+
+<view class="title">navigator示例</view>
+<navigator url="/pages/logs/logs" class="navigator">
+  <button type="primary">跳转到logs</button>
+</navigator>
+
+<view class="title">icon示例</view>
+<icon type="success"></icon>
+<icon type="waiting"></icon>
+<icon type="download" size="50"></icon>
+<icon type="search" size="40" color="lightgreen"></icon>
+
+<view class="title">progress示例</view>
+<progress percent="20" show-info />
+<progress percent="40" stroke-width="12" />
+<progress percent="60" color="pink" />
+<progress percent="80" active />
+
+<view class="title">富文本</view>
+<view>在富文本输入框中支持将html渲染为wxml</view>
+<rich-text nodes="{{htmlStr}}"></rich-text>

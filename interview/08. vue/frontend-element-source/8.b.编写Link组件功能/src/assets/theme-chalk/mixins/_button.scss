@@ -1,0 +1,69 @@
+@import "../common/var.scss";
+
+@mixin button-variant ($backgroundColor, $borderColor, $fontColor) {
+  color: $fontColor;
+  background-color: $backgroundColor;
+  border-color: $borderColor;
+
+  &:hover,
+  &:focus {
+    background-color: mix($--color-white, $backgroundColor, $--button-hover-tint-percent);
+    border-color: mix($--color-white, $borderColor, $--button-hover-tint-percent);
+    color: $fontColor;
+  }
+
+  &:active {
+    background-color: mix($--color-black, $backgroundColor, $--button-active-shade-percent);
+    border-color: mix($--color-black, $borderColor, $--button-active-shade-percent);
+    color: $fontColor;
+  }
+
+  &.is-plain {
+    @include button-plain($backgroundColor);
+  }
+
+  &.is-disabled {
+    background-color: mix($--color-white, $backgroundColor);
+    border-color: mix($--color-white, $backgroundColor);
+    color: $--color-white;
+  }
+}
+
+@mixin button-plain ($color) {
+  background-color: mix($--color-white, $color, 90%);
+  border-color: mix($--color-white, $color, 60%);
+  color: $color;
+
+  &:hover,
+  &:focus {
+    background-color: $color;
+    border-color: $color;
+    color: $--color-white;
+  }
+
+  &:active {
+    background-color: mix($--color-black, $color, $--button-active-shade-percent);
+    border-color: mix($--color-black, $color, $--button-active-shade-percent);
+    color: $--color-white;
+  }
+
+  &.is-disabled {
+    background-color: mix($--color-white, $color, 90%);
+    border-color: mix($--color-white, $color, 80%);
+    color: mix($--color-white, $color, 40%);
+  }
+}
+
+@mixin button-size ($padding-vertical, $padding-horizontal, $font-size, $border-radius) {
+  padding: $padding-vertical $padding-horizontal;
+  font-size: $font-size;
+  border-radius: $border-radius;
+
+  &.is-round {
+    padding: $padding-vertical $padding-horizontal;
+  }
+
+  &.is-circle {
+    padding: $padding-vertical;
+  }
+}

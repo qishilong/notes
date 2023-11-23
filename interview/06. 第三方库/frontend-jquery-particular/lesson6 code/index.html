@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* .demo {
+            width: 100px;
+            height: 100px;
+            background: orange;
+        } */
+    </style>
+</head>
+<body>
+    <!-- <div class="demo"></div> -->
+
+
+    <!-- <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul> -->
+
+    <!-- <a href="https://www.baidu.com" target='_blank'>jump</a> -->
+
+
+    <!-- <div class="demo"></div> -->
+
+    <input type="text" class='demo'/>
+
+    <script src='./jquery.js'></script>
+    <script>   
+
+        // trigger
+        
+        // $('.demo').on('click', function (e, a, b, c, d) {
+        //     console.log('click', a, b, c, d);
+        // });
+
+        // $('.demo').trigger('click', [10, 20, 30, 40]);
+
+        // 自定义事件
+        // 
+        // $('.demo').on('pageLoad', function (e, a, b, c, d) {
+        //     console.log(a, b, c, d);
+        // });
+
+
+        // $('.demo').trigger('pageLoad', 10, 20, 30, 40);
+
+
+
+        //     
+
+
+
+        // on
+        // on  
+        // 系统事件
+        // 4
+        // 1.type 2.selector 3.data 4.handle
+        // function demo() {
+        //     alert(0);
+        // }        
+        // $('.demo').on('click', demo);
+        // $('.demo').on('click', demo);
+
+        // $('.demo').on('mouseenter', function () {
+        //     alert(0);
+        // });
+
+        // 
+
+        // $('.demo').on('click', true, function (e) {
+        //     console.log(e.data);
+        // });
+
+        // 
+        // $('ul').on('click', 'li', function (e) {
+        //     alert( $(e.target).text() );
+        // });
+
+        // $('<li>9</li>').appendTo($('ul'))
+
+
+
+        // 
+        // $('a').one('click', function () {
+        //     window.open('https://www.taobao.com');
+        //     return false;
+        // });
+
+
+        // on
+
+        // $('.demo').on({
+        //     click: function () {
+        //         console.log('click');
+        //     },
+        //     mouseenter: function () {
+        //         console.log('mouseenter');
+        //     },
+        //     mouseleave: function () {
+        //         console.log('mouseleave');
+        //     }
+        // });
+
+
+        // 
+        // function clickOne () {
+        //     console.log('clickOne');
+        // }
+
+        // function clickTwo () {
+        //     console.log('clickTwo');            
+        // }
+        
+        // $('.demo').on('click', clickOne);
+        // $('.demo').on('click', clickTwo);
+
+
+        // function enterOne () {
+        //     console.log('enterOne');
+        // }
+
+        // function enterTwo () {
+        //     console.log('enterTwo');
+        // }
+
+        // $('.demo').on('mouseenter', enterOne);
+        // $('.demo').on('mouseenter', enterTwo);
+
+
+
+        // off
+        // $('.demo').off();
+        // $('.demo').off('click');
+        // $('.demo').off('click', clickTwo);
+        //
+
+        // $('ul').on('click', 'li', clickOne);
+
+
+        // // 
+        // $('ul').off('click', 'li', clickOne);
+
+
+
+        // hover
+
+        // $('.demo').on('mouseenter', function () {
+        //     console.log('enter');
+        // }).on('mouseleave', function () {
+        //     console.log('leave');
+        // });
+
+        // $('.demo').hover(function () {
+        //     console.log('enter');
+        // }, function () {
+        //     console.log('leave');     
+        // });
+
+
+       $('.demo').keydown(function () {
+           console.log($(this).val());
+       })
+    </script>
+</body>
+</html>

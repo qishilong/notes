@@ -1,0 +1,5 @@
+<item wx:for="{{messages}}" wx:key="this" item="{{item}}"/>
+<wxs module="foo">
+  var i = 100;
+  console.log(i);
+</wxs>

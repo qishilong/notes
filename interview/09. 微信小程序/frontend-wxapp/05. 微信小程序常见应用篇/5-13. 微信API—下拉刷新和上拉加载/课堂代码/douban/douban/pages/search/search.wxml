@@ -1,0 +1,22 @@
+<!--pages/search/search.wxml-->
+
+<!-- 搜索框 -->
+<view class='searchBox'>
+    <icon class='searchIcon' type='search' size="14"></icon>
+    <input type='text' bindblur="searchMovie"/>
+</view>
+
+<!-- 搜索列表 -->
+<view class='searchList'>
+  <!-- 搜索出来的电影条目 -->
+  <view wx:for="{{searchResult}}" wx:key='this' class="searchItem">
+    <!-- 电影海报 -->
+    <image src="{{item.movieImg}}"/>
+    <!-- 右边的详细信息 -->
+    <view style="width: 538rpx">
+      <text class='title'>{{item.title}}</text>
+      <stars star="{{item.stars}}" average="{{item.average}}"></stars>
+      <text class='otherInfo'>{{item.year}} / 美国 / {{item.genres}} / {{item.directors}}</text>
+    </view>
+  </view>
+</view>

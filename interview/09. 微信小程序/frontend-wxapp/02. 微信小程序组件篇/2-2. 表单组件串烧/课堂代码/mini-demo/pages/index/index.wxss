@@ -1,0 +1,41 @@
+.title{
+  margin-top: 50rpx;
+}
+
+.inputContainer{
+  margin: 30rpx 0;
+  border-top: 1rpx solid #ccc;
+  border-bottom: 1rpx solid #ccc;
+}
+
+input{
+  margin: 30rpx;
+}
+
+.placeholder{
+  color:red;
+}
+
+/* 修改 switch 的大小 */
+.switch .wx-switch-input{
+  width: 82rpx !important;
+  height: 40rpx !important;
+}
+
+/* 开启状态：设置小球 */
+.switch .wx-switch-input::after{
+    width: 38rpx !important;
+    height: 36rpx !important;
+}
+
+/* 关闭状态：设置阴影 */
+.switch .wx-switch-input::before{
+  width: 80rpx !important;
+  height: 36rpx !important;
+}
+
+textarea{
+  width: 100%;
+  border: 1rpx solid #ccc;
+  padding: 30rpx;
+}

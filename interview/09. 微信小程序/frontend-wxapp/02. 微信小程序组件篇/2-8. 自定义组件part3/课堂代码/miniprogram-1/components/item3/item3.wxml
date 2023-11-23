@@ -1,0 +1,14 @@
+<view>
+  item3
+</view>
+<view>
+  纯数据字段演示
+</view>
+<view class="item3Container" style="background-color: rgb({{fullColor}});"></view>
+<view>
+  <view>纯数据字段：{{_rgb.r}},{{_rgb.g}},{{_rgb.b}}</view>
+  <view>普通数据字段：{{fullColor}}</view>
+</view>
+<button bindtap="tapHandle1">r增加</button>
+<button bindtap="tapHandle2">g增加</button>
+<button bindtap="tapHandle3">b增加</button>

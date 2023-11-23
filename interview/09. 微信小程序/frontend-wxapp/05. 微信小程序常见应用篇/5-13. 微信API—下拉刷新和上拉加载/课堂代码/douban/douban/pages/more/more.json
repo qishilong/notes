@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "影院热映",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "movieItem": "../../components/movieItem/movieItem"
+  },
+  "enablePullDownRefresh":true,
+  "backgroundTextStyle": "dark"
+}

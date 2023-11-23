@@ -1,0 +1,86 @@
+.title{
+  color: #aaa;
+  margin: 20rpx 0;
+}
+
+.area{
+  width: 400rpx;
+  height: 400rpx;
+  background: blue;
+}
+
+.area .view{
+  width: 100rpx;
+  height: 100rpx;
+  background: red;
+}
+
+.container{
+  width: calc(100% + 120rpx);
+  height: 150rpx;
+  outline: 1rpx solid #ddd;
+  margin-bottom: 10rpx;
+  position: relative;
+  left: -120rpx;
+}
+
+.movable-view{
+  width: calc(100% - 120rpx);
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 10rpx;
+  box-sizing: border-box;
+  background: white;
+  position: absolute;
+  left: 120rpx;
+}
+
+.movable-view image{
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.content{
+  width: 70%;
+  height: 100%;
+}
+
+.timeBox{
+  width: 10%;
+  height: 100%;
+}
+
+.top{
+  width: 100%;
+  height: 50%;
+  color: #2c2b2b;
+  font-size: 30rpx;
+  margin-top: 10rpx;
+}
+
+.bottom{
+  width: 100%;
+  height: 50%;
+  font-size: 26rpx;
+  color: #888;
+}
+
+.timeBox .top{
+  font-size: 24rpx;
+}
+
+.timeBox .bottom{
+  text-align: center;
+}
+
+.delete{
+  width: 120rpx;
+  height: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+  line-height: 150rpx;
+  float: right;
+}

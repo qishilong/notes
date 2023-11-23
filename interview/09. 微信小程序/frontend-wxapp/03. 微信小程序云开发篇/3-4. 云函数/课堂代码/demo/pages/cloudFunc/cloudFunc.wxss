@@ -1,0 +1,9 @@
+.btnContainer{
+  display: flex;
+  justify-content: space-between;
+}
+.result{
+  font-size: 76rpx;
+  color:#888;
+  margin: 50rpx;
+}

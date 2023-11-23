@@ -1,0 +1,71 @@
+/* pages/mine/mine.wxss */
+
+.loginTop {
+  height: 420rpx;
+  background-color: #5cc76d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginTop > button {
+  height: 86rpx;
+  width: 338rpx;
+  border-radius: 50rpx;
+  color: #38623f;
+  background-color: #fff;
+  font-size: 36rpx;
+}
+
+.loginContent {
+  padding: 0 30rpx;
+}
+
+.titleBox {
+  display: flex;
+  justify-content: space-between;
+  height: 90rpx;
+  align-items: center;
+}
+
+.titleBox > text {
+  font-size: 34rpx;
+  font-weight: bold;
+}
+
+.titleBox > navigator {
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+}
+
+.arrowRight {
+  width: 10rpx;
+  height: 30rpx;
+  margin: 2rpx 20rpx 0;
+}
+
+.contentItem {
+  height: 152rpx;
+  display: flex;
+}
+
+.imageBox {
+  width: 87rpx;
+}
+
+.imageBox > image {
+  width: 60rpx;
+  height: 60rpx;
+  margin-top: 60rpx;
+}
+
+.contentBox {
+  border: 1rpx solid #f0f0f0;
+  flex: 1;
+}
+
+.contentTitle {
+  font-size: 26rpx;
+  color: #000;
+}

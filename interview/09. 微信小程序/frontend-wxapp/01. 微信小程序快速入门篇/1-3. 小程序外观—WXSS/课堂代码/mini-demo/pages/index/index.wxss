@@ -1,0 +1,7 @@
+.timerContainer{
+  border: 1rpx solid;
+}
+.time{
+  color : red;
+  font-size: 36rpx;
+}

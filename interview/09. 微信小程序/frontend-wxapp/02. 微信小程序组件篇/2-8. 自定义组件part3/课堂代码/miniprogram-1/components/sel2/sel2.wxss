@@ -1,0 +1,5 @@
+.inputContainer{
+  border-top: 1rpx solid #ccc;
+  border-bottom: 1rpx solid #ccc;
+  padding: 20rpx;
+}

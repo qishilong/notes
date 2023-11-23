@@ -1,0 +1,62 @@
+.momentContainer{
+  /* border-top: 1rpx solid #ccc; */
+  width: 100%;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10rpx;
+  box-sizing: border-box;
+  padding-top: 20rpx;
+}
+
+.left{
+  width: 16%;
+  height: 100rpx;
+  padding: 16rpx;
+  /* border: 1rpx solid #ccc; */
+}
+
+.right{
+  width: 76%;
+  height: 100%;
+  /* border: 1rpx solid #ccc; */
+  font-size: 30rpx;
+}
+
+.content{
+  color : #666;
+  padding: 20rpx 0;
+}
+
+.day{
+  width: 60%;
+  height: 60%;
+  font-size: 60rpx;
+  /* border: 1rpx solid; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.month{
+  width: 40%;
+  height: 40%;
+  /* border: 1rpx solid; */
+  float: right;
+  font-style: italic;
+  white-space:nowrap;
+}
+
+.picContainer{
+  width: 100%;
+  /* border: 1rpx solid red; */
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.picContainer image{
+  width: 30%;
+  height: 180rpx;
+  /* border: 1rpx solid #ccc; */
+  margin: 6rpx;
+}
