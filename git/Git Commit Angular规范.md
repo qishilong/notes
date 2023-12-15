@@ -31,8 +31,6 @@ ps：Angular规范不是指的 Angular 框架，而是其 `git commit` 的提交
 | `chore`    | 当一个提交有其他修改（不在上述类型中的修改），**必须**使用`chore`类型。 |
 | `refactor` | 当一个提交既不修复错误也不添加功能的代码更改，**必须**使用`refactor`类型。 |
 
-
-
 ## scope 与 subject
 
 1.  `scope`其实是可选的内容，如果项目较为庞大的话，加上 `scope` 能够帮助你更好地知道改动的位置
