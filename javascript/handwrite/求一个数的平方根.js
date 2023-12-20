@@ -14,7 +14,7 @@ function sqrt(num) {
 }
 
 console.log(sqrt(4)); // 输出：2
-console.log(sqrt(9)); // 输出▍
+console.log(sqrt(9)); // 输出：3
 
 /**
  * 2. 利用二分查找
