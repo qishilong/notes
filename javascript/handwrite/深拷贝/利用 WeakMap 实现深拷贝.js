@@ -1,4 +1,4 @@
-const isDateType = (data) =>
+const isObjectType = (data) =>
   (typeof data === "function" || typeof data === "object") && data !== null;
 
 /**
@@ -36,6 +36,17 @@ function deepClone(obj, hash = new WeakMap()) {
       }
     });
     return set;
+  } else if (obj.constructor === Array) {
+    const cloneArr = [];
+    hash.set(obj, cloneArr);
+    for (let i = 0, len = obj.length; i < len; i++) {
+      if (isObjectType(obj[i])) {
+        cloneArr[i] = deepClone(obj[i], hash);
+      } else {
+        cloneArr[i] = obj[i];
+      }
+    }
+    return cloneArr;
   }
 
   // 如果循环引用了，就使用 WeekMap 解决
@@ -51,7 +62,7 @@ function deepClone(obj, hash = new WeakMap()) {
 
   hash.set(obj, cloneObj);
   for (let key of Reflect.ownKeys(obj)) {
-    cloneObj[key] = isDateType(obj[key]) ? deepClone(obj[key], hash) : obj[key];
+    cloneObj[key] = isObjectType(obj[key]) ? deepClone(obj[key], hash) : obj[key];
   }
 
   return cloneObj;
@@ -82,6 +93,8 @@ let obj = {
   arr: [0, 1, 2],
   func: function () {
     console.log("我是一个函数");
+    console.log(this.num);
+    return this.num + 1;
   },
   date: new Date(0),
   reg: new RegExp("/我是一个正则/ig"),
@@ -95,11 +108,12 @@ let obj = {
   set: new Set([1, 2, 3, 4, 5, { a: 1, b: 2 }]),
 };
 
-Object.defineProperty(obj, "innumerable", { enumerable: "false", value: "不可枚举属性" });
-obj = Object.create(obj, Object.getOwnPropertyDescriptors(obj));
+// Object.defineProperty(obj, "innumerable", { enumerable: "false", value: "不可枚举属性" });
+// obj = Object.create(obj, Object.getOwnPropertyDescriptors(obj));
 obj.loop = obj; // 设置 loop 成循环引用的属性
-let cloneObj = deepClone(obj);
-console.log(cloneObj);
+// let cloneObj = deepClone(obj);
+// console.log(cloneObj);
+// console.log(cloneObj.func());
 
 // deepClone(obj).then((res) => console.log(res));
 
