@@ -14,7 +14,7 @@
  * @param {*} obj
  */
 function isPromise(obj) {
-	return !!(obj && typeof obj === 'object' && typeof obj.then === 'function');
+  return !!(obj && typeof obj === "object" && typeof obj.then === "function");
 }
 
 /**
@@ -27,31 +27,31 @@ function isPromise(obj) {
  * @param {*} obj
  */
 Promise.myAll = (obj) => {
-	return new Promise((resolve, reject) => {
-		try {
-			const result = [];
-			// 任务总数
-			let all = 0;
-			// 已经完成的数量
-			let fulfilled = 0;
-			for (const item of obj) {
-				let i = all;
-				all++;
-				Promise.resolve(item).then((data) => {
-					fulfilled++;
-					result[i] = data;
-					if (all === fulfilled) {
-						resolve(result);
-					}
-				});
-			}
-			if (all === 0) {
-				resolve(result);
-			}
-		} catch (err) {
-			reject(err);
-		}
-	});
+  return new Promise((resolve, reject) => {
+    try {
+      const result = [];
+      // 任务总数
+      let all = 0;
+      // 已经完成的数量
+      let fulfilled = 0;
+      for (const item of obj) {
+        let i = all;
+        all++;
+        Promise.resolve(item).then((data) => {
+          fulfilled++;
+          result[i] = data;
+          if (all === fulfilled) {
+            resolve(result);
+          }
+        });
+      }
+      if (all === 0) {
+        resolve(result);
+      }
+    } catch (err) {
+      reject(err);
+    }
+  });
 };
 
 /**
@@ -64,38 +64,38 @@ Promise.myAll = (obj) => {
  * @param {*} obj
  */
 Promise.myAny = (obj) => {
-	return new Promise((resolve, reject) => {
-		try {
-			const result = [];
-			let all = 0;
-			let isResolve = false;
-			let rejected = 0;
-			for (let item of obj) {
-				let i = all;
-				all++;
-				Promise.resolve(item).then(
-					(data) => {
-						if (!isResolve) {
-							isResolve = true;
-							resolve(data);
-						}
-					},
-					(res) => {
-						rejected++;
-						result[i] = res;
-						if (all === rejected) {
-							reject(result);
-						}
-					},
-				);
-			}
-			if (all === 0) {
-				reject(result);
-			}
-		} catch (err) {
-			reject(err);
-		}
-	});
+  return new Promise((resolve, reject) => {
+    try {
+      const result = [];
+      let all = 0;
+      let isResolve = false;
+      let rejected = 0;
+      for (let item of obj) {
+        let i = all;
+        all++;
+        Promise.resolve(item).then(
+          (data) => {
+            if (!isResolve) {
+              isResolve = true;
+              resolve(data);
+            }
+          },
+          (res) => {
+            rejected++;
+            result[i] = res;
+            if (all === rejected) {
+              reject(result);
+            }
+          },
+        );
+      }
+      if (all === 0) {
+        reject(result);
+      }
+    } catch (err) {
+      reject(err);
+    }
+  });
 };
 
 /**
@@ -103,11 +103,11 @@ Promise.myAny = (obj) => {
  * @param {*} obj
  */
 Promise.myRace = (obj) => {
-	return new Promise((resolve, reject) => {
-		for (const item of obj) {
-			Promise.resolve(item).then(resolve, reject);
-		}
-	});
+  return new Promise((resolve, reject) => {
+    for (const item of obj) {
+      Promise.resolve(item).then(resolve, reject);
+    }
+  });
 };
 
 /**
@@ -115,26 +115,26 @@ Promise.myRace = (obj) => {
  * @param {*} obj
  */
 Promise.myAllSettled = (obj) => {
-	const result = [];
-	for (const item of obj) {
-		result.push(
-			Promise.resolve(item).then(
-				(data) => {
-					return {
-						status: 'fulfilled',
-						value: data,
-					};
-				},
-				(res) => {
-					return {
-						status: 'rejected',
-						value: res,
-					};
-				},
-			),
-		);
-	}
-	return Promise.all(result);
+  const result = [];
+  for (const item of obj) {
+    result.push(
+      Promise.resolve(item).then(
+        (data) => {
+          return {
+            status: "fulfilled",
+            value: data,
+          };
+        },
+        (res) => {
+          return {
+            status: "rejected",
+            value: res,
+          };
+        },
+      ),
+    );
+  }
+  return Promise.all(result);
 };
 
 /**
@@ -145,16 +145,16 @@ Promise.myAllSettled = (obj) => {
  * @param {*} obj
  */
 Promise.myResolve = (obj) => {
-	if (obj in Promise) {
-		return obj;
-	}
-	return new Promise((resolve, reject) => {
-		if (isPromise(obj)) {
-			obj.then(resolve, reject);
-		} else {
-			resolve(obj);
-		}
-	});
+  if (obj in Promise) {
+    return obj;
+  }
+  return new Promise((resolve, reject) => {
+    if (isPromise(obj)) {
+      obj.then(resolve, reject);
+    } else {
+      resolve(obj);
+    }
+  });
 };
 
 /**
@@ -162,9 +162,9 @@ Promise.myResolve = (obj) => {
  * @param {*} obj
  */
 Promise.myReject = (obj) => {
-	return new Promise((resolve, reject) => {
-		reject(obj);
-	});
+  return new Promise((resolve, reject) => {
+    reject(obj);
+  });
 };
 
 /**
@@ -172,16 +172,16 @@ Promise.myReject = (obj) => {
  * @param {*} fn
  */
 Promise.prototype.finally = (fn) => {
-	return Promise.resolve().then(
-		(data) => {
-			fn();
-			return data;
-		},
-		(res) => {
-			fn();
-			return res;
-		},
-	);
+  return Promise.resolve().then(
+    (data) => {
+      fn();
+      return data;
+    },
+    (res) => {
+      fn();
+      return res;
+    },
+  );
 };
 
 /**
@@ -189,41 +189,41 @@ Promise.prototype.finally = (fn) => {
  * @param {*} fn
  */
 Promise.prototype.catch = (fn) => {
-	return Promise.resolve().then(null, fn);
+  return Promise.resolve().then(null, fn);
 };
 
 const promise1 = () => {
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			console.log(1);
-			resolve(1);
-		}, 1000);
-	});
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(1);
+      resolve(1);
+    }, 1000);
+  });
 };
 
 const promise2 = () => {
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			console.log(2);
-			resolve(2);
-		}, 2000);
-	});
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(2);
+      resolve(2);
+    }, 2000);
+  });
 };
 const promise3 = () => {
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			console.log(3);
-			resolve(3);
-		}, 3000);
-	});
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(3);
+      resolve(3);
+    }, 3000);
+  });
 };
 const promise4 = () => {
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			console.log(4);
-			reject(4);
-		}, 4000);
-	});
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(4);
+      reject(4);
+    }, 4000);
+  });
 };
 const promiseArr = [promise1, promise2, promise3, promise4];
 
@@ -233,11 +233,11 @@ Promise.all(promiseArr).then((res) => console.log(res));
 const promise5 = Promise.resolve(3);
 const promise6 = 42;
 const promise7 = new Promise((resolve, reject) => {
-	setTimeout(resolve, 100, 'foo');
+  setTimeout(resolve, 100, "foo");
 });
 const arr = [promise5, promise6, promise7];
 
 Promise.myAll(arr).then((res) => console.log(res));
 Promise.all(arr).then((values) => {
-	console.log(values);
+  console.log(values);
 });

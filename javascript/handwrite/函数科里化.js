@@ -7,15 +7,15 @@
 // };
 
 function myCurrying(fn, ...args) {
-	if (fn.length === args.length) {
-		return fn(...args);
-	} else {
-		return (...args1) => myCurrying(fn, ...args, ...args1);
-	}
+  if (fn.length === args.length) {
+    return fn(...args);
+  } else {
+    return (...args1) => myCurrying(fn, ...args, ...args1);
+  }
 }
 
 const add = (x, y, z) => {
-	return x + y + z;
+  return x + y + z;
 };
 
 const curFn = myCurrying(add, 1);
@@ -28,8 +28,8 @@ const cur1 = addCurry(1);
 const cur2 = cur1(2, 3);
 const sum2 = addCurry(1)(2)(3);
 
-console.log(sum1, 'sum1');
-console.log(cur2, 'sum2');
+console.log(sum1, "sum1");
+console.log(cur2, "sum2");
 
 /**
  * 函数科里化

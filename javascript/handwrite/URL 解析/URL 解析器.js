@@ -31,7 +31,7 @@ function parseUrl(url) {
     pathname: a.pathname,
     search: a.search,
     hash: a.hash,
-    host: a.host
+    host: a.host,
   };
 }
 
@@ -72,7 +72,7 @@ function parseUrl(url) {
     port: matches[3] || "",
     pathname: matches[4] || "",
     search: searchObj,
-    hash: matches[6] || ""
+    hash: matches[6] || "",
   };
 }
 
@@ -85,7 +85,7 @@ console.log(parseUrl(url));
  */
 function parseUrl(url) {
   var match = url.match(
-    /^(?:([A-Za-z]+):)?(?:\/*)([a-zA-Z0-9.-]+)?(?::([0-9]+))?(\/[^?#]*)?(?:\?([^#]*))?(?:#(.*))?$/
+    /^(?:([A-Za-z]+):)?(?:\/*)([a-zA-Z0-9.-]+)?(?::([0-9]+))?(\/[^?#]*)?(?:\?([^#]*))?(?:#(.*))?$/,
   );
   return (
     match && {
@@ -94,7 +94,7 @@ function parseUrl(url) {
       port: match[3],
       pathname: match[4],
       search: match[5],
-      hash: match[6]
+      hash: match[6],
     }
   );
 }

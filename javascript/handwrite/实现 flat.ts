@@ -1,34 +1,34 @@
-const arr = [1, [2, 3, [4, 5, [12, 3, 'zs'], 7, [8, 9, [10, 11, [1, 2, [3, 4]]]]]]];
+const arr = [1, [2, 3, [4, 5, [12, 3, "zs"], 7, [8, 9, [10, 11, [1, 2, [3, 4]]]]]]];
 
 interface Object {
-	myFlat: Function;
+  myFlat: Function;
 }
 
 // 判断类型
 function checkTypes(item: any) {
-	return Object.prototype.toString.call(item).slice(8, -1);
+  return Object.prototype.toString.call(item).slice(8, -1);
 }
 
 Array.prototype.myFlat = function (num: number = 1) {
-	const type = checkTypes(this);
-	if (!Object.is(type, 'Array')) {
-		return;
-	}
-	const result: any[] = [];
-	this.forEach((item: any) => {
-		const type = checkTypes(item);
-		if (Object.is(type, 'Array')) {
-			// console.log(num);
-			num--;
-			if (num < 0) {
-				return result.push(item);
-			}
-			result.push(...item.myFlat(num));
-		} else {
-			result.push(item);
-		}
-	});
-	return result;
+  const type = checkTypes(this);
+  if (!Object.is(type, "Array")) {
+    return;
+  }
+  const result: any[] = [];
+  this.forEach((item: any) => {
+    const type = checkTypes(item);
+    if (Object.is(type, "Array")) {
+      // console.log(num);
+      num--;
+      if (num < 0) {
+        return result.push(item);
+      }
+      result.push(...item.myFlat(num));
+    } else {
+      result.push(item);
+    }
+  });
+  return result;
 };
 
 console.time();

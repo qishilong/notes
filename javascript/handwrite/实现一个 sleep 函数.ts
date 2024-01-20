@@ -7,10 +7,10 @@
 // }
 
 function sleep(duration: number) {
-    const start = Date.now();
-    while (Date.now() - start < duration) {
-        continue;
-    }
+  const start = Date.now();
+  while (Date.now() - start < duration) {
+    continue;
+  }
 }
 
 // console.log(1);

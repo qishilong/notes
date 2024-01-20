@@ -7,21 +7,21 @@
  */
 
 let arr = [
-	{
-		id: 1,
-		pid: 0,
-		name: 'body',
-	},
-	{
-		id: 2,
-		pid: 0,
-		name: 'title',
-	},
-	{
-		id: 3,
-		pid: 1,
-		name: 'div',
-	},
+  {
+    id: 1,
+    pid: 0,
+    name: "body",
+  },
+  {
+    id: 2,
+    pid: 0,
+    name: "title",
+  },
+  {
+    id: 3,
+    pid: 1,
+    name: "div",
+  },
 ];
 
 /**
@@ -54,31 +54,31 @@ let arr = [
  * @param {*} date
  */
 const toTree = (data) => {
-	const roots = [];
-	for (let item of data) {
-		if (item.pid === 0) {
-			item.children = [];
-			roots.push(item);
-		} else {
-			const parent = findParent(item, roots);
-			if (parent) {
-				item.children = [];
-				parent.children.push(item);
-			}
-		}
-	}
-	return roots;
+  const roots = [];
+  for (let item of data) {
+    if (item.pid === 0) {
+      item.children = [];
+      roots.push(item);
+    } else {
+      const parent = findParent(item, roots);
+      if (parent) {
+        item.children = [];
+        parent.children.push(item);
+      }
+    }
+  }
+  return roots;
 };
 function findParent(item, roots) {
-	for (let root of roots) {
-		if (root.id === item.pid) {
-			return root;
-		}
-		const parent = findParent(item, root.children);
-		if (parent) {
-			return parent;
-		}
-	}
+  for (let root of roots) {
+    if (root.id === item.pid) {
+      return root;
+    }
+    const parent = findParent(item, root.children);
+    if (parent) {
+      return parent;
+    }
+  }
 }
 
 const result = toTree(arr);

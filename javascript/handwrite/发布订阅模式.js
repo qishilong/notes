@@ -1,56 +1,56 @@
 class EventEmitter {
-	constructor() {
-		this.events = {};
-	}
+  constructor() {
+    this.events = {};
+  }
 
-	// 订阅
-	on(eventName, callback) {
-		const callbacks = this.events[eventName] || [];
-		callbacks.push(callback);
-		this.events[eventName] = callbacks;
-	}
+  // 订阅
+  on(eventName, callback) {
+    const callbacks = this.events[eventName] || [];
+    callbacks.push(callback);
+    this.events[eventName] = callbacks;
+  }
 
-	// 发布
-	emit(eventName, ...args) {
-		const callbacks = this.events[eventName] || [];
-		callbacks.forEach((item) => item(...args));
-	}
+  // 发布
+  emit(eventName, ...args) {
+    const callbacks = this.events[eventName] || [];
+    callbacks.forEach((item) => item(...args));
+  }
 
-	// 只监听一次
-	once(eventName, callback) {
-		const one = (...args) => {
-			callback(...args);
-			this.off(eventName, one);
-		};
-		this.on(eventName, one);
-	}
+  // 只监听一次
+  once(eventName, callback) {
+    const one = (...args) => {
+      callback(...args);
+      this.off(eventName, one);
+    };
+    this.on(eventName, one);
+  }
 
-	// 取消订阅
-	off(eventName, callback) {
-		const index = this.events[eventName].indexOf(callback);
-		if (index !== -1) {
-			this.events[eventName].splice(index, 1);
-		}
-	}
+  // 取消订阅
+  off(eventName, callback) {
+    const index = this.events[eventName].indexOf(callback);
+    if (index !== -1) {
+      this.events[eventName].splice(index, 1);
+    }
+  }
 }
 
 const event1 = new EventEmitter();
 const event2 = new EventEmitter();
 
-const handle = (params) => console.log('handle', params);
+const handle = (params) => console.log("handle", params);
 
-event1.on('handle', handle);
-event1.on('handle', handle);
-event1.emit('handle', 'aaa1');
-event1.off('handle', handle);
-event1.emit('handle', 'aaa2');
-event1.once('handleOnce', handle);
-event1.emit('handleOnce', 'once');
-event1.emit('handleOnce', 'once');
+event1.on("handle", handle);
+event1.on("handle", handle);
+event1.emit("handle", "aaa1");
+event1.off("handle", handle);
+event1.emit("handle", "aaa2");
+event1.once("handleOnce", handle);
+event1.emit("handleOnce", "once");
+event1.emit("handleOnce", "once");
 
-event2.once('handle1', handle);
-event2.emit('handle1', 'bbb1');
-event2.emit('handle1', 'bbb2');
+event2.once("handle1", handle);
+event2.emit("handle1", "bbb1");
+event2.emit("handle1", "bbb2");
 
 /* class EventEmitter {
 	constructor() {
