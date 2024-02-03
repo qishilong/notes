@@ -11,7 +11,7 @@ const reactive = (obj) => {
     },
     set(target, key, newValue, receiver) {
       const result = Reflect.set(target, key, newValue);
-      // console.log(`Set ${key} to ${newValue}`);
+      upload();
       return result;
     },
   });
@@ -25,17 +25,15 @@ const computed = (fn) => {
     {
       // 如果对象中存在该属性，则直接返回属性值
       get(target, key, receiver) {
-        // console.log(target, key, "computed");
         return Reflect.get(target, key, receiver);
       },
       set(target, key, newValue, receiver) {
         Reflect.set(target, key, newValue);
-        upload();
         return true;
       },
     },
   );
-  const upload = () => {
+  globalThis.upload = () => {
     value = fn();
     proxy.value = value;
   };
