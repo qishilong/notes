@@ -1,3 +1,4 @@
+// 方法一
 const addLargeNumbers = (num1, num2) => {
   if (typeof num1 !== "string" && typeof num2 === "string") {
     num1 = num1.toLocaleString(undefined, { useGrouping: false });
@@ -42,3 +43,35 @@ const num2 = Number.MAX_VALUE;
 
 const result = addLargeNumbers(num1, num2);
 console.log(result);
+
+// 方法二
+function add(a, b) {
+  const maxLen = Math.max(a.length, b.length);
+  const result = new Array(maxLen).fill(0);
+  a = a.padStart(maxLen, "0");
+  b = b.padStart(maxLen, "0");
+  let offset = 0;
+  for (let i = maxLen - 1; i >= 0; i--) {
+    const numA = Number(a[i]);
+    const numB = Number(b[i]);
+    const sum = numA + numB;
+    offset = Math.floor(sum / 10);
+
+    result[i] = result[i] + (sum % 10);
+
+    if (result[i] >= 10) {
+      offset += Math.floor(result[i] / 10);
+      result[i] = result[i] % 10;
+    }
+
+    if (offset) {
+      result[i - 1] = result[i - 1] + offset;
+    }
+  }
+  return result;
+}
+
+let a = "9007199254740991";
+let b = "1234567899999999999";
+const res = add(a, b);
+console.log(res);
