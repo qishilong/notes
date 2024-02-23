@@ -12,12 +12,12 @@
 
 ## 语法
 
-```
+```css
 /* Positional alignment */
 justify-content: center; /* 居中排列 */
 justify-content: start; /* Pack items from the start */
 justify-content: end; /* Pack items from the end */
-justify-content: flex-start; /* 从行首起始位置开始排列 */
+justify-content: flex-start; /* 从行首起始位置开始排列 */	/* 标准规范 */
 justify-content: flex-end; /* 从行尾位置开始排列 */
 justify-content: left; /* Pack items from the left */
 justify-content: right; /* Pack items from the right */
