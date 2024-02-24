@@ -39,7 +39,7 @@ Warning
 
 ## 与缓存相关的首部字段名
 
-![HTTP 缓存.png](https://qiniucloud.qishilong.space/images/5fbe4966f4d6415dac9e6182e55d3eb0~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp)
+![image-20240223194826744](https://qiniucloud.qishilong.space/images/image-20240223194826744.png)
 
 上图中和强缓存有关的首部字段名主要有两个：`Expires` 和 `Cache-Control` 。
 
@@ -74,6 +74,8 @@ Cache-Control: no-cache
 
 而 `s-maxage` 与 max-age 不同之处在于，其只适用于公共缓存服务器，比如资源从源服务器发出后又被中间的代理服务器接收并缓存。
 
+![image-20240223194912631](https://qiniucloud.qishilong.space/images/image-20240223194912631.png)
+
 **当使用 s-maxage 指令后，公共缓存服务器将直接忽略 Expires 和 max-age 指令的值。**
 
 另外，`public` 指令表示该资源可以被任何节点缓存（包括客户端和代理服务器），与其行为相反的 `private` 指令表示该资源只提供给客户端缓存，代理服务器不会进行缓存。**同时当设置了 private 指令后 s-maxage 指令将被忽略。**
@@ -92,3 +94,32 @@ Cache-Control: no-cache
 
 ### Last-Modified 与 If-Modified-Since
 
+Last-Modified 首部字段顾名思义，代表资源的最后修改时间，其属于**响应首部字段**。当浏览器第一次接收到服务器返回资源的 Last-Modified 值后，其会把这个值存储起来，并再下次访问该资源时通过携带 If-Modified-Since 请求首部发送给服务器验证该资源有没有过期。
+
+#### 示例
+
+```http
+Last-Modified: Fri , 14 May 2021 17:23:13 GMT
+If-Modified-Since: Fri , 14 May 2021 17:23:13 GMT
+```
+
+如果在 If-Modified-Since 字段指定的时间之后**资源发生了更新**，那么服务器会将更新的资源发送给浏览器（状态码200）并返回最新的 Last-Modified 值，浏览器收到资源后会更新缓存的 If-Modified-Since 的值。
+
+如果在 If-Modified-Since 字段指定的时间之后**资源都没有发生更新**，那么服务器会返回状态码 `304 Not Modified` 的响应。
+
+### Etag 与 If-None-Match
+
+Etag 首部字段用于代表资源的唯一性标识，服务器会按照指定的规则生成资源的标识，其属于**响应首部字段**。当资源发生变化时，Etag 的标识也会更新。同样的，当浏览器第一次接收到服务器返回资源的 Etag 值后，其会把这个值存储起来，并在下次访问该资源时通过携带 If-None-Match 请求首部发送给服务器验证该资源有没有过期。
+
+#### 示例
+
+```http
+Etag: "29322-09SpAhH3nXWd8KIVqB10hSSz66"
+If-None-Match: "29322-09SpAhH3nXWd8KIVqB10hSSz66"
+```
+
+如果服务器发现 If-None-Match 值与 Etag 不一致时，说明服务器上的文件已经被更新，那么服务器会发送更新后的资源给浏览器并返回最新的 Etag 值，浏览器收到资源后会更新缓存的 If-None-Match 的值。
+
+## 结语
+
+本文从 HTTP 出发，介绍了 HTTP 的概念、报文的组成及与缓存相关的首部字段，一层层揭开请求响应头中关于缓存的奥秘。
