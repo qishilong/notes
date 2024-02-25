@@ -42,7 +42,7 @@ const num1 = Number.MAX_VALUE;
 const num2 = Number.MAX_VALUE;
 
 const result = addLargeNumbers(num1, num2);
-console.log(result);
+// console.log(result);
 
 // 方法二
 function add(a, b) {
@@ -71,7 +71,7 @@ function add(a, b) {
   return result;
 }
 
-let a = "9007199254740991";
-let b = "1234567899999999999";
-const res = add(a, b);
+let a = 9007199254740991;
+let b = 1234567899999999999;
+const res = add(String(a), String(b)).join("");
 console.log(res);
