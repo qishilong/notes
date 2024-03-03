@@ -4,13 +4,13 @@ async 函数是使用`async`关键字声明的函数。async 函数是 [`AsyncFu
 
 async 函数还可以被[作为表达式](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/async_function)来定义。
 
-## [尝试一下](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function#尝试一下)
+## 尝试一下
 
 <iframe class="interactive is-taller-height" height="200" src="https://interactive-examples.mdn.mozilla.net/pages/js/statement-async.html" title="MDN Web Docs Interactive Example" loading="lazy" data-readystate="complete" style="box-sizing: border-box; border: 0px; max-width: 100%; width: 765.719px; background-color: var(--background-secondary); border-radius: var(--elem-radius); color: var(--text-primary); height: 654px; margin: 1rem 0px; padding: 0px;"></iframe>
 
-## [语法](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function#语法)
+## 语法
 
-```
+```js
 async function name(param0) {
   statements
 }
@@ -22,7 +22,7 @@ async function name(param0, param1, /* … ,*/ paramN) {
 }
 ```
 
-### [参数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function#参数)
+### 参数
 
 -   [`name`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function#name)
 
@@ -36,11 +36,11 @@ async function name(param0, param1, /* … ,*/ paramN) {
 
     包含函数主体的表达式。可以使用 `await` 机制。
 
-### [返回值](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function#返回值)
+### 返回值
 
 一个 [`Promise`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)，这个 promise 要么会通过一个由 async 函数返回的值被解决，要么会通过一个从 async 函数中抛出的（或其中没有被捕获到的）异常被拒绝。
 
-## [描述](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function#描述)
+## 描述
 
 async 函数可能包含 0 个或者多个 [`await`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/await) 表达式。await 表达式会暂停整个 async 函数的执行进程并出让其控制权，只有当其等待的基于 promise 的异步操作被兑现或被拒绝之后才会恢复进程。promise 的解决值会被当作该 await 表达式的返回值。使用 `async`/`await` 关键字就可以在异步代码中使用普通的 `try`/`catch` 代码块。
 
@@ -52,7 +52,7 @@ async 函数一定会返回一个 promise 对象。如果一个 async 函数的�
 
 例如，如下代码：
 
-```
+```js
 async function foo() {
   return 1;
 }
@@ -60,7 +60,7 @@ async function foo() {
 
 等价于：
 
-```
+```js
 function foo() {
   return Promise.resolve(1);
 }
@@ -70,7 +70,7 @@ async 函数的函数体可以被看作是由 0 个或者多个 await 表达式�
 
 例如：
 
-```
+```js
 async function foo() {
   await 1;
 }
@@ -78,7 +78,7 @@ async function foo() {
 
 等价于
 
-```
+```js
 function foo() {
   return Promise.resolve(1).then(() => undefined);
 }
@@ -92,7 +92,7 @@ function foo() {
 2.  一段时间后，当第一个 promise 完结的时候，控制权将重新回到 foo 函数内。示例中将会将`1`（promise 状态为 fulfilled）作为结果返回给 await 表达式的左边即 `result1`。接下来函数会继续进行，到达第二个 await 区域，此时 `foo` 函数的进程将再次被暂停。
 3.  一段时间后，同样当第二个 promise 完结的时候，`result2` 将被赋值为 `2`，之后函数将会正常同步执行，将默认返回`undefined` 。
 
-```
+```js
 async function foo() {
   const result1 = await new Promise((resolve) =>
     setTimeout(() => resolve("1")),
@@ -108,7 +108,7 @@ foo();
 
 例如，在下面代码中，即使在 promise 链中进一步配置了 `.catch` 方法处理，也会抛出一个未处理的 promise 被拒绝的错误。这是因为 `p2` 直到控制从 `p1` 返回后才会连接到 promise 链。
 
-```
+```js
 async function foo() {
   const p1 = new Promise((resolve) => setTimeout(() => resolve("1"), 1000));
   const p2 = new Promise((_, reject) => setTimeout(() => reject("2"), 500));
@@ -117,9 +117,9 @@ async function foo() {
 foo().catch(() => {}); // 捕捉所有的错误...
 ```
 
-## [示例](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function#示例)
+## 示例
 
-### [简单例子](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function#简单例子)
+### 简单例子
 
 ```js
 function resolveAfter2Seconds() {
@@ -248,11 +248,11 @@ slow
 
 但是，async 函数仍有可能错误地忽略错误。以 `parallel` async 函数为例。如果它没有等待 `await`（或返回）`Promise.all([])` 调用的结果，则不会传播任何错误。虽然 `parallelPromise` 函数示例看起来很简单，但它根本不会处理错误！这样做需要一个类似于 `return Promise.all([])` 处理方式。
 
-### [使用 async 函数重写 promise 链](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/async_function#使用_async_函数重写_promise_链)
+### 使用 async 函数重写 promise 链
 
 返回 [`Promise`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)的 API 将会产生一个 promise 链，它将函数肢解成许多部分。例如下面的代码：
 
-```
+```js
 function getProcessedData(url) {
   return downloadData(url) // 返回一个 promise 对象
     .catch((e) => {
@@ -266,7 +266,7 @@ function getProcessedData(url) {
 
 可以重写为单个 async 函数：
 
-```
+```js
 async function getProcessedData(url) {
   let v;
   try {
@@ -284,7 +284,7 @@ async function getProcessedData(url) {
 
 看下下面重写的上面代码，在 `processDataInWorker` 抛出异常时返回了 null：
 
-```
+```js
 async function getProcessedData(url) {
   let v;
   try {
