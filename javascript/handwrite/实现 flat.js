@@ -1,23 +1,19 @@
-const arr = [1, [2, 3, [4, 5, [12, 3, "zs"], 7, [8, 9, [10, 11, [1, 2, [3, 4]]]]]]];
-
-interface Object {
-  myFlat: Function;
-}
+const arr = [1, [2, 3, [4, 5, [12, 3, 'zs'], 7, [8, 9, [10, 11, [1, 2, [3, 4]]]]]]];
 
 // 判断类型
-function checkTypes(item: any) {
+function checkTypes(item) {
   return Object.prototype.toString.call(item).slice(8, -1);
 }
 
-Array.prototype.myFlat = function (num: number = 1) {
+Array.prototype.myFlat = function (num = 1) {
   const type = checkTypes(this);
-  if (!Object.is(type, "Array")) {
+  if (!Object.is(type, 'Array')) {
     return;
   }
-  const result: any[] = [];
-  this.forEach((item: any) => {
+  const result = [];
+  this.forEach((item) => {
     const type = checkTypes(item);
-    if (Object.is(type, "Array")) {
+    if (Object.is(type, 'Array')) {
       // console.log(num);
       num--;
       if (num < 0) {
