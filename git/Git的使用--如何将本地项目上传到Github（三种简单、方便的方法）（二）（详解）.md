@@ -1,6 +1,6 @@
-## Git的使用--如何将本地项目上传到Github（三种简单、方便的方法）（二）（详解）
+# Git的使用--如何将本地项目上传到Github（三种简单、方便的方法）（二）（详解）
 
-一、第一种方法：
+## 一、第一种方法：
 
 1.首先你需要一个github账号，所以还没有的话先去注册吧！
 
@@ -66,7 +66,7 @@ git push -u origin master   （注：此操作目的是把本地仓库push到git
 
 ![img](https://qiniucloud.qishilong.space/images/yi335l8ner.png)
 
-二、第二种方法：
+## 二、第二种方法：
 
 第一步：我们需要先创建一个本地的版本库（其实也就是一个文件夹）。
 
@@ -206,7 +206,7 @@ $ git pull --rebase origin master
 
 ​     5、最后通过git push -u origin master把本地仓库的项目推送到远程仓库（也就是Github）上；（若新建远程仓库的时候自动创建了README文件会报错，解决办法看上面）。
 
-三、第三种方法
+## 三、第三种方法
 
 第一步：Git客户端安装好
 
@@ -254,7 +254,7 @@ git push -u origin master
 
 ![img](https://qiniucloud.qishilong.space/images/nft0tkuxju.png)
 
-四、Git命令
+## 四、Git命令
 
 ```shell
 查看、添加、提交、删除、找回，重置修改文件
