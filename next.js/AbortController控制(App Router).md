@@ -167,6 +167,22 @@ export default function BestWay() {
 }
 ```
 
+```tsx
+// actions/test.ts
+"use server";
+
+export async function getTest(
+  payload: any,
+	signal?: AbortSignal                  // ← Next.js 自动注入的 signal，可选
+) {
+  const response = await fetch('api', {
+    signal,        // ← 直接用就行，真的能被取消
+    // ...
+  });
+  // ...
+}
+```
+
 **优点**
 
 - 自动 isPending、乐观更新、错误边界全家桶
