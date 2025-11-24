@@ -125,8 +125,6 @@ export async function getTest(
 >
 > AbortController.signal 是 Client-only 的临时对象，Next.js 在服务端渲染阶段检测到你试图把 client 对象属性传给 server function → 直接抛错阻止：
 
-所有的方式以及不同方式之间对比
-
 ### 正确的方式
 
 （适用于 Next.js 14.1+ / 15 / 16）
