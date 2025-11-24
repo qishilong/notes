@@ -7,6 +7,7 @@
 | 1. `useActionState` + `dispatch(null)`       | Yes              | Yes（自动）         | Yes（自动）      | No                          | ★★★★★  | 绝大多数场景（首选） |
 | 2. `<form action>` + `<button type="reset">` | Yes              | Yes（自动）         | Yes（自动）      | No                          | ★★★★★  | 简单表单或想最少代码 |
 | 3. `startTransition(() => action().then())`  | No（只能被动）   | Yes（自动）         | No               | No                          | ★☆☆☆☆  | 仅临时测试用         |
+| 4. 手动传 `AbortController.signal`           | No               | No（被禁止）        | 手动实现         | Yes（Next.js 15+ 直接报错） | ☠️      | 彻底废弃             |
 
 
 ### 错误的方式
