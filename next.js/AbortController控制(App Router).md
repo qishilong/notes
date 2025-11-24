@@ -196,7 +196,7 @@ export async function getTest(
 
 **结论：非表单场景的绝对首选**
 
-### 2.  + \<button type="reset"> —— 最少代码的官方神器
+### 2. \<form> + \<button type="reset"> —— 最少代码的官方神器
 
 ```tsx
 <form action={getTest.bind(null, { sessionId: 'xxx' })}>
