@@ -1,64 +1,73 @@
 /**
- * 函数防抖
- * 写法1
- * @param fn
+ * 防抖
+ * @param callback
  * @param wait
  */
-// function debounce(callback: Function, time: number) {
-//   let timer: number | undefined = undefined;
-//   return function () {
-//     if (timer) {
-//       clearTimeout(timer);
-//     }
-//     const args = arguments;
-//     timer = setTimeout(function () {
-//       callback.apply(null, args);
-//     }, time);
-//   };
-// }
-
-/**
- * 函数防抖
- * 写法二
- * @param fn
- * @param wait
- */
-const debounce = <F extends (...arg: any[]) => void>(fn: F, wait: number) => {
-  let timeId: ReturnType<typeof setTimeout>;
-  return (...args: Parameters<F>) => {
-    clearTimeout(timeId);
+function debounce<F extends (...args: any[]) => void>(callback: F, wait: number) {
+  let timeId: ReturnType<typeof setTimeout> | null = null;
+  return function (this: unknown, ...args: Parameters<F>) {
+    if (timeId !== null) {
+      clearTimeout(timeId);
+      timeId = null;
+    }
     timeId = setTimeout(() => {
-      fn(...args);
+      callback.apply(this, args);
+      timeId = null;
     }, wait);
   };
-};
+}
 
-// 函数节流
-function throttle(callback: Function, time: number, isImmediately: boolean) {
-  if (isImmediately === undefined) {
-    isImmediately = true;
-  }
-  if (isImmediately) {
-    // 时间戳实现
-    let t: number | undefined = undefined;
-    return function () {
-      if (!t || Date.now() - t >= time) {
-        callback.apply(null, arguments);
-        t = Date.now(); // 更新当前时间戳
+/**
+ * 节流
+ * @param callback
+ * @param wait
+ * @param immediately
+ */
+function throttle<F extends (...args: any[]) => void>(
+  callback: F,
+  wait: number,
+  immediately: boolean = true
+) {
+  if (immediately) {
+    let time: number = 0;
+    let trailingTimeId: ReturnType<typeof setTimeout> | null = null;
+    return function (this: unknown, ...args: Parameters<F>) {
+      const remaining = wait - (Date.now() - time);
+      if (remaining <= 0) {
+        // Date.now() - time >= wait
+        if (trailingTimeId !== null) {
+          clearTimeout(trailingTimeId);
+          trailingTimeId = null;
+        }
+        callback.apply(this, args);
+        time = Date.now();
+      } else {
+        // 保留最后一次调用
+        if (trailingTimeId !== null) {
+          clearTimeout(trailingTimeId);
+        }
+
+        trailingTimeId = setTimeout(() => {
+          callback.apply(this, args);
+          time = Date.now();
+          trailingTimeId = null;
+        }, remaining);
       }
     };
   } else {
-    // setTimeout 实现
-    let timer: number | undefined = undefined;
-    return function () {
-      if (timer) {
+    let timeId: ReturnType<typeof setTimeout> | null = null;
+    return function (this: unknown, ...args: Parameters<F>) {
+      let lastArgs: Parameters<F> | null = args;
+      let lastThis: unknown = this;
+      if (timeId !== null) {
         return;
       }
-      const args = arguments;
-      timer = setTimeout(function () {
-        callback.apply(null, args);
-        timer = undefined;
-      }, time);
+      timeId = setTimeout(() => {
+        callback.apply(lastThis, lastArgs);
+        timeId = null;
+        lastArgs = null;
+        lastThis = null;
+      }, wait);
     };
   }
 }
