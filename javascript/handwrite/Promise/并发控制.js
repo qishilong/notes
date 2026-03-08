@@ -4,7 +4,7 @@
  * @param {number} maxNum 最大并发数量
  */
 function concurrenceRequest(urls, maxNum) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     if (urls.length === 0) {
       resolve([]);
       return;
@@ -49,7 +49,7 @@ const urls = [];
 for (let i = 0; i < 100; i++) {
   urls[i] = `https://www.aaa.com/request&a=${i}`;
 }
-concurrenceRequest(urls, 10).then((res) => console.log(res));
+concurrenceRequest(urls, 10).then(res => console.log(res));
 
 const promise1 = () => {
   return new Promise((resolve, reject) => {
@@ -95,7 +95,7 @@ const pLimit = (pList, limit) => {
     const result = [];
 
     const nextP = (p, count) => {
-      p().then((res) => {
+      p().then(res => {
         result[count] = res;
         resolvedCount++;
         if (pList.length) {
@@ -116,6 +116,6 @@ const pLimit = (pList, limit) => {
   });
 };
 
-pLimit(promiseArr, 3).then((res) => {
-  console.log(res, "1111");
-});
+// pLimit(promiseArr, 3).then((res) => {
+//   console.log(res, "1111");
+// });
