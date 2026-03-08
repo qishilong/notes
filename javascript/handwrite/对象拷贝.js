@@ -1,127 +1,141 @@
-// const obj = {
-//     data: 1,
-//     un: undefined,
-//     info: {
-//         d: 2
-//     },
-//     fn: function () {
-//         console.log('Function');
-//     },
-//     get c() {
-//         return this.info.d;
-//     }
-// };
-
-/**
- * 浅拷贝
- * 1. Object.assign
- * 2. 不完整的深拷贝 JSON.stringify & JSON.parse
- * 3. Object.create
- */
-// 1. Object.assign
-// const obj1 = Object.assign({}, obj);
-// const obj2 = Object.assign({}, obj);
-// console.log(obj1.info === obj2.info);   // true
-
-// 2. 不完整的深拷贝 JSON.stringify & JSON.parse
-// const obj1 = JSON.parse(JSON.stringify(obj));
-// const obj2 = JSON.parse(JSON.stringify(obj));
-// console.log(obj1, obj2);
-// console.log(obj1.info === obj2.info);   // false
-
-// 3. Object.create
-// const obj1 = Object.create(obj);
-// const obj2 = Object.create(obj);
-// console.log(obj1, obj2);
-// console.log(obj1.__proto__.info === obj2.__proto__.info);   // true
-
-/**
- * 深拷贝
- * 递归实现
- * 这种写法无法解决循环引用的问题
- */
-
-const checkType = (value) => {
-  return Object.prototype.toString.call(value).slice(8, -1);
+// 使用 JSON.parse() 方法将 JSON 字符串转换为 JavaScript 对象
+const deepCloneJsonParse = obj => {
+  return JSON.parse(JSON.stringify(obj));
 };
-function deepClone(obj) {
-  if (checkType(obj) === "Object") {
-    const newObj = {};
-    for (const key in obj) {
-      newObj[key] = deepClone(obj[key]);
-    }
-    return newObj;
-  } else if (checkType(obj) === "Array") {
-    const newArr = [];
-    const length = obj.length;
-    for (let i = 0; i < length; i++) {
-      newArr[i] = deepClone(obj[i]);
-    }
-    return newArr;
-  } else if (checkType(obj) === "Function") {
-    return new Function(`return ${obj.toString()}`).call(this);
-  } else if (checkType(obj) === "Date") {
-    return new Date(obj.valueOf());
-  } else if (checkType(obj) === "RegExp") {
-    return new RegExp(obj);
-  } else if (checkType(obj) === "Map") {
-    const newMap = new Map();
-    obj.forEach((value, key) => {
-      if (typeof value === "object") {
-        newMap.set(key, deepClone(value));
-      } else {
-        newMap.set(key, value);
-      }
-    });
-    return newMap;
-  } else if (checkType(obj) === "Set") {
-    const newSet = new Set();
-    obj.forEach((value) => {
-      if (typeof value === "object") {
-        newSet.add(deepClone(value));
-      } else {
-        newSet.add(value);
-      }
-    });
-    return newSet;
-  } else {
-    return obj;
+
+// 使用 MessageChannel
+const deepClonePostMessage = obj => {
+  return new Promise(resolve => {
+    const { port1, port2 } = new MessageChannel();
+    port1.postMessage(obj);
+
+    port2.onmessage = data => resolve(data.data);
+  });
+};
+
+/**
+ * 获取数据类型
+ * @param {any} value
+ * @returns {String} 数据类型
+ */
+const getType = value => Object.prototype.toString.call(value).slice(8, -1);
+
+// 使用 WeekMap 实现深度拷贝
+const deepCloneWeekMap = (source, cache = new WeakMap()) => {
+  if (!source || (typeof source !== 'function' && typeof source !== 'object')) {
+    return source;
   }
-}
 
-const a = {
-  name: "aaa",
-  skills: ["踢球", "跑步", "打羽毛球"],
-  age: 18,
-  love: {
-    name: "小红",
-    age: 16,
-  },
-  map: new Map([["aaa", "123"]]),
-  fn: function (a, b, c) {
-    console.log(`我的名字叫${this.name}` + a);
-    return b + c;
-  },
-  set: new Set([1, 2, 3, 4, 5]),
-  date: new Date(),
-  reg: /^[1,2]/,
-  symbol: Symbol("abc"),
+  // 处理循环引用
+  if (cache.has(source)) {
+    return cache.get(source);
+  }
+
+  const type = getType(source);
+
+  // 处理 Date
+  if (type === 'Date') {
+    return new Date(source.getTime());
+  }
+
+  // 处理 RegExp
+  if (type === 'RegExp') {
+    return new RegExp(source.source, source.flags);
+  }
+
+  // 处理 Map
+  if (type === 'Map') {
+    const map = new Map();
+    cache.set(source, map);
+    source.forEach((val, key) => {
+      map.set(deepCloneWeekMap(key, cache), deepCloneWeekMap(val, cache));
+    });
+    return map;
+  }
+
+  // 处理 Set
+  if (type === 'Set') {
+    const set = new Set();
+    cache.set(source, set);
+    source.forEach(value => {
+      set.add(deepCloneWeekMap(value, cache));
+    });
+
+    return set;
+  }
+
+  // 处理 Function
+  if (type === 'Function') {
+    try {
+      const cloneFunc = new Function(`return ${source.toString()}`).call(this);
+      cache.set(source, cloneFunc);
+      return cloneFunc;
+    } catch (error) {
+      return source;
+    }
+  }
+
+  // // 处理 Array 和普通 Object
+  // const target = type === 'Array' ? [] : Object.create(Object.getPrototypeOf(source));
+  // cache.set(source, target);
+
+  // // 拷贝自身可枚举 + 不可枚举属性，包括 Symbol 键
+  // Reflect.ownKeys(source).forEach(key => {
+  //   const descriptor = Object.getOwnPropertyDescriptor(source, key);
+  //   if (descriptor.value !== undefined) {
+  //     descriptor.value = deepCloneWeekMap(descriptor.value, cache);
+  //   }
+  //   Object.defineProperty(target, key, descriptor);
+  // });
+
+  // 处理 Array 和普通 Object
+  const target = type === 'Array' ? [] : Object.create(Object.getPrototypeOf(source));
+
+  cache.set(source, target);
+
+  // 拷贝自身枚举 + 不可枚举属性，包括 Symbol 键
+  Reflect.ownKeys(source).forEach(key => {
+    const descriptor = Object.getOwnPropertyDescriptor(source, key);
+    if (descriptor.value !== undefined) {
+      descriptor.value = deepCloneWeekMap(descriptor.value, cache);
+    }
+    Object.defineProperty(target, key, descriptor);
+  });
+
+  return target;
 };
-// a.loop = a;
-const newA = deepClone(a);
-a.age = 100;
-a.love.age = 100;
-a.set.add("1123");
-a.skills.push("计算机");
-a.name = "bbb";
-a.map.set("name", "小明");
 
-console.log(a);
-console.log(newA);
+const obj = {
+  num: 0,
+  str: '',
+  boolean: true,
+  unf: undefined,
+  null: null,
+  obj: { name: '我是一个对象', id: 1 },
+  arr: [0, 1, 2],
+  func: function () {
+    console.log('我是一个函数');
+  },
+  date: new Date(0),
+  reg: new RegExp('/我是一个正则/ig'),
+  [Symbol('1')]: 1,
+  map: new Map([
+    [1, 2],
+    [2, 3],
+    [3, 4],
+    [4, { a: 1, b: 2 }]
+  ]),
+  set: new Set([1, 2, 3, 4, 5, { a: 1, b: 2 }])
+};
 
-// console.log(a.fn('a', 1, 2));
-// console.log(newA.fn('newA', 1, 3));
-// console.log(a.fn === newA.fn);
-// console.log(a.date === newA.date);
-// console.log(a.reg === newA.reg);
-// console.log(a.symbol === newA.symbol);
+// const res = deepCloneJsonParse(obj);
+// console.log(res);
+
+// deepClonePostMessage(obj).then(data => {
+//   console.log(data);
+// });
+
+const res = deepCloneWeekMap(obj);
+console.log(obj, res);
+
+console.log(res.arr === obj.arr, res.func === obj.func);
