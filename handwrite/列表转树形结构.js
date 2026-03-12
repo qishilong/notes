@@ -25,7 +25,7 @@ const listToTreeRecursion = (listData, id, treeList) => {
 
   for (const item of treeList) {
     item.children = [];
-    listToTree(listData, item.id, item.children);
+    listToTreeRecursion(listData, item.id, item.children);
     if (item.children.length === 0) {
       delete item.children;
     }
