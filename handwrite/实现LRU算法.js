@@ -58,6 +58,14 @@ class LRUCache {
       this.cache.delete(firstKey);
     }
   }
+
+  /**
+   * 查看当前LRU缓存内容
+   * @returns
+   */
+  check() {
+    return this.cache;
+  }
 }
 
 // 初始化容量为 2 的 LRU 缓存
