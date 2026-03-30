@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown + DOMPurify 基础示例</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    textarea {
+      width: 100%;
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    #preview {
+      border: 1px solid #ddd;
+      padding: 16px;
+      margin-top: 16px;
+      border-radius: 4px;
+    }
+
+    button {
+      margin-top: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>案例 1：最基础用法（浏览器端）</h1>
+
+  <textarea id="editor" rows="10" placeholder="输入 Markdown...">
+# 标题
+
+正常的 [链接](https://example.com) 和 **加粗**
+
+恶意测试: <script>alert('XSS')</script>
+
+<img src=x onerror=alert('XSS')>
+
+[恶意链接](javascript:alert('XSS'))
+  </textarea>
+
+  <button onclick="render()">渲染</button>
+
+  <h3>预览：</h3>
+  <div id="preview"></div>
+
+  <h3>净化后的 HTML 源码：</h3>
+  <pre id="source"></pre>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script>
+    function render() {
+      const markdown = document.getElementById('editor').value;
+
+      // 第一步：Markdown → 原始 HTML
+      const rawHtml = marked.parse(markdown);
+
+      // 第二步：DOMPurify 净化
+      const cleanHtml = DOMPurify.sanitize(rawHtml);
+
+      // 第三步：安全插入 DOM
+      document.getElementById('preview').innerHTML = cleanHtml;
+
+      // 显示净化后的 HTML 源码
+      document.getElementById('source').textContent = cleanHtml;
+    }
+
+    // 页面加载时自动渲染一次
+    render();
+  </script>
+</body>
+
+</html>
