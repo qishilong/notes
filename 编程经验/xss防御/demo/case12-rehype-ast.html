@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>方案 F: rehype AST 树变换</title>
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5
+    }
+
+    h1 {
+      font-size: 18px;
+      margin-top: 0
+    }
+
+    .desc {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 12px;
+      line-height: 1.6;
+      background: #fff;
+      padding: 12px;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0
+    }
+
+    .desc code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 12px
+    }
+
+    .container {
+      display: flex;
+      gap: 16px
+    }
+
+    .panel {
+      flex: 1;
+      min-width: 0
+    }
+
+    textarea {
+      width: 100%;
+      height: 600px;
+      font-family: Menlo, Consolas, monospace;
+      font-size: 13px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical
+    }
+
+    .preview-frame {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+      width: 100%;
+      height: 600px
+    }
+
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 8px
+    }
+
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #2196f3;
+      color: #fff;
+      text-align: center;
+      padding: 8px;
+      font-size: 14px;
+      z-index: 999;
+      transition: opacity .3s
+    }
+
+    .loading.done {
+      opacity: 0;
+      pointer-events: none
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loading" id="loadingBar">正在加载 rehype 模块…</div>
+  <h1>方案 F: rehype AST 树变换</h1>
+  <div class="desc">
+    <strong>原理：</strong>Markdown → <code>marked</code> 转 HTML 字符串 →
+    <code>rehype-parse</code> 解析为 HAST（HTML Abstract Syntax Tree）→
+    自定义插件遍历 AST，将危险节点替换为文本节点 →
+    <code>rehype-stringify</code> 序列化回安全 HTML。<br>
+    与 DOMPurify 的区别：全程在<strong>纯 AST 层面</strong>操作，不依赖浏览器 DOM API，可同构运行于 Node.js / 浏览器。
+  </div>
+  <div class="container">
+    <div class="panel">
+      <div class="section-title">Markdown 输入</div>
+      <textarea id="editor"># 正常 Markdown 内容
+
+- **加粗** 和 *斜体* 和 ~~删除线~~
+- `行内代码`
+
+[正常链接](https://example.com)
+
+![Markdown图片](https://qiniucloud.qishilong.space/images202501270030826.jpg)
+
+> 这是一段引用文字
+
+| 表头1 | 表头2 |
+|-------|-------|
+| 数据1 | 数据2 |
+
+```javascript
+function hello() {
+  console.log("Hello World");
+}
+```
+
+---
+
+# 安全 HTML（正常渲染）
+
+<img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" alt="正常图片" style="zoom:50%;" />
+
+<div style="color: blue; font-size: 18px; border: 1px solid blue; padding: 8px;">
+  蓝色 div 正常渲染
+</div>
+
+这段有<span style="color:red; font-weight:bold;">红色加粗</span>的内容
+
+第一行<br>第二行<br>第三行
+
+---
+
+# 危险 HTML（转为纯文本展示）
+
+<script>alert('XSS')</script>
+
+<script src="https://evil.com/malware.js"></script>
+
+<img src=x onerror="alert('XSS')">
+
+<img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" onerror="alert('XSS')" onload="alert('loaded')">
+
+<div onmouseover="alert('XSS')">鼠标移入触发</div>
+
+<input onfocus="alert('XSS')" autofocus>
+
+<a href="javascript:alert('XSS')">恶意链接</a>
+
+<svg onload="alert('XSS')">
+
+<iframe src="javascript:alert('XSS')"></iframe>
+
+<iframe src="https://evil.com"></iframe>
+
+<style>body{background:red !important}</style>
+
+<form action="javascript:alert('XSS')"><input type="submit"></form>
+
+<base href="https://evil.com">
+
+<meta http-equiv="refresh" content="0;url=javascript:alert('XSS')">
+
+---
+
+# 混合场景
+
+正常文字 <script>alert('行内XSS')</script> 后续正常文字
+
+**加粗** 中间 <img src=x onerror="alert(1)"> 继续 *斜体*
+
+安全图片和危险图片对比：
+<img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" style="width:100px" />
+<img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" onclick="alert(1)" />
+</textarea>
+    </div>
+    <div class="panel">
+      <div class="section-title">安全预览（rehype AST 变换）</div>
+      <iframe id="preview" class="preview-frame" sandbox="allow-same-origin"></iframe>
+    </div>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "unified": "https://esm.sh/unified@11",
+      "rehype-parse": "https://esm.sh/rehype-parse@9",
+      "rehype-stringify": "https://esm.sh/rehype-stringify@10",
+      "unist-util-visit": "https://esm.sh/unist-util-visit@5",
+      "hast-util-to-html": "https://esm.sh/hast-util-to-html@9",
+      "marked": "https://esm.sh/marked@12"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import { unified } from 'unified';
+    import rehypeParse from 'rehype-parse';
+    import rehypeStringify from 'rehype-stringify';
+    import { visit, SKIP } from 'unist-util-visit';
+    import { toHtml } from 'hast-util-to-html';
+    import { marked } from 'marked';
+
+    // ====== 配置 ======
+    var BLOCKED_TAGS = new Set([
+      'script', 'style', 'iframe', 'object', 'embed', 'applet',
+      'form', 'base', 'meta', 'link', 'noscript', 'noembed',
+      'frameset', 'frame', 'title', 'xmp', 'plaintext',
+      'isindex', 'bgsound', 'layer', 'svg', 'math'
+    ]);
+
+    var DANGEROUS_URI_ATTRS = new Set(['href', 'src', 'action', 'formaction', 'xlink:href']);
+    var DANGEROUS_URI_RE = /^(javascript|vbscript|data)\s*:/i;
+
+    // ====== rehype 插件：危险节点 → 纯文本 ======
+    function rehypeSanitizeToText() {
+      return function (tree) {
+        visit(tree, 'element', function (node, index, parent) {
+          if (parent === null || index === null) return;
+
+          var tag = node.tagName.toLowerCase();
+
+          // 1) 整个标签被封禁 → 序列化为文本
+          if (BLOCKED_TAGS.has(tag)) {
+            var html = toHtml(node);
+            parent.children[index] = { type: 'text', value: html };
+            return SKIP;
+          }
+
+          // 2) 检查属性是否含 on* / javascript: 等
+          var props = node.properties || {};
+          var isDangerous = false;
+
+          for (var key of Object.keys(props)) {
+            var lower = key.toLowerCase();
+            if (lower.startsWith('on')) {
+              isDangerous = true;
+              break;
+            }
+            if (DANGEROUS_URI_ATTRS.has(lower)) {
+              var val = String(props[key] || '').replace(/[\s\x00-\x1f]/g, '');
+              if (DANGEROUS_URI_RE.test(val)) {
+                isDangerous = true;
+                break;
+              }
+            }
+          }
+
+          if (isDangerous) {
+            var html2 = toHtml(node);
+            parent.children[index] = { type: 'text', value: html2 };
+            return SKIP;
+          }
+        });
+      };
+    }
+
+    // ====== 处理管线 ======
+    var processor = unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeSanitizeToText)
+      .use(rehypeStringify);
+
+    var CSS = 'body{font-family:-apple-system,sans-serif;padding:16px;margin:0;line-height:1.6;color:#333}pre{background:#1e1e1e;color:#d4d4d4;padding:16px;border-radius:4px;overflow-x:auto}code{font-family:Menlo,Consolas,monospace;font-size:13px}p>code,li>code{background:#f0f0f0;padding:2px 6px;border-radius:3px}blockquote{border-left:4px solid #ddd;margin:0;padding:8px 16px;color:#666}table{border-collapse:collapse}th,td{border:1px solid #ddd;padding:8px;text-align:left}img{max-width:100%}hr{border:none;border-top:1px solid #ddd;margin:24px 0}';
+
+    async function renderSafe(md) {
+      // 1) Markdown → HTML
+      var rawHtml = marked.parse(md);
+      // 2) HTML → HAST → 变换 → HTML
+      var result = await processor.process(rawHtml);
+      return String(result);
+    }
+
+    var debounceTimer = null;
+    function scheduleRender() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(doRender, 200);
+    }
+
+    async function doRender() {
+      var md = document.getElementById('editor').value;
+      var safeHtml = await renderSafe(md);
+      var doc = '<!DOCTYPE html><html><head><meta charset="UTF-8"><style>'
+        + CSS + '</style></head><body>' + safeHtml + '</body></html>';
+      document.getElementById('preview').srcdoc = doc;
+    }
+
+    // ====== 初始化 ======
+    document.getElementById('loadingBar').classList.add('done');
+    document.getElementById('editor').addEventListener('input', scheduleRender);
+    doRender();
+  </script>
+</body>
+
+</html>

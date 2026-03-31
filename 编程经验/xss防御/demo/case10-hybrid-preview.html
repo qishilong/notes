@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown 安全预览 —— 危险 HTML 转纯文本，安全 HTML 正常渲染</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      font-size: 18px;
+      margin-top: 0;
+    }
+
+    .container {
+      display: flex;
+      gap: 16px;
+    }
+
+    .panel {
+      flex: 1;
+      min-width: 0;
+    }
+
+    textarea {
+      width: 100%;
+      height: 650px;
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 13px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    .preview-frame {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+      width: 100%;
+      height: 650px;
+    }
+
+    .note {
+      background: #e3f2fd;
+      border: 1px solid #1976d2;
+      border-radius: 4px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .note b {
+      color: #0d47a1;
+    }
+
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Markdown 安全预览 —— 危险代码转纯文本，其余正常渲染</h1>
+
+  <div class="note">
+    <b>渲染规则：</b><br>
+    ✅ 正常 Markdown 语法（标题、加粗、列表、表格、图片语法等）→ 正常渲染<br>
+    ✅ 安全 HTML 标签（&lt;img src="https://..."&gt;、&lt;div style="..."&gt; 等）→ 正常渲染<br>
+    ⚠️ 危险 HTML（&lt;script&gt;、on* 事件、javascript: 协议、&lt;iframe&gt; 等）→ <b>作为纯文本原样展示，不执行也不删除</b>
+  </div>
+
+  <div class="container">
+    <div class="panel">
+      <div class="section-title">Markdown 输入</div>
+      <textarea id="editor">
+# 正常 Markdown 内容
+
+## 文本格式
+
+- **加粗** 和 *斜体* 和 ~~删除线~~
+- `行内代码`
+
+## 链接与图片（Markdown 语法）
+
+[正常链接](https://example.com)
+
+![Markdown图片](https://qiniucloud.qishilong.space/images202501270030826.jpg)
+
+## 引用和表格
+
+> 这是一段引用文字
+
+| 表头1 | 表头2 |
+|-------|-------|
+| 数据1 | 数据2 |
+
+## 代码块
+
+```javascript
+function hello() {
+  console.log("Hello World");
+  // 代码块内的内容照常显示
+  document.write('<script>alert(1)</script>');
+}
+```
+
+---
+
+# 安全 HTML（应正常渲染）
+
+## 带样式的 img 标签
+
+<img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" alt="正常图片" style="zoom:50%;" />
+
+## 带样式的 div
+
+<div style="color: blue; font-size: 18px; border: 1px solid blue; padding: 8px;">
+  这是一个蓝色的 div，应该正常渲染
+</div>
+
+## 带 class 的 span
+
+这段文字中有<span style="color:red; font-weight:bold;">红色加粗</span>的内容
+
+## 换行标签
+
+第一行<br>第二行<br>第三行
+
+---
+
+# 危险 HTML（应作为纯文本展示）
+
+## script 标签
+
+<script>alert('XSS')</script>
+
+<script src="https://evil.com/malware.js"></script>
+
+## 事件处理器
+
+<img src=x onerror=alert('XSS')>
+
+<img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" onerror=alert('XSS') onload=alert('loaded')>
+
+<div onmouseover=alert('XSS')>鼠标移入触发</div>
+
+<input onfocus=alert('XSS') autofocus>
+
+<details open ontoggle=alert('XSS')>展开触发</details>
+
+## JavaScript 协议链接
+
+<a href="javascript:alert('XSS')">恶意链接</a>
+
+<a href="JAVASCRIPT:alert('XSS')">大写绕过</a>
+
+## SVG 注入
+
+<svg onload=alert('XSS')>
+
+<svg><script>alert('XSS')</script></svg>
+
+## iframe / object / embed
+
+<iframe src="javascript:alert('XSS')"></iframe>
+
+<iframe src="https://evil.com"></iframe>
+
+<object data="javascript:alert('XSS')"></object>
+
+<embed src="javascript:alert('XSS')">
+
+## style 标签
+
+<style>body{background:red}</style>
+
+## form / base 标签
+
+<form action="javascript:alert('XSS')"><input type="submit"></form>
+
+<base href="https://evil.com">
+
+## meta 注入
+
+<meta http-equiv="refresh" content="0;url=javascript:alert('XSS')">
+
+---
+
+# 混合场景
+
+正常文字 <script>alert('行内XSS')</script> 后续正常文字
+
+**加粗** 中间有 <img src=x onerror=alert(1)> 继续 *斜体*
+
+安全图片和危险图片对比：
+<img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" style="width:100px" />
+<img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" onclick=alert(1) />
+      </textarea>
+    </div>
+    <div class="panel">
+      <div class="section-title">安全预览</div>
+      <iframe id="preview" class="preview-frame" sandbox="allow-same-origin"></iframe>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    /**
+     * 核心策略：通过 marked 的自定义 renderer 拦截 HTML token
+     *
+     * marked 解析 Markdown 时，会将原始 HTML 识别为 "html" 类型的 token。
+     * 我们重写 renderer.html()：
+     *   - 检查这段 HTML 是否危险
+     *   - 危险 → 转义为纯文本显示（用户能看到完整源码）
+     *   - 安全 → 原样输出，浏览器正常渲染
+     *
+     * 代码块/行内代码不受影响（marked 已将其转义）
+     * Markdown 原生语法（标题/加粗/链接/图片/表格）不受影响（不经过 html renderer）
+     */
+
+    // ==========================================
+    // 危险检测规则
+    // ==========================================
+
+    // 完全禁止的标签
+    const BLOCKED_TAGS = new Set([
+      'script', 'style', 'iframe', 'object', 'embed', 'applet',
+      'form', 'base', 'meta', 'link', 'noscript', 'noembed',
+      'frameset', 'frame', 'svg', 'math', 'xmp', 'plaintext',
+      'xml', 'xss', 'isindex', 'bgsound', 'layer',
+    ]);
+
+    // 危险属性模式
+    const DANGEROUS_ATTR_PATTERNS = [
+      /\bon\w+\s*=/i,                        // on* 事件属性: onerror=, onclick=, onload=...
+      /href\s*=\s*["']?\s*javascript:/i,      // javascript: 协议
+      /href\s*=\s*["']?\s*vbscript:/i,        // vbscript: 协议
+      /href\s*=\s*["']?\s*data:/i,            // data: 协议 href
+      /src\s*=\s*["']?\s*javascript:/i,       // javascript: 协议 src
+      /src\s*=\s*["']?\s*data:text\/html/i,   // data:text/html src
+      /formaction\s*=\s*["']?\s*javascript:/i, // formaction javascript:
+      /style\s*=\s*["'][^"']*expression\s*\(/i,  // CSS expression()
+      /style\s*=\s*["'][^"']*url\s*\(\s*["']?\s*javascript:/i, // CSS url(javascript:)
+      /style\s*=\s*["'][^"']*-moz-binding/i,     // -moz-binding
+      /style\s*=\s*["'][^"']*behavior\s*:/i,       // behavior:
+    ];
+
+    /**
+     * 判断一段 HTML 字符串是否危险
+     */
+    function isDangerous(html) {
+      // 提取标签名
+      const tagMatch = html.match(/<\/?([a-zA-Z][a-zA-Z0-9]*)/);
+      if (!tagMatch) return false;
+
+      const tagName = tagMatch[1].toLowerCase();
+
+      // 1. 检查是否是被禁止的标签
+      if (BLOCKED_TAGS.has(tagName)) {
+        return true;
+      }
+
+      // 2. 检查是否存在危险属性
+      for (const pattern of DANGEROUS_ATTR_PATTERNS) {
+        if (pattern.test(html)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    /**
+     * HTML 转义（用于把危险 HTML 转为可见文本）
+     */
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // ==========================================
+    // 自定义 marked renderer
+    // ==========================================
+
+    const renderer = {
+      // 拦截所有原始 HTML（块级和内联）
+      html(token) {
+        const raw = token.raw || token.text || '';
+        if (isDangerous(raw)) {
+          // 危险 HTML → 转义为纯文本，用 <code> 样式展示
+          return `< code class="xss-text" > ${escapeHtml(raw.trim())}</code > `;
+        }
+        // 安全 HTML → 原样输出，正常渲染
+        return raw;
+      },
+    };
+
+    marked.use({ renderer });
+
+    // ==========================================
+    // 渲染逻辑
+    // ==========================================
+
+    const previewStyles = `
+      body {
+      font - family: -apple - system, sans - serif;
+      padding: 16px; margin: 0; line - height: 1.6;
+      color: #333;
+    }
+      pre {
+      background: #1e1e1e; color: #d4d4d4;
+      padding: 16px; border - radius: 4px; overflow - x: auto;
+    }
+      code {
+      font - family: Menlo, Consolas, monospace; font - size: 13px;
+    }
+    p > code, li > code {
+      background: #f0f0f0; padding: 2px 6px; border - radius: 3px;
+    }
+      blockquote {
+      border - left: 4px solid #ddd; margin: 0; padding: 8px 16px; color: #666;
+    }
+      table { border - collapse: collapse; }
+    th, td { border: 1px solid #ddd; padding: 8px; text - align: left; }
+      img { max - width: 100 %; }
+      hr { border: none; border - top: 1px solid #ddd; margin: 24px 0; }
+
+    /* 危险 HTML 转为纯文本的样式 */
+    code.xss - text {
+      display: inline;
+      background: #fff8e1;
+      border: 1px solid #ffc107;
+      border - radius: 3px;
+      padding: 2px 6px;
+      color: #e65100;
+      font - size: 13px;
+      white - space: pre - wrap;
+      word -break: break-all;
+    }
+    `;
+
+    function render() {
+      const markdown = document.getElementById('editor').value;
+      const html = marked.parse(markdown);
+
+      const frame = document.getElementById('preview');
+      frame.srcdoc = `< !DOCTYPE html >
+      <html><head><meta charset="UTF-8">
+        <style>${previewStyles}</style>
+      </head><body>${html}</body></html>`;
+    }
+
+    document.getElementById('editor').addEventListener('input', render);
+    render();
+  </script>
+</body>
+
+</html>

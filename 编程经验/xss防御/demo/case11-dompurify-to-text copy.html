@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>方案E：DOMPurify 转文本 + 方案F：marked renderer 对比</title>
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5
+    }
+
+    h1 {
+      font-size: 18px;
+      margin-top: 0
+    }
+
+    .container {
+      display: flex;
+      gap: 16px
+    }
+
+    .panel {
+      flex: 1;
+      min-width: 0
+    }
+
+    textarea {
+      width: 100%;
+      height: 650px;
+      font-family: Menlo, Consolas, monospace;
+      font-size: 13px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0
+    }
+
+    .tab {
+      padding: 8px 16px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-bottom: none;
+      border-radius: 4px 4px 0 0;
+      background: #eee;
+      font-size: 13px;
+      user-select: none
+    }
+
+    .tab.active {
+      background: #fff;
+      font-weight: bold
+    }
+
+    .preview-frame {
+      border: 1px solid #ccc;
+      border-radius: 0 4px 4px 4px;
+      background: #fff;
+      width: 100%;
+      height: 650px
+    }
+
+    .note {
+      background: #e8f5e9;
+      border: 1px solid #4caf50;
+      border-radius: 4px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      line-height: 1.8
+    }
+
+    .note b {
+      color: #1b5e20
+    }
+
+    .note code {
+      background: #c8e6c9;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace
+    }
+
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 8px
+    }
+  </style>
+</head>
+
+<body>
+  <h1>方案 E &amp; F —— 更安全的 Markdown 预览</h1>
+  <div class="note">
+    <b>方案 E（推荐）：</b>利用 <code>DOMPurify</code> 的 hook，在净化过程中把危险节点<b>转为可见纯文本</b>而非直接删除。<br>
+    → 复用 DOMPurify 全部安全能力（mXSS 防御、编码绕过处理），不需要自己写任何检测规则。<br>
+    → 安全 HTML（图片、div、span 等）正常渲染，危险内容以纯文本原样展示。<br><br>
+    <b>方案 F：</b>用 <code>marked renderer</code> 正则检测方案作为对比。
+  </div>
+  <div class="container">
+    <div class="panel">
+      <div class="section-title">Markdown 输入</div>
+      <textarea
+                id="editor"># 正常 Markdown 内容
+
+## 文本格式
+
+- **加粗** 和 *斜体* 和 ~~删除线~~
+- `行内代码`
+
+## 链接与图片（Markdown 语法）
+
+[正常链接](https://example.com)
+
+![Markdown图片](https://qiniucloud.qishilong.space/images202501270030826.jpg)
+
+## 引用和表格
+
+> 这是一段引用文字
+
+| 表头1 | 表头2 |
+|-------|-------|
+| 数据1 | 数据2 |
+
+## 代码块
+
+```javascript
+function hello() {
+  console.log("Hello World");
+  document.write('&lt;script&gt;alert(1)&lt;/script&gt;');
+}
+```
+
+---
+
+# 安全 HTML（应正常渲染）
+
+&lt;img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" alt="正常图片" style="zoom:50%;" /&gt;
+
+&lt;div style="color: blue; font-size: 18px; border: 1px solid blue; padding: 8px;"&gt;
+  蓝色 div 正常渲染
+&lt;/div&gt;
+
+这段有&lt;span style="color:red; font-weight:bold;"&gt;红色加粗&lt;/span&gt;的内容
+
+第一行&lt;br&gt;第二行&lt;br&gt;第三行
+
+---
+
+# 危险 HTML（应作为纯文本展示）
+
+## script
+
+&lt;script&gt;alert('XSS')&lt;/script&gt;
+
+&lt;script src="https://evil.com/malware.js"&gt;&lt;/script&gt;
+
+## 事件处理器
+
+&lt;img src=x onerror="alert('XSS')"&gt;
+
+&lt;img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" onerror="alert('XSS')" onload="alert('loaded')"&gt;
+
+&lt;div onmouseover=alert('XSS')&gt;鼠标移入触发&lt;/div&gt;
+
+&lt;input onfocus="alert('XSS')" autofocus&gt;
+
+&lt;details open ontoggle="alert('XSS')"&gt;展开触发&lt;/details&gt;
+
+## javascript 协议
+
+&lt;a href="javascript:alert('XSS')"&gt;恶意链接&lt;/a&gt;
+
+&lt;a href="JaVaScRiPt:alert('XSS')"&gt;大小写绕过&lt;/a&gt;
+
+## SVG
+
+&lt;svg onload="alert('XSS')"&gt;
+
+&lt;svg&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;&lt;/svg&gt;
+
+## iframe / object / embed
+
+&lt;iframe src="javascript:alert('XSS')"&gt;&lt;/iframe&gt;
+
+&lt;iframe src="https://evil.com"&gt;&lt;/iframe&gt;
+
+&lt;object data="javascript:alert('XSS')"&gt;&lt;/object&gt;
+
+&lt;embed src="javascript:alert('XSS')"&gt;
+
+## style
+
+&lt;style&gt;body{background:red !important}&lt;/style&gt;
+
+## form / base / meta
+
+&lt;form action="javascript:alert('XSS')"&gt;&lt;input type="submit"&gt;&lt;/form&gt;
+
+&lt;base href="https://evil.com"&gt;
+
+&lt;meta http-equiv="refresh" content="0;url=javascript:alert('XSS')"&gt;
+
+## 编码绕过测试（DOMPurify 自动处理）
+
+&lt;a href="&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;alert('XSS')"&gt;HTML实体绕过&lt;/a&gt;
+
+&lt;a href="java&amp;#x0a;script:alert('XSS')"&gt;换行绕过&lt;/a&gt;
+
+## Mutation XSS 测试
+
+&lt;math&gt;&lt;mtext&gt;&lt;table&gt;&lt;mglyph&gt;&lt;style&gt;&lt;!--&lt;/style&gt;&lt;img src=x onerror="alert(1)"&gt;
+
+&lt;svg&gt;&lt;style&gt;&lt;img src="&lt;/style&gt;&lt;img src=x onerror="alert(1)"&gt;"&gt;
+
+---
+
+# 混合场景
+
+<img src=x onerror="alert('indented')">
+
+正常文字 &lt;script&gt;alert('行内XSS')&lt;/script&gt; 后续正常文字
+
+**加粗** 中间 &lt;img src=x onerror="alert(1)"&gt; 继续 *斜体*
+
+安全图片和危险图片对比：
+&lt;img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" style="width:100px" /&gt;
+&lt;img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" onclick="alert(1)" /&gt;</textarea>
+    </div>
+    <div class="panel">
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('e',this)">方案E: DOMPurify转文本</div>
+        <div class="tab" onclick="switchTab('f',this)">方案F: 对比(旧方案)</div>
+      </div>
+      <iframe id="preview-e" class="preview-frame" sandbox="allow-same-origin"></iframe>
+      <iframe id="preview-f" class="preview-frame" sandbox="allow-same-origin"
+              style="display:none"></iframe>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script>
+    // ==================================================
+    // 公共预览样式
+    // ==================================================
+    var PREVIEW_CSS = [
+      'body{font-family:-apple-system,sans-serif;padding:16px;margin:0;line-height:1.6;color:#333}',
+      'pre{background:#1e1e1e;color:#d4d4d4;padding:16px;border-radius:4px;overflow-x:auto}',
+      'code{font-family:Menlo,Consolas,monospace;font-size:13px}',
+      'p>code,li>code{background:#f0f0f0;padding:2px 6px;border-radius:3px}',
+      'blockquote{border-left:4px solid #ddd;margin:0;padding:8px 16px;color:#666}',
+      'table{border-collapse:collapse}',
+      'th,td{border:1px solid #ddd;padding:8px;text-align:left}',
+      'img{max-width:100%}',
+      'hr{border:none;border-top:1px solid #ddd;margin:24px 0}',
+      'code.xss-text{display:inline;background:#fff8e1;border:1px solid #ffc107;border-radius:3px;padding:2px 6px;color:#e65100;font-size:13px;white-space:pre-wrap;word-break:break-all}',
+      'code.xss-attr{display:inline;background:#fce4ec;border:1px solid #e91e63;border-radius:3px;padding:1px 6px;color:#c62828;font-size:11px;margin-left:4px;vertical-align:middle}'
+    ].join('\n');
+
+    function wrapInDoc(bodyHtml) {
+      return '<!DOCTYPE html><html><head><meta charset="UTF-8"><style>' + PREVIEW_CSS + '</style></head><body>' + bodyHtml + '</body></html>';
+    }
+
+    // ==================================================
+    // 方案 E：DOMPurify "转文本而非删除"
+    // ==================================================
+    function reconstructOuterHTML(el) {
+      var tag = el.tagName.toLowerCase();
+      var attrs = '';
+      for (var i = 0; i < el.attributes.length; i++) {
+        var a = el.attributes[i];
+        attrs += ' ' + a.name + '="' + a.value + '"';
+      }
+      var inner = el.innerHTML || el.textContent || '';
+      if (inner) {
+        return '<' + tag + attrs + '>' + inner + '</' + tag + '>';
+      }
+      return '<' + tag + attrs + '>';
+    }
+
+    function renderMethodE(markdown) {
+      var rawHtml = marked.parse(markdown);
+
+      // 清理之前的 hooks
+      DOMPurify.removeAllHooks();
+
+      // 被阻止的标签列表
+      var blockedTags = [
+        'script', 'style', 'iframe', 'object', 'embed', 'applet',
+        'form', 'base', 'meta', 'link', 'noscript', 'noembed',
+        'frameset', 'frame', 'title', 'textarea', 'xmp',
+        'plaintext', 'isindex', 'bgsound', 'layer', 'svg', 'math'
+      ];
+
+      // Hook: 危险标签 → 替换为纯文本
+      DOMPurify.addHook('uponSanitizeElement', function (node, data) {
+        if (node.nodeType !== 1) return;
+        var tagName = (data.tagName || '').toLowerCase();
+        if (blockedTags.indexOf(tagName) !== -1) {
+          var outerText = reconstructOuterHTML(node);
+          var textSpan = document.createElement('code');
+          textSpan.className = 'xss-text';
+          textSpan.textContent = outerText;
+          node.replaceWith(textSpan);
+        }
+      });
+
+      // Hook: 危险属性 → 记录到节点上
+      DOMPurify.addHook('uponSanitizeAttribute', function (node, data) {
+        if (!data.attrName) return;
+
+        // 记录 on* 事件属性
+        if (/^on/i.test(data.attrName)) {
+          if (!node._xssRemovedAttrs) node._xssRemovedAttrs = [];
+          node._xssRemovedAttrs.push(data.attrName + '="' + data.attrValue + '"');
+        }
+
+        // 记录 javascript:/vbscript:/data: 协议
+        if (data.attrName === 'href' || data.attrName === 'src' || data.attrName === 'action') {
+          var val = (data.attrValue || '').replace(/[\s\x00-\x1f]/g, '');
+          if (/^(javascript|vbscript|data\s*:)/i.test(val)) {
+            if (!node._xssRemovedAttrs) node._xssRemovedAttrs = [];
+            node._xssRemovedAttrs.push(data.attrName + '="' + data.attrValue + '"');
+            if (data.attrName === 'href') {
+              node._xssHadJsHref = data.attrValue;
+            }
+          }
+        }
+      });
+
+      // Hook: 净化后为被移除属性的元素添加标注
+      DOMPurify.addHook('afterSanitizeAttributes', function (node) {
+        // 处理被移除的事件属性
+        if (node._xssRemovedAttrs && node._xssRemovedAttrs.length > 0) {
+          var badge = document.createElement('code');
+          badge.className = 'xss-attr';
+          badge.textContent = '[已拦截: ' + node._xssRemovedAttrs.join(', ') + ']';
+          if (node.parentNode) {
+            node.parentNode.insertBefore(badge, node.nextSibling);
+          }
+          delete node._xssRemovedAttrs;
+        }
+
+        // 处理 javascript: 协议链接
+        if (node.tagName === 'A' && !node.getAttribute('href') && node._xssHadJsHref) {
+          var badge2 = document.createElement('code');
+          badge2.className = 'xss-attr';
+          badge2.textContent = '[已拦截: href="' + node._xssHadJsHref + '"]';
+          node.style.textDecoration = 'line-through';
+          node.style.color = '#999';
+          if (node.parentNode) {
+            node.parentNode.insertBefore(badge2, node.nextSibling);
+          }
+          delete node._xssHadJsHref;
+        }
+      });
+
+      // 使用 RETURN_DOM 模式净化
+      var cleanDom = DOMPurify.sanitize(rawHtml, {
+        RETURN_DOM: true,
+        ADD_TAGS: ['details', 'summary'],
+        ADD_ATTR: ['open', 'style']
+      });
+
+      var cleanHtml = cleanDom.innerHTML;
+      DOMPurify.removeAllHooks();
+      return cleanHtml;
+    }
+
+    // ==================================================
+    // 方案 F（对比）：marked renderer 正则检测
+    // ==================================================
+    var BLOCKED_TAGS_F = ['script', 'style', 'iframe', 'object', 'embed', 'applet', 'form', 'base', 'meta', 'link', 'noscript', 'noembed', 'frameset', 'frame', 'svg', 'math', 'xmp', 'plaintext', 'xml', 'xss', 'isindex', 'bgsound', 'layer'];
+    var DANGEROUS_ATTR_F = [
+      /\bon\w+\s*=/i,
+      /href\s*=\s*["']?\s*javascript:/i,
+      /href\s*=\s*["']?\s*vbscript:/i,
+      /href\s*=\s*["']?\s*data:/i,
+      /src\s*=\s*["']?\s*javascript:/i,
+      /src\s*=\s*["']?\s*data:text\/html/i,
+      /style\s*=\s*["'][^"']*expression\s*\(/i,
+      /style\s*=\s*["'][^"']*url\s*\(\s*["']?\s*javascript:/i
+    ];
+
+    function isDangerousF(html) {
+      var m = html.match(/<\/?([a-zA-Z][a-zA-Z0-9]*)/);
+      if (!m) return false;
+      if (BLOCKED_TAGS_F.indexOf(m[1].toLowerCase()) !== -1) return true;
+      for (var i = 0; i < DANGEROUS_ATTR_F.length; i++) {
+        if (DANGEROUS_ATTR_F[i].test(html)) return true;
+      }
+      return false;
+    }
+
+    function escapeHtmlF(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function renderMethodF(markdown) {
+      var renderer2 = {
+        html: function (token) {
+          var raw = token.raw || token.text || '';
+          if (isDangerousF(raw)) {
+            return '<code class="xss-text">' + escapeHtmlF(raw.trim()) + '</code>';
+          }
+          return raw;
+        }
+      };
+      var m2 = new marked.Marked();
+      m2.use({ renderer: renderer2 });
+      return m2.parse(markdown);
+    }
+
+    // ==================================================
+    // 渲染与 Tab 切换
+    // ==================================================
+    function render() {
+      var markdown = document.getElementById('editor').value;
+
+      var htmlE = renderMethodE(markdown);
+      document.getElementById('preview-e').srcdoc = wrapInDoc(htmlE);
+
+      var htmlF = renderMethodF(markdown);
+      document.getElementById('preview-f').srcdoc = wrapInDoc(htmlF);
+    }
+
+    function switchTab(id, el) {
+      var tabs = document.querySelectorAll('.tab');
+      for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+      el.classList.add('active');
+      var frames = document.querySelectorAll('.preview-frame');
+      for (var i = 0; i < frames.length; i++) frames[i].style.display = 'none';
+      document.getElementById('preview-' + id).style.display = 'block';
+    }
+
+    document.getElementById('editor').addEventListener('input', render);
+    render();
+  </script>
+</body>
+
+</html>

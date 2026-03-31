@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown 完整预览 —— 所有内容可见但不执行</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      font-size: 20px;
+    }
+
+    .container {
+      display: flex;
+      gap: 16px;
+    }
+
+    .panel {
+      flex: 1;
+      min-width: 0;
+    }
+
+    textarea {
+      width: 100%;
+      height: 600px;
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 13px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+    }
+
+    .tab {
+      padding: 8px 16px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-bottom: none;
+      border-radius: 4px 4px 0 0;
+      background: #eee;
+      font-size: 13px;
+    }
+
+    .tab.active {
+      background: #fff;
+      font-weight: bold;
+    }
+
+    .preview-frame {
+      border: 1px solid #ccc;
+      border-radius: 0 4px 4px 4px;
+      background: #fff;
+      width: 100%;
+      height: 600px;
+    }
+
+    .note {
+      background: #e8f5e9;
+      border: 1px solid #4caf50;
+      border-radius: 4px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .note code {
+      background: #c8e6c9;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+
+    .method-tag {
+      display: inline-block;
+      background: #1976d2;
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Markdown 完整预览 —— 所有内容可见但不执行</h1>
+
+  <div class="note">
+    <strong>四种方案对比：</strong><br>
+    <span class="method-tag">方案A</span> <code>sandbox iframe</code> — HTML
+    正常渲染但禁止脚本执行，&lt;script&gt; 标签不可见<br>
+    <span class="method-tag">方案B</span> <code>sandbox iframe + CSS 强制显示</code> — 所有标签内容可见，保留 HTML
+    渲染效果<br>
+    <span class="method-tag">方案C</span> <code>HTML 标签转义展示</code> — 将代码块外的 HTML 标签也转为可见文本，最安全<br>
+    <span class="method-tag" style="background:#e65100">方案D 推荐</span>
+    <code>混合方案：安全标签渲染 + 危险部分标注</code> — 图片正常显示，危险标签/属性转为可见文本
+  </div>
+
+  <div class="container">
+    <div class="panel">
+      <div style="font-weight:bold; margin-bottom:8px;">Markdown 输入</div>
+      <textarea id="editor">
+# 完整预览测试
+
+## 正常 Markdown 内容
+
+- **加粗** 和 *斜体*
+- [正常链接](https://example.com)
+- ~~删除线~~
+
+> 这是一段引用
+
+| 表头1 | 表头2 |
+|-------|-------|
+| 数据1 | 数据2 |
+
+## 代码块内的 XSS（应显示为代码）
+
+```html
+<script>alert('代码块内的XSS')</script>
+<img src=x onerror=alert('代码块内')>
+<img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" alt="16819581115172"
+     style="zoom:50%;" />
+```
+
+## 代码块外的 XSS（关键：也应该完整展示，不能消失）
+
+<script>alert('裸script标签')</script>
+
+<img src=x onerror=alert('裸img标签')>
+
+<img src='' onerror=alert('裸img标签')>
+
+<img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" alt="16819581115172"
+     style="zoom:50%;" />
+
+<svg onload=alert('裸svg标签')>
+
+<a href="javascript:alert('裸链接')">恶意链接</a>
+
+<iframe src="javascript:alert('裸iframe')"></iframe>
+
+<div onmouseover=alert('裸div事件')>鼠标移入触发</div>
+
+<details open ontoggle=alert('裸details')>展开触发</details>
+
+<style>body{background:red}</style>
+
+## 行内混合
+
+这是正常文本 <script>alert('行内XSS')</script> 这是后续文本
+
+**加粗** 中间 <img src=x onerror=alert(1)> 继续 *斜体*
+      </textarea>
+    </div>
+    <div class="panel">
+      <div class="tabs">
+        <div class="tab" onclick="switchTab('a', this)">方案A: sandbox</div>
+        <div class="tab" onclick="switchTab('b', this)">方案B: sandbox+CSS</div>
+        <div class="tab" onclick="switchTab('c', this)">方案C: 转义展示</div>
+        <div class="tab active" onclick="switchTab('d', this)"
+             style="background:#fff3e0;border-color:#ff9800;">方案D: 混合（推荐）</div>
+      </div>
+      <iframe id="preview-a" class="preview-frame" sandbox="allow-same-origin"
+              style="display:none"></iframe>
+      <iframe id="preview-b" class="preview-frame" sandbox="allow-same-origin"
+              style="display:none"></iframe>
+      <iframe id="preview-c" class="preview-frame" sandbox="allow-same-origin"
+              style="display:none"></iframe>
+      <iframe id="preview-d" class="preview-frame" sandbox="allow-same-origin"></iframe>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    // ========================================
+    // 方案 A：sandbox iframe（HTML 正常渲染，脚本不执行）
+    // script 标签内容不可见（因为 script 默认 display:none）
+    // ========================================
+    function renderMethodA(markdown) {
+      const html = marked.parse(markdown);
+      const fullHtml = `<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<style>
+  body { font-family: -apple-system, sans-serif; padding: 16px; margin: 0; line-height: 1.6; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 4px; overflow-x: auto; }
+  code { font-family: Menlo, Consolas, monospace; font-size: 13px; }
+  p > code, li > code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; }
+  blockquote { border-left: 4px solid #ddd; margin: 0; padding: 8px 16px; color: #666; }
+  table { border-collapse: collapse; }
+  th, td { border: 1px solid #ddd; padding: 8px; }
+  img { max-width: 100%; }
+</style>
+</head><body>${html}</body></html>`;
+      return fullHtml;
+    }
+
+    // ========================================
+    // 方案 B：sandbox iframe + CSS 强制显示所有标签
+    // 通过 CSS 让 script/style/iframe 等标签可见
+    // ========================================
+    function renderMethodB(markdown) {
+      const html = marked.parse(markdown);
+      const fullHtml = `<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<style>
+  body { font-family: -apple-system, sans-serif; padding: 16px; margin: 0; line-height: 1.6; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 4px; overflow-x: auto; }
+  code { font-family: Menlo, Consolas, monospace; font-size: 13px; }
+  p > code, li > code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; }
+  blockquote { border-left: 4px solid #ddd; margin: 0; padding: 8px 16px; color: #666; }
+  table { border-collapse: collapse; }
+  th, td { border: 1px solid #ddd; padding: 8px; }
+  img { max-width: 100%; }
+
+  /* 关键：强制显示默认隐藏的标签 */
+  script, style, iframe, object, embed, applet, noscript, noembed {
+    display: block !important;
+    background: #fff3e0;
+    border: 1px dashed #ff9800;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin: 8px 0;
+    font-family: Menlo, Consolas, monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    color: #e65100;
+  }
+  script::before { content: "<script> "; font-weight: bold; color: #bf360c; }
+  style::before { content: "<style> "; font-weight: bold; color: #bf360c; }
+  iframe::before { content: "<iframe> "; font-weight: bold; color: #bf360c; }
+</style>
+</head><body>${html}</body></html>`;
+      return fullHtml;
+    }
+
+    // ========================================
+    // 方案 C：将代码块外的 HTML 标签转为转义文本
+    // 最安全：所有 HTML 变成可见的纯文本
+    // ========================================
+    function renderMethodC(markdown) {
+      // 思路：先保护代码块，然后将剩余部分的 HTML 标签转义，最后还原代码块再交给 marked
+      let codeBlocks = [];
+      let index = 0;
+
+      // 1. 提取并保护围栏代码块（```...```）和缩进代码块
+      let processed = markdown.replace(/(`{3,})[^\n]*\n[\s\S]*?\n\1/g, (match) => {
+        const placeholder = `%%CODEBLOCK_${index}%%`;
+        codeBlocks.push(match);
+        index++;
+        return placeholder;
+      });
+
+      // 保护行内代码（`...`）
+      let inlineCodes = [];
+      let inlineIndex = 0;
+      processed = processed.replace(/`[^`\n]+`/g, (match) => {
+        const placeholder = `%%INLINE_${inlineIndex}%%`;
+        inlineCodes.push(match);
+        inlineIndex++;
+        return placeholder;
+      });
+
+      // 2. 对非代码区域的 HTML 标签进行转义，使其可见但不执行
+      // 将 < 转为一个特殊标记，后续在 marked 输出中还原为 &lt;
+      processed = processed.replace(/</g, '&lt;');
+      processed = processed.replace(/>/g, '&gt;');
+
+      // 3. 还原代码块和行内代码
+      for (let i = 0; i < codeBlocks.length; i++) {
+        processed = processed.replace(`%%CODEBLOCK_${i}%%`, codeBlocks[i]);
+      }
+      for (let i = 0; i < inlineCodes.length; i++) {
+        processed = processed.replace(`%%INLINE_${i}%%`, inlineCodes[i]);
+      }
+
+      // 4. 交给 marked 渲染
+      const html = marked.parse(processed);
+
+      const fullHtml = `<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<style>
+  body { font-family: -apple-system, sans-serif; padding: 16px; margin: 0; line-height: 1.6; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 4px; overflow-x: auto; }
+  code { font-family: Menlo, Consolas, monospace; font-size: 13px; }
+  p > code, li > code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; }
+  blockquote { border-left: 4px solid #ddd; margin: 0; padding: 8px 16px; color: #666; }
+  table { border-collapse: collapse; }
+  th, td { border: 1px solid #ddd; padding: 8px; }
+  img { max-width: 100%; }
+</style>
+</head><body>${html}</body></html>`;
+      return fullHtml;
+    }
+
+    // ========================================
+    // 方案 D（推荐）：混合方案
+    // 安全标签正常渲染（img 能显示图片）
+    // 危险标签 → 转为可见文本块
+    // 危险属性 → 移除并标注
+    // ========================================
+    function renderMethodD(markdown) {
+      const html = marked.parse(markdown);
+
+      // 用 DOMParser 解析为 DOM 树
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(
+        `<!DOCTYPE html><html><body>${html}</body></html>`,
+        'text/html'
+      );
+
+      // --- 第 1 步：危险标签 → 替换为可见的文本块 ---
+      const dangerousTags = [
+        'script', 'style', 'iframe', 'object', 'embed',
+        'applet', 'noscript', 'noembed', 'base', 'form'
+      ];
+      dangerousTags.forEach(tag => {
+        // 注意：querySelectorAll 返回的是静态列表，需要反复查询因为 replaceWith 会改变 DOM
+        let elements;
+        while ((elements = doc.querySelectorAll(tag)) && elements.length > 0) {
+          elements.forEach(el => {
+            const container = doc.createElement('div');
+            container.className = 'xss-blocked-tag';
+
+            const label = doc.createElement('span');
+            label.className = 'xss-tag-label';
+            label.textContent = `<${tag}>`;
+            container.appendChild(label);
+
+            // 显示标签的完整原始内容
+            const content = doc.createElement('code');
+            content.className = 'xss-tag-content';
+            // 对于 script/style 显示内部文本，对于 iframe 等显示属性
+            if (tag === 'script' || tag === 'style') {
+              content.textContent = el.textContent;
+            } else {
+              // 重建属性文本
+              const attrs = [...el.attributes].map(a => `${a.name}="${a.value}"`).join(' ');
+              content.textContent = attrs ? `<${tag} ${attrs}>` : `<${tag}>`;
+              if (el.innerHTML) {
+                content.textContent += el.innerHTML;
+              }
+            }
+            container.appendChild(content);
+
+            el.replaceWith(container);
+          });
+        }
+      });
+
+      // --- 第 2 步：危险属性 → 移除并添加可见标注 ---
+      const dangerousAttrPatterns = /^on/i; // 所有 on* 事件属性
+      doc.querySelectorAll('*').forEach(el => {
+        // 跳过我们自己创建的标注元素
+        if (el.classList?.contains('xss-blocked-tag') ||
+          el.classList?.contains('xss-tag-label') ||
+          el.classList?.contains('xss-tag-content') ||
+          el.classList?.contains('xss-stripped-attr')) return;
+        // 也跳过 <pre><code> 内的元素（代码块）
+        if (el.closest('pre')) return;
+
+        const attrsToRemove = [];
+
+        [...el.attributes].forEach(attr => {
+          // 事件属性：onerror, onclick, onload, onmouseover...
+          if (dangerousAttrPatterns.test(attr.name)) {
+            attrsToRemove.push({ name: attr.name, value: attr.value });
+          }
+        });
+
+        // javascript: 协议链接
+        const href = el.getAttribute('href');
+        if (href && /^\s*(javascript|data|vbscript):/i.test(href)) {
+          attrsToRemove.push({ name: 'href', value: href });
+          el.removeAttribute('href');
+          el.style.color = '#e65100';
+          el.style.textDecoration = 'line-through';
+        }
+
+        // javascript: 协议 src（但保留正常 src）
+        const src = el.getAttribute('src');
+        if (src && /^\s*(javascript|data):/i.test(src)) {
+          attrsToRemove.push({ name: 'src', value: src });
+          el.removeAttribute('src');
+        }
+
+        // 移除危险属性并添加标注
+        if (attrsToRemove.length > 0) {
+          attrsToRemove.forEach(attr => {
+            el.removeAttribute(attr.name);
+          });
+          const badge = doc.createElement('span');
+          badge.className = 'xss-stripped-attr';
+          badge.textContent = ' [已拦截: ' +
+            attrsToRemove.map(a => `${a.name}="${a.value}"`).join(', ') +
+            ']';
+          el.insertAdjacentElement('afterend', badge);
+        }
+      });
+
+      const processedHtml = doc.body.innerHTML;
+
+      const fullHtml = `<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<style>
+  body { font-family: -apple-system, sans-serif; padding: 16px; margin: 0; line-height: 1.6; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 4px; overflow-x: auto; }
+  code { font-family: Menlo, Consolas, monospace; font-size: 13px; }
+  p > code, li > code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; }
+  blockquote { border-left: 4px solid #ddd; margin: 0; padding: 8px 16px; color: #666; }
+  table { border-collapse: collapse; }
+  th, td { border: 1px solid #ddd; padding: 8px; }
+  img { max-width: 100%; }
+
+  /* 被拦截的危险标签 */
+  .xss-blocked-tag {
+    display: block;
+    background: #fbe9e7;
+    border: 1px dashed #e53935;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin: 8px 0;
+    font-size: 13px;
+  }
+  .xss-tag-label {
+    display: inline-block;
+    background: #e53935;
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-right: 8px;
+    font-family: Menlo, Consolas, monospace;
+  }
+  .xss-tag-content {
+    color: #c62828;
+    white-space: pre-wrap;
+    word-break: break-all;
+    background: transparent;
+    padding: 0;
+  }
+
+  /* 被移除的危险属性标注 */
+  .xss-stripped-attr {
+    display: inline-block;
+    background: #fff3e0;
+    border: 1px solid #ff9800;
+    color: #e65100;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: Menlo, Consolas, monospace;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+</style>
+</head><body>${processedHtml}</body></html>`;
+      return fullHtml;
+    }
+
+    // ========================================
+    // 渲染与 Tab 切换逻辑
+    // ========================================
+    function render() {
+      const markdown = document.getElementById('editor').value;
+
+      const frameA = document.getElementById('preview-a');
+      const frameB = document.getElementById('preview-b');
+      const frameC = document.getElementById('preview-c');
+      const frameD = document.getElementById('preview-d');
+
+      // 方案 A
+      frameA.srcdoc = renderMethodA(markdown);
+      // 方案 B
+      frameB.srcdoc = renderMethodB(markdown);
+      // 方案 C
+      frameC.srcdoc = renderMethodC(markdown);
+      // 方案 D
+      frameD.srcdoc = renderMethodD(markdown);
+    }
+
+    function switchTab(method, el) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+      document.querySelectorAll('.preview-frame').forEach(f => f.style.display = 'none');
+      document.getElementById('preview-' + method).style.display = 'block';
+    }
+
+    document.getElementById('editor').addEventListener('input', render);
+    render();
+  </script>
+</body>
+
+</html>

